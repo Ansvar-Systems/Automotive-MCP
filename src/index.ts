@@ -1,0 +1,70 @@
+#!/usr/bin/env node
+
+import { Server } from '@modelcontextprotocol/sdk/server/index.js';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import {
+  CallToolRequestSchema,
+  ListToolsRequestSchema,
+} from '@modelcontextprotocol/sdk/types.js';
+import Database from 'better-sqlite3';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Database path - can be overridden with env var
+const DB_PATH = process.env.AUTOMOTIVE_CYBERSEC_DB_PATH || join(__dirname, '..', 'data', 'automotive.db');
+
+function getDatabase(): Database.Database {
+  try {
+    return new Database(DB_PATH, { readonly: true });
+  } catch (error) {
+    throw new Error(`Failed to open database at ${DB_PATH}: ${error}`);
+  }
+}
+
+const db = getDatabase();
+const server = new Server(
+  {
+    name: 'automotive-cybersecurity-mcp',
+    version: '0.1.0',
+  },
+  {
+    capabilities: {
+      tools: {},
+    },
+  }
+);
+
+// List tools (empty for now, will add registry later)
+server.setRequestHandler(ListToolsRequestSchema, async () => ({
+  tools: [],
+}));
+
+// Call tool (returns error for now, will add registry later)
+server.setRequestHandler(CallToolRequestSchema, async (request) => {
+  const { name } = request.params;
+
+  return {
+    content: [
+      {
+        type: 'text',
+        text: `Unknown tool: ${name}`,
+      },
+    ],
+    isError: true,
+  };
+});
+
+// Start server
+async function main() {
+  const transport = new StdioServerTransport();
+  await server.connect(transport);
+  console.error('Automotive Cybersecurity MCP server started');
+}
+
+main().catch((error) => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
