@@ -41,6 +41,7 @@ export function listSources(db: Database.Database, input: ListSourcesInput): Sou
         name: reg.full_name,
         version: reg.version,
         type: 'regulation',
+        description: reg.title,
         item_count: reg.item_count,
         full_text_available: true,
       });
@@ -76,6 +77,7 @@ export function listSources(db: Database.Database, input: ListSourcesInput): Sou
         name: std.full_name,
         version: std.version,
         type: 'standard',
+        description: std.title,
         item_count: std.item_count,
         full_text_available: false, // Standards require paid license
       });

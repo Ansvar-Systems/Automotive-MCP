@@ -110,6 +110,7 @@ describe('list_sources tool', () => {
     expect(r155).toBeDefined();
     expect(r155?.name).toBe('UN Regulation No. 155');
     expect(r155?.type).toBe('regulation');
+    expect(r155?.description).toBe('Cyber Security and Cyber Security Management System');
     expect(r155?.item_count).toBe(2);
     expect(r155?.full_text_available).toBe(true);
 
@@ -117,6 +118,7 @@ describe('list_sources tool', () => {
     expect(r156).toBeDefined();
     expect(r156?.name).toBe('UN Regulation No. 156');
     expect(r156?.type).toBe('regulation');
+    expect(r156?.description).toBe('Software Update and Software Updates Management System');
     expect(r156?.item_count).toBe(1);
 
     // Check standard
@@ -124,6 +126,7 @@ describe('list_sources tool', () => {
     expect(iso).toBeDefined();
     expect(iso?.name).toBe('ISO/SAE 21434:2021');
     expect(iso?.type).toBe('standard');
+    expect(iso?.description).toBe('Road vehicles — Cybersecurity engineering');
     expect(iso?.item_count).toBe(2);
     expect(iso?.full_text_available).toBe(false);
   });

@@ -197,6 +197,7 @@ export interface SourceInfo {
   name: string;
   version: string | null;
   type: string;
+  description: string;
   item_count: number;
   full_text_available: boolean;
 }
