@@ -34,25 +34,26 @@ A Model Context Protocol (MCP) server that gives Claude direct access to UNECE R
 
 ## Quick Start
 
-```bash
-# Install globally from npm (when published)
-npm install -g @ansvar/automotive-cybersecurity-mcp
+**⚡ 30-Second Setup:**
 
-# Or use directly with npx (no install needed)
-npx @ansvar/automotive-cybersecurity-mcp
-```
-
-**Add to Claude Desktop** (`claude_desktop_config.json`):
+Add to `~/.claude/claude_desktop_config.json`:
 ```json
 {
   "mcpServers": {
-    "automotive-cybersecurity": {
+    "automotive": {
       "command": "npx",
       "args": ["-y", "@ansvar/automotive-cybersecurity-mcp"]
     }
   }
 }
 ```
+
+Restart Claude Desktop, then ask: *"What does R155 Article 7 require?"*
+
+**📚 Documentation:**
+- **[QUICK_START.md](QUICK_START.md)** - 5-minute guide with examples
+- **[docs/USAGE_GUIDE.md](docs/USAGE_GUIDE.md)** - Complete usage scenarios & ROI
+- **[R155_R156_INTEGRATION_SUMMARY.md](R155_R156_INTEGRATION_SUMMARY.md)** - Technical details
 
 ## Overview
 
