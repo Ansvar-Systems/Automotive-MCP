@@ -202,6 +202,141 @@ CREATE INDEX IF NOT EXISTS idx_mappings_source ON framework_mappings(source_type
 CREATE INDEX IF NOT EXISTS idx_mappings_target ON framework_mappings(target_type, target_id, target_ref);
 `;
 
+/**
+ * Load regulations and regulation content from seed JSON file
+ */
+function loadRegulations(db: Database.Database): void {
+  const seedPath = join(SEED_DIR, 'regulations.json');
+
+  if (!existsSync(seedPath)) {
+    console.log('⚠ No regulations.json found, skipping...');
+    return;
+  }
+
+  const data = JSON.parse(readFileSync(seedPath, 'utf-8'));
+
+  // Prepare statements
+  const insertReg = db.prepare(`
+    INSERT INTO regulations (id, full_name, title, version, effective_date, source_url, applies_to, regulation_type)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+
+  const insertContent = db.prepare(`
+    INSERT INTO regulation_content (regulation, content_type, reference, title, text, parent_reference)
+    VALUES (?, ?, ?, ?, ?, ?)
+  `);
+
+  // Load in transaction
+  const loadAll = db.transaction(() => {
+    let regCount = 0;
+    let contentCount = 0;
+
+    // Insert regulations
+    if (data.regulations) {
+      for (const reg of data.regulations) {
+        insertReg.run(
+          reg.id,
+          reg.full_name,
+          reg.title,
+          reg.version || null,
+          reg.effective_date || null,
+          reg.source_url || null,
+          reg.applies_to ? JSON.stringify(reg.applies_to) : null,
+          reg.regulation_type
+        );
+        regCount++;
+      }
+    }
+
+    // Insert content
+    if (data.content) {
+      for (const item of data.content) {
+        insertContent.run(
+          item.regulation,
+          item.content_type,
+          item.reference,
+          item.title || null,
+          item.text,
+          item.parent_reference || null
+        );
+        contentCount++;
+      }
+    }
+
+    return { regCount, contentCount };
+  });
+
+  const result = loadAll();
+  console.log(`✓ Loaded ${result.regCount} regulations`);
+  console.log(`✓ Loaded ${result.contentCount} content items`);
+}
+
+/**
+ * Load standards and clauses from seed JSON file
+ */
+function loadStandards(db: Database.Database): void {
+  const seedPath = join(SEED_DIR, 'standards.json');
+
+  if (!existsSync(seedPath)) {
+    console.log('⚠ No standards.json found, skipping...');
+    return;
+  }
+
+  const data = JSON.parse(readFileSync(seedPath, 'utf-8'));
+
+  // Prepare statements
+  const insertStd = db.prepare(`
+    INSERT INTO standards (id, full_name, title, version, note)
+    VALUES (?, ?, ?, ?, ?)
+  `);
+
+  const insertClause = db.prepare(`
+    INSERT INTO standard_clauses (standard, clause_id, title, guidance, work_products, cal_relevant)
+    VALUES (?, ?, ?, ?, ?, ?)
+  `);
+
+  // Load in transaction
+  const loadAll = db.transaction(() => {
+    let stdCount = 0;
+    let clauseCount = 0;
+
+    // Insert standards
+    if (data.standards) {
+      for (const std of data.standards) {
+        insertStd.run(
+          std.id,
+          std.full_name,
+          std.title,
+          std.version || null,
+          std.note || null
+        );
+        stdCount++;
+      }
+    }
+
+    // Insert clauses
+    if (data.clauses) {
+      for (const clause of data.clauses) {
+        insertClause.run(
+          clause.standard,
+          clause.clause_id,
+          clause.title,
+          clause.guidance,
+          clause.work_products ? JSON.stringify(clause.work_products) : null,
+          clause.cal_relevant || 0
+        );
+        clauseCount++;
+      }
+    }
+
+    return { stdCount, clauseCount };
+  });
+
+  const result = loadAll();
+  console.log(`✓ Loaded ${result.stdCount} standards`);
+  console.log(`✓ Loaded ${result.clauseCount} clauses`);
+}
+
 function buildDatabase() {
   console.log('Building automotive cybersecurity database...');
 
@@ -233,10 +368,15 @@ function buildDatabase() {
     // Create schema
     console.log('Creating schema...');
     db.exec(SCHEMA);
-
     console.log('✓ Schema created');
+
+    // Load seed data
+    console.log('\nLoading seed data...');
+    loadRegulations(db);
+    loadStandards(db);
+
+    console.log('\n✓ Database populated successfully');
     console.log(`Database ready at: ${DB_PATH}`);
-    console.log('Next: Add seed JSON files to data/seed/ and populate tables');
   } catch (error) {
     console.error('Failed to build database:', error);
 
