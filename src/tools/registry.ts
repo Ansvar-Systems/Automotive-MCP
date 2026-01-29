@@ -15,7 +15,8 @@ import {
 } from '@modelcontextprotocol/sdk/types.js';
 import { listSources } from './list.js';
 import { getRequirement } from './get.js';
-import type { ListSourcesInput, GetRequirementInput } from '../types/index.js';
+import { searchRequirements } from './search.js';
+import type { ListSourcesInput, GetRequirementInput, SearchRequirementsInput } from '../types/index.js';
 
 /**
  * Tool definition with name, description, input schema, and handler function
@@ -83,6 +84,39 @@ const TOOLS: ToolDefinition[] = [
     handler: (db: Database.Database, args: unknown) => {
       const input = args as GetRequirementInput;
       return getRequirement(db, input);
+    },
+  },
+  {
+    name: 'search_requirements',
+    description:
+      'Full-text search across all regulations and standards using FTS5 with BM25 ranking. Search regulations (UNECE R155/R156 full text) and standards (ISO 21434 guidance). Returns results sorted by relevance with highlighted snippets. Useful for finding requirements by topic, keyword, or concept.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        query: {
+          type: 'string',
+          description:
+            'Search query text. Can be a single word, phrase, or multiple terms. FTS5 will tokenize and rank results by relevance.',
+        },
+        sources: {
+          type: 'array',
+          items: {
+            type: 'string',
+          },
+          description:
+            'Optional: Filter to specific sources (e.g., ["r155", "iso_21434"]). Omit to search all sources.',
+        },
+        limit: {
+          type: 'number',
+          description:
+            'Maximum number of results to return. Default: 10. Results are ranked by BM25 relevance score.',
+        },
+      },
+      required: ['query'],
+    },
+    handler: (db: Database.Database, args: unknown) => {
+      const input = args as SearchRequirementsInput;
+      return searchRequirements(db, input);
     },
   },
 ];
