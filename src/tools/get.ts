@@ -1,0 +1,142 @@
+import type Database from 'better-sqlite3';
+import type { GetRequirementInput, GetRequirementOutput, MappingReference } from '../types/index.js';
+
+/**
+ * Retrieve a specific regulation article or standard clause with full details.
+ *
+ * For regulations: Returns full text, title, and reference
+ * For standards: Returns guidance only (full text requires paid license)
+ *
+ * Optionally includes cross-framework mappings to related requirements.
+ *
+ * @param db - SQLite database connection
+ * @param input - Source ID and reference to retrieve
+ * @returns Requirement details with text/guidance and optional mappings
+ * @throws Error if source or reference is not found
+ */
+export function getRequirement(db: Database.Database, input: GetRequirementInput): GetRequirementOutput {
+  const { source, reference, include_mappings = false } = input;
+
+  try {
+    // First, determine if source is a regulation or standard
+    const isRegulation = db.prepare('SELECT 1 FROM regulations WHERE id = ?').get(source);
+    const isStandard = db.prepare('SELECT 1 FROM standards WHERE id = ?').get(source);
+
+    if (!isRegulation && !isStandard) {
+      throw new Error(`Source not found: ${source}`);
+    }
+
+    let result: GetRequirementOutput;
+
+    if (isRegulation) {
+      // Query regulation_content table
+      const row = db.prepare(`
+        SELECT
+          regulation,
+          reference,
+          title,
+          text
+        FROM regulation_content
+        WHERE regulation = ? AND reference = ?
+      `).get(source, reference) as {
+        regulation: string;
+        reference: string;
+        title: string | null;
+        text: string;
+      } | undefined;
+
+      if (!row) {
+        throw new Error(`Reference not found: ${reference} in source ${source}`);
+      }
+
+      result = {
+        source: row.regulation,
+        reference: row.reference,
+        title: row.title,
+        text: row.text,
+        guidance: ''
+      };
+    } else {
+      // Query standard_clauses table
+      const row = db.prepare(`
+        SELECT
+          standard,
+          clause_id,
+          title,
+          guidance,
+          work_products
+        FROM standard_clauses
+        WHERE standard = ? AND clause_id = ?
+      `).get(source, reference) as {
+        standard: string;
+        clause_id: string;
+        title: string;
+        guidance: string;
+        work_products: string | null;
+      } | undefined;
+
+      if (!row) {
+        throw new Error(`Reference not found: ${reference} in source ${source}`);
+      }
+
+      // Parse work_products JSON if present
+      let workProducts: string[] | undefined = undefined;
+      if (row.work_products) {
+        try {
+          const parsed = JSON.parse(row.work_products);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            workProducts = parsed;
+          }
+        } catch (e) {
+          // Invalid JSON, leave undefined
+        }
+      }
+
+      result = {
+        source: row.standard,
+        reference: row.clause_id,
+        title: row.title,
+        text: null, // Standards don't include full text (paid license required)
+        guidance: row.guidance,
+        ...(workProducts && { work_products: workProducts })
+      };
+    }
+
+    // Include mappings if requested
+    if (include_mappings) {
+      const sourceType = isRegulation ? 'regulation' : 'standard';
+      const mappings = db.prepare(`
+        SELECT
+          target_type,
+          target_id,
+          target_ref,
+          relationship
+        FROM framework_mappings
+        WHERE source_type = ? AND source_id = ? AND source_ref = ?
+      `).all(sourceType, source, reference) as Array<{
+        target_type: string;
+        target_id: string;
+        target_ref: string;
+        relationship: string;
+      }>;
+
+      if (mappings.length > 0) {
+        result.maps_to = mappings.map((m): MappingReference => ({
+          target_type: m.target_type,
+          target_id: m.target_id,
+          target_ref: m.target_ref,
+          relationship: m.relationship
+        }));
+      }
+    }
+
+    return result;
+  } catch (error) {
+    // Re-throw our custom errors
+    if (error instanceof Error) {
+      throw error;
+    }
+    // Wrap unexpected errors
+    throw new Error(`Failed to retrieve requirement: ${String(error)}`);
+  }
+}
