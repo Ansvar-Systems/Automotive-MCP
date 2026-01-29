@@ -2,13 +2,10 @@
 
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import {
-  CallToolRequestSchema,
-  ListToolsRequestSchema,
-} from '@modelcontextprotocol/sdk/types.js';
 import Database from 'better-sqlite3';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { registerTools } from './tools/registry.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -37,25 +34,8 @@ const server = new Server(
   }
 );
 
-// List tools (empty for now, will add registry later)
-server.setRequestHandler(ListToolsRequestSchema, async () => ({
-  tools: [],
-}));
-
-// Call tool (returns error for now, will add registry later)
-server.setRequestHandler(CallToolRequestSchema, async (request) => {
-  const { name } = request.params;
-
-  return {
-    content: [
-      {
-        type: 'text',
-        text: `Unknown tool: ${name}`,
-      },
-    ],
-    isError: true,
-  };
-});
+// Register all tools via shared registry
+registerTools(server, db);
 
 // Start server
 async function main() {
