@@ -1,0 +1,44 @@
+{
+  "name": "@ansvar/automotive-cybersecurity-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for automotive cybersecurity regulations, standards, and TARA methodology",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "automotive-cybersecurity-mcp": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:db": "tsx scripts/build-db.ts",
+    "dev": "tsx watch src/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build && npm run build:db"
+  },
+  "keywords": [
+    "mcp",
+    "automotive",
+    "cybersecurity",
+    "unece",
+    "r155",
+    "r156",
+    "iso21434",
+    "tara"
+  ],
+  "author": "Jeffrey von Rotz <jeffrey@ansvar.ai>",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "better-sqlite3": "^11.8.1"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^22.10.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "vitest": "^2.1.8"
+  }
+}
