@@ -1,0 +1,69 @@
+# ============================================================================
+# npm Package Exclusions
+# ============================================================================
+# This file controls what gets published to npm.
+# CRITICAL: Database file (data/automotive.db) MUST be included!
+
+# Development and Testing Files
+tests/
+*.test.ts
+*.test.js
+test-*.mjs
+test-*.py
+inspect-*.py
+quality-*.mjs
+coverage/
+.serena/
+.claude/
+
+# Source TypeScript (dist/ is shipped instead)
+src/
+tsconfig.json
+vitest.config.ts
+
+# Assessment and Documentation (internal)
+QUALITY_ASSESSMENT_REPORT.md
+TEST_RESULTS.md
+DEPLOYMENT_CHECKLIST.md
+CRITICAL_ISSUE_FOUND.md
+SUMMARY.md
+
+# Git Files
+.git/
+.gitignore
+.gitattributes
+.worktrees/
+
+# IDE Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Environment Files
+.env
+.env.local
+
+# Build Artifacts
+*.tsbuildinfo
+*.log
+npm-debug.log*
+
+# Documentation (keep some, exclude others)
+docs/plans/
+
+# ============================================================================
+# IMPORTANT: Files that MUST be included (not excluded)
+# ============================================================================
+# - dist/                (compiled JavaScript)
+# - data/automotive.db   (CRITICAL: database file)
+# - data/seed/           (seed JSON files)
+# - README.md            (user documentation)
+# - LICENSE              (to be added)
+# - package.json         (package metadata)
+# - scripts/build-db.ts  (needed if users rebuild DB)

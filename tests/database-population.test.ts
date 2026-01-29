@@ -56,20 +56,21 @@ describe('Database Population', () => {
   });
 
   describe('Regulation Content', () => {
-    it('should load 1 content item', () => {
+    it('should load 33 content items (17 R155 + 16 R156)', () => {
       const count = db.prepare('SELECT COUNT(*) as count FROM regulation_content').get() as { count: number };
-      expect(count.count).toBe(1);
+      expect(count.count).toBe(33);
     });
 
-    it('should have correct content for R155 Article 7.2.2.2', () => {
+    it('should have correct content for R155 Article 7 with CSMS requirements', () => {
       const content = db.prepare(
         'SELECT * FROM regulation_content WHERE regulation = ? AND reference = ?'
-      ).get('r155', '7.2.2.2') as any;
+      ).get('r155', '7') as any;
 
       expect(content).toBeDefined();
       expect(content.content_type).toBe('article');
-      expect(content.title).toBe('Cyber Security Management System Requirements');
-      expect(content.text).toContain('Cyber Security Management System');
+      expect(content.title).toBe('Specifications');
+      expect(content.text).toContain('Cybersecurity Management System');
+      expect(content.text).toContain('7.2.2.2'); // Contains subsection references
       expect(content.parent_reference).toBeNull();
     });
   });
@@ -123,7 +124,7 @@ describe('Database Population', () => {
       const count = db.prepare(
         'SELECT COUNT(*) as count FROM regulation_content_fts'
       ).get() as { count: number };
-      expect(count.count).toBe(1);
+      expect(count.count).toBe(33); // 17 R155 + 16 R156
     });
 
     it('should search regulation content by keyword', () => {
@@ -131,15 +132,17 @@ describe('Database Population', () => {
         'SELECT reference FROM regulation_content_fts WHERE regulation_content_fts MATCH ?'
       ).all('vulnerability') as any[];
 
-      // Content contains text about "risk assessment in relation to cyber-attacks"
-      // but the actual test data might not contain "vulnerability"
-      // Let's search for something we know is there
+      // Vulnerability should be found in multiple articles
+      expect(results.length).toBeGreaterThan(0);
+
+      // Search for CSMS which should be in Article 7
       const csmsResults = db.prepare(
         'SELECT reference FROM regulation_content_fts WHERE regulation_content_fts MATCH ?'
-      ).all('Cyber Security Management System') as any[];
+      ).all('Cybersecurity Management System') as any[];
 
       expect(csmsResults.length).toBeGreaterThan(0);
-      expect(csmsResults[0].reference).toBe('7.2.2.2');
+      // Article 7 contains CSMS specifications
+      expect(csmsResults.some((r: any) => r.reference === '7')).toBe(true);
     });
 
     it('should automatically populate standard_clauses_fts', () => {
