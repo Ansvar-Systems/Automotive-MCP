@@ -13,7 +13,13 @@
     "dev": "tsx watch src/index.ts",
     "test": "vitest run",
     "test:watch": "vitest",
-    "prepublishOnly": "npm run build && npm run build:db"
+    "test:ci": "npm run build:db && npm run build && npm test",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\" \"scripts/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\" \"tests/**/*.ts\" \"scripts/**/*.ts\"",
+    "verify:package": "npm pack --dry-run && echo '✅ Package verification complete'",
+    "verify:db": "test -f data/automotive.db && echo '✅ Database exists' || (echo '❌ Database missing' && exit 1)",
+    "prepublishOnly": "npm run test:ci && npm run verify:db && echo '✅ Ready to publish'"
   },
   "keywords": [
     "mcp",
@@ -27,6 +33,18 @@
   ],
   "author": "Jeffrey von Rotz <jeffrey@ansvar.ai>",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ansvar-Systems/Automotive-MCP.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ansvar-Systems/Automotive-MCP/issues"
+  },
+  "homepage": "https://github.com/Ansvar-Systems/Automotive-MCP#readme",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "engines": {
     "node": ">=18.0.0"
   },

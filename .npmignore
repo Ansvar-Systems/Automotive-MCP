@@ -57,6 +57,12 @@ npm-debug.log*
 # Documentation (keep some, exclude others)
 docs/plans/
 
+# CI/CD Files
+.github/
+.gitleaks.toml
+R155_R156_INTEGRATION_SUMMARY.md
+VERIFICATION_COMPLETE.md
+
 # ============================================================================
 # IMPORTANT: Files that MUST be included (not excluded)
 # ============================================================================
