@@ -1,0 +1,34 @@
+{
+  "regulations": [
+    {
+      "id": "r155",
+      "full_name": "UN Regulation No. 155",
+      "title": "Cyber Security and Cyber Security Management System",
+      "version": "Revision 2",
+      "effective_date": "2024-07-07",
+      "source_url": "https://unece.org/transport/documents/2021/03/standards/un-regulation-no-155",
+      "applies_to": ["M1", "M2", "M3", "N1", "N2", "N3", "O3", "O4"],
+      "regulation_type": "unece"
+    },
+    {
+      "id": "r156",
+      "full_name": "UN Regulation No. 156",
+      "title": "Software Update and Software Updates Management System",
+      "version": "Revision 2",
+      "effective_date": "2024-07-07",
+      "source_url": "https://unece.org/transport/documents/2021/03/standards/un-regulation-no-156",
+      "applies_to": ["M1", "M2", "M3", "N1", "N2", "N3", "O3", "O4"],
+      "regulation_type": "unece"
+    }
+  ],
+  "content": [
+    {
+      "regulation": "r155",
+      "content_type": "article",
+      "reference": "7.2.2.2",
+      "title": "Cyber Security Management System Requirements",
+      "text": "The Cyber Security Management System shall be appropriate to the type of vehicle and shall address the following areas as they apply to the vehicle type: (a) vehicle type related risk assessment in relation to cyber-attacks...",
+      "parent_reference": null
+    }
+  ]
+}

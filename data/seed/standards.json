@@ -1,0 +1,21 @@
+{
+  "standards": [
+    {
+      "id": "iso_21434",
+      "full_name": "ISO/SAE 21434:2021",
+      "title": "Road vehicles — Cybersecurity engineering",
+      "version": "2021",
+      "note": "Standard text requires paid license. Clause IDs and expert guidance provided."
+    }
+  ],
+  "clauses": [
+    {
+      "standard": "iso_21434",
+      "clause_id": "9.3",
+      "title": "Vulnerability analysis",
+      "guidance": "Monitor for vulnerabilities in components throughout vehicle lifetime. Establish processes for vulnerability disclosure, triage, and remediation. Interface with PSIRT for coordination.",
+      "work_products": ["[WP-09-03]"],
+      "cal_relevant": 1
+    }
+  ]
+}
