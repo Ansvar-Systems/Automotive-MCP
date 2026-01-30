@@ -8,6 +8,9 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue)](https://www.typescriptlang.org/)
 [![Tests](https://img.shields.io/badge/tests-91%20passed-brightgreen)](#)
 [![Database](https://img.shields.io/badge/database-620KB-orange)](#)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/Ansvar-Systems/Automotive-MCP/badge)](https://securityscorecards.dev/viewer/?uri=github.com/Ansvar-Systems/Automotive-MCP)
+[![CodeQL](https://github.com/Ansvar-Systems/Automotive-MCP/workflows/CodeQL/badge.svg)](https://github.com/Ansvar-Systems/Automotive-MCP/actions/workflows/codeql.yml)
+[![Security](https://github.com/Ansvar-Systems/Automotive-MCP/workflows/Semgrep/badge.svg)](https://github.com/Ansvar-Systems/Automotive-MCP/security)
 
 **Stop wasting hours searching through PDF regulations.** Ask Claude about automotive cybersecurity requirements in natural language and get instant, accurate answers with source references.
 
