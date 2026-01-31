@@ -91,9 +91,9 @@ describe('Database Population', () => {
   });
 
   describe('Standard Clauses', () => {
-    it('should load 1 clause', () => {
+    it('should load 25 clauses', () => {
       const count = db.prepare('SELECT COUNT(*) as count FROM standard_clauses').get() as { count: number };
-      expect(count.count).toBe(1);
+      expect(count.count).toBe(25);
     });
 
     it('should have clause 9.3 with correct data', () => {
@@ -115,7 +115,7 @@ describe('Database Population', () => {
       expect(clause.work_products).toBeDefined();
       const parsed = JSON.parse(clause.work_products);
       expect(Array.isArray(parsed)).toBe(true);
-      expect(parsed).toContain('[WP-09-03]');
+      expect(parsed[0]).toContain('[WP-09-03]');
     });
   });
 
@@ -149,7 +149,7 @@ describe('Database Population', () => {
       const count = db.prepare(
         'SELECT COUNT(*) as count FROM standard_clauses_fts'
       ).get() as { count: number };
-      expect(count.count).toBe(1);
+      expect(count.count).toBe(25);
     });
 
     it('should search standard clauses by keyword', () => {
@@ -158,7 +158,9 @@ describe('Database Population', () => {
       ).all('vulnerability') as any[];
 
       expect(results.length).toBeGreaterThan(0);
-      expect(results[0].clause_id).toBe('9.3');
+      // Vulnerability appears in multiple clauses (8, 9.3, 15, etc.)
+      const clauseIds = results.map((r: any) => r.clause_id);
+      expect(clauseIds).toContain('9.3');
     });
   });
 

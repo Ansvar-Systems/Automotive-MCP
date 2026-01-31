@@ -11,10 +11,227 @@
   "clauses": [
     {
       "standard": "iso_21434",
+      "clause_id": "5",
+      "title": "Organizational cybersecurity management",
+      "guidance": "Establishes the foundation for cybersecurity governance within an organization. Requires defining a cybersecurity policy, assigning roles and responsibilities, establishing a cybersecurity culture, and ensuring competence of personnel. Key activities include: (1) Create and maintain a cybersecurity policy approved by top management; (2) Define organizational structure with clear cybersecurity responsibilities; (3) Establish processes for cybersecurity awareness and training; (4) Implement continuous improvement mechanisms. This clause maps to R155 Article 7.2.2.2(a) - processes used within the manufacturer's organization to manage cybersecurity.",
+      "work_products": ["[WP-05-01] Cybersecurity policy", "[WP-05-02] Organizational cybersecurity rules", "[WP-05-03] Evidence of competence"],
+      "r155_mapping": ["7.2.2.2(a)"],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "iso_21434",
+      "clause_id": "6",
+      "title": "Project dependent cybersecurity management",
+      "guidance": "Defines how to manage cybersecurity at the project level. The cybersecurity case is the central artifact - a structured argument demonstrating that cybersecurity risks are managed appropriately. Key requirements: (1) Cybersecurity planning - define activities, responsibilities, and timing; (2) Cybersecurity case - collect evidence that cybersecurity goals are achieved; (3) Cybersecurity assessment - independent evaluation of the cybersecurity case; (4) Release for post-development - formal handover criteria. The cybersecurity case must be maintained throughout the vehicle lifecycle and updated when new threats emerge or design changes occur. Auditors will primarily examine your cybersecurity case for type approval evidence.",
+      "work_products": ["[WP-06-01] Cybersecurity plan", "[WP-06-02] Cybersecurity case", "[WP-06-03] Cybersecurity assessment report", "[WP-06-04] Release for post-development report"],
+      "r155_mapping": ["5.1.1(b)", "7.3.1"],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "iso_21434",
+      "clause_id": "7",
+      "title": "Distributed cybersecurity activities",
+      "guidance": "Addresses cybersecurity when work is distributed across organizations (OEM-supplier relationships). Defines the Cybersecurity Interface Agreement (CIA) as the key mechanism. Requirements include: (1) Define clear interfaces between customer and supplier; (2) Agree on cybersecurity responsibilities via CIA; (3) Establish information sharing protocols for vulnerabilities and incidents; (4) Define how to handle cybersecurity requirements flow-down. Critical for Tier 1/2 suppliers: your customer (OEM) will require you to demonstrate compliance via CIA. The CIA should specify: shared vs. exclusive responsibilities, required work products, vulnerability disclosure timelines, and audit rights.",
+      "work_products": ["[WP-07-01] Cybersecurity interface agreement"],
+      "r155_mapping": ["5.1.1(a)", "7.2.2.5", "7.3.2"],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "iso_21434",
+      "clause_id": "8",
+      "title": "Continual cybersecurity activities",
+      "guidance": "Covers ongoing cybersecurity activities throughout the vehicle lifecycle. Four main areas: (1) Cybersecurity monitoring - track threat landscape, vulnerability databases (CVE, NVD), and automotive-specific sources (Auto-ISAC); (2) Cybersecurity event evaluation - assess relevance of new threats/vulnerabilities to your products; (3) Vulnerability analysis - determine exploitability and impact; (4) Vulnerability management - triage, remediation planning, and tracking. Key insight: This clause operationalizes the 'post-production' monitoring required by R155 Article 7.2.2.2(g). You need processes to detect new vulnerabilities affecting deployed vehicles and respond within defined timelines.",
+      "work_products": ["[WP-08-01] Cybersecurity monitoring report", "[WP-08-02] Cybersecurity event evaluation", "[WP-08-03] Vulnerability analysis report", "[WP-08-04] Vulnerability management report"],
+      "r155_mapping": ["7.2.2.2(f)", "7.2.2.2(g)", "7.2.2.3", "7.2.2.4"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "iso_21434",
+      "clause_id": "9",
+      "title": "Concept phase",
+      "guidance": "Initiates cybersecurity engineering for a new item or component. Key activities: (1) Item definition - describe the item, its boundaries, functions, and interfaces; (2) Cybersecurity relevance determination - decide if cybersecurity applies; (3) If relevant, initiate TARA (Clause 15). The item definition must include: preliminary architecture, external interfaces, trust boundaries, assets to protect, and operating environment assumptions. This phase produces the foundation for all subsequent cybersecurity analysis. Tip: Get the item definition right - errors here propagate through the entire TARA.",
+      "work_products": ["[WP-09-01] Item definition", "[WP-09-02] Cybersecurity relevance decision"],
+      "r155_mapping": ["7.3.3"],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "iso_21434",
       "clause_id": "9.3",
       "title": "Vulnerability analysis",
-      "guidance": "Monitor for vulnerabilities in components throughout vehicle lifetime. Establish processes for vulnerability disclosure, triage, and remediation. Interface with PSIRT for coordination.",
-      "work_products": ["[WP-09-03]"],
+      "guidance": "Monitor for vulnerabilities in components throughout vehicle lifetime. Establish processes for vulnerability disclosure, triage, and remediation. Interface with PSIRT for coordination. Key activities: (1) Identify known vulnerabilities in components (CVE monitoring); (2) Assess vulnerability applicability to your implementation; (3) Determine exploitability in automotive context; (4) Prioritize based on risk. Tools: vulnerability scanners, SBOM analysis, threat intelligence feeds.",
+      "work_products": ["[WP-09-03] Vulnerability analysis report"],
+      "r155_mapping": ["7.2.2.2(g)"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "iso_21434",
+      "clause_id": "10",
+      "title": "Product development phase",
+      "guidance": "Integrates cybersecurity into the product development lifecycle. Two main sub-phases: (1) Design - refine cybersecurity requirements, design cybersecurity controls, specify secure architecture; (2) Integration and verification - implement controls, verify they work as intended, validate against cybersecurity goals. Key principle: cybersecurity requirements must be traceable from TARA through design to verification. Each cybersecurity goal should have corresponding requirements, design decisions, implementation, and test evidence. This forms the 'vertical slice' auditors examine.",
+      "work_products": ["[WP-10-01] Refined cybersecurity requirements", "[WP-10-02] Cybersecurity specifications", "[WP-10-03] Cybersecurity design verification report", "[WP-10-04] Integration and verification specification", "[WP-10-05] Verification report"],
+      "r155_mapping": ["5.1.1(c)", "5.1.1(d)", "7.3.4", "7.3.6"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "iso_21434",
+      "clause_id": "11",
+      "title": "Cybersecurity validation",
+      "guidance": "Confirms that cybersecurity goals are achieved at the vehicle level. Distinct from verification (Clause 10): validation answers 'did we build the right thing?' while verification answers 'did we build the thing right?'. Key activities: (1) Define validation criteria based on cybersecurity goals; (2) Execute validation tests (penetration testing, fuzz testing, attack simulations); (3) Confirm residual risk is acceptable. Validation should include realistic attack scenarios from TARA. Consider engaging independent penetration testers for objective assessment.",
+      "work_products": ["[WP-11-01] Validation specification", "[WP-11-02] Validation report"],
+      "r155_mapping": ["5.1.2", "7.3.6"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "iso_21434",
+      "clause_id": "12",
+      "title": "Production phase",
+      "guidance": "Ensures cybersecurity is maintained during manufacturing. Key concerns: (1) Protect cryptographic material during production (key injection, secure provisioning); (2) Maintain integrity of software/firmware flashing; (3) Prevent tampering with security configurations; (4) Control access to production systems and tools. Production cybersecurity often involves: HSMs for key management, secure boot chain initialization, production line network segmentation, and audit trails for security-critical operations.",
+      "work_products": ["[WP-12-01] Production control plan"],
+      "r155_mapping": ["7.2.2.1(b)"],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "iso_21434",
+      "clause_id": "13",
+      "title": "Operations and maintenance phase",
+      "guidance": "Covers cybersecurity during vehicle operation in the field. Two main activities: (1) Cybersecurity incident response - detect, analyze, contain, and remediate incidents affecting vehicles; (2) Updates - manage security patches and software updates. Requires: incident response plan, communication channels with vehicle owners, coordination with authorities (if applicable), and update deployment mechanisms. This clause works closely with R156 (Software Updates) - your SUMS must support secure update delivery.",
+      "work_products": ["[WP-13-01] Incident response plan", "[WP-13-02] Cybersecurity update documentation"],
+      "r155_mapping": ["7.2.2.2(g)", "7.2.2.2(h)", "7.3.7"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "iso_21434",
+      "clause_id": "14",
+      "title": "End of cybersecurity support and decommissioning",
+      "guidance": "Addresses end-of-life cybersecurity considerations. Key activities: (1) Define cybersecurity support period - how long will you provide security updates?; (2) Communicate end-of-support to vehicle owners; (3) Consider decommissioning procedures - data erasure, certificate revocation, service discontinuation. Important: R155 requires demonstrating cybersecurity throughout the 'post-production phase' until end-of-life. Your end-of-support policy affects type approval commitments.",
+      "work_products": ["[WP-14-01] End of cybersecurity support communication", "[WP-14-02] Decommissioning procedure"],
+      "r155_mapping": ["7.2.2.1(c)"],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "iso_21434",
+      "clause_id": "15",
+      "title": "Threat analysis and risk assessment (TARA)",
+      "guidance": "The core methodology for identifying and assessing cybersecurity risks. TARA is the most important clause for daily work - it drives all cybersecurity decisions. Process steps: (1) Asset identification - what needs protection (safety functions, PII, IP, availability); (2) Threat scenario identification - how could assets be compromised? Use STRIDE, attack trees, or threat libraries; (3) Impact rating - consequences if threat succeeds (safety, financial, operational, privacy); (4) Attack path analysis - how would an attacker reach the asset?; (5) Attack feasibility rating - how difficult is the attack? Consider elapsed time, expertise, knowledge, window of opportunity, equipment (see Annex G); (6) Risk determination - combine impact and attack feasibility; (7) Risk treatment - accept, avoid, transfer, or mitigate. Key outputs: threat scenarios, attack feasibility ratings, risk values, and cybersecurity goals. Each unacceptable risk must have a corresponding cybersecurity goal. TARA must be maintained - update when architecture changes or new threats emerge.",
+      "work_products": ["[WP-15-01] TARA report", "[WP-15-02] Asset identification", "[WP-15-03] Threat scenarios", "[WP-15-04] Impact ratings", "[WP-15-05] Attack path analysis", "[WP-15-06] Attack feasibility ratings", "[WP-15-07] Risk values", "[WP-15-08] Risk treatment decisions", "[WP-15-09] Cybersecurity goals"],
+      "r155_mapping": ["5.1.1(b)", "5.1.3(a)", "7.2.2.2(b)", "7.2.2.2(c)", "7.2.2.2(d)", "7.3.3", "7.3.4"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "iso_21434",
+      "clause_id": "15.3",
+      "title": "Asset identification",
+      "guidance": "First step of TARA: identify what needs protection. Assets include: (1) Cybersecurity properties - confidentiality, integrity, availability of vehicle functions; (2) Safety-related assets - functions where compromise could cause physical harm; (3) Data assets - PII, cryptographic keys, calibration data, diagnostic data; (4) Financial assets - odometer, usage data affecting resale; (5) Operational assets - functions needed for vehicle operation. Method: analyze item definition, identify trust boundaries, list assets at each boundary. Prioritize assets by damage potential. Tip: Start with safety-critical functions, then work outward to convenience features.",
+      "work_products": ["[WP-15-02] Asset identification"],
+      "r155_mapping": ["7.3.3"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "iso_21434",
+      "clause_id": "15.4",
+      "title": "Threat scenario identification",
+      "guidance": "Identify how assets could be compromised. Methods: (1) STRIDE - Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege; (2) Attack trees - decompose high-level threats into attack steps; (3) Threat libraries - use R155 Annex 5 as starting point (70+ automotive threats); (4) Brainstorming with security experts. For each asset, ask: Who might attack? Why? How? Consider: remote attackers, malicious insiders, supply chain compromise, physical attackers. Output: list of threat scenarios with attacker motivation and high-level attack description.",
+      "work_products": ["[WP-15-03] Threat scenarios"],
+      "r155_mapping": ["7.2.2.2(b)", "7.3.3"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "iso_21434",
+      "clause_id": "15.5",
+      "title": "Impact rating",
+      "guidance": "Assess consequences if a threat scenario succeeds. Impact categories: (1) Safety - injury severity (use ISO 26262 ASIL logic: S0-S3); (2) Financial - direct costs, liability, recall expenses; (3) Operational - vehicle functionality degradation; (4) Privacy - PII exposure severity. Rating scale typically: Negligible, Moderate, Major, Severe. The highest impact across categories determines overall impact. Document rationale for each rating. Impact should be assessed assuming successful attack with no mitigations in place.",
+      "work_products": ["[WP-15-04] Impact ratings"],
+      "r155_mapping": ["7.2.2.2(c)", "7.3.3"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "iso_21434",
+      "clause_id": "15.6",
+      "title": "Attack path analysis",
+      "guidance": "Determine how an attacker could reach and exploit the asset. Analyze: (1) Entry points - external interfaces (OBD-II, Bluetooth, cellular, USB, WiFi, DSRC); (2) Intermediate steps - internal network traversal, privilege escalation; (3) Target access - how to reach the asset from entry point. Output: attack paths showing sequence of steps. Consider: network segmentation, authentication requirements, physical access needs. Attack paths inform attack feasibility - longer paths with more barriers are harder to execute.",
+      "work_products": ["[WP-15-05] Attack path analysis"],
+      "r155_mapping": ["7.3.3"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "iso_21434",
+      "clause_id": "15.7",
+      "title": "Attack feasibility rating",
+      "guidance": "Assess how difficult it is to execute the attack. ISO 21434 Annex G provides a method using five factors: (1) Elapsed time - how long to develop and execute attack (hours to years); (2) Specialist expertise - attacker skill level needed (layman to multiple experts); (3) Knowledge of item - information needed about target (public to critical insider); (4) Window of opportunity - access conditions (unlimited to very limited); (5) Equipment - tools required (standard to bespoke). Each factor rated 0-∞, summed to get attack potential. Lower sum = higher feasibility. Alternative: use attack probability based on industry data. Document assumptions clearly.",
+      "work_products": ["[WP-15-06] Attack feasibility ratings"],
+      "r155_mapping": ["7.2.2.2(c)", "7.3.3"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "iso_21434",
+      "clause_id": "15.8",
+      "title": "Risk determination",
+      "guidance": "Combine impact and attack feasibility to determine risk level. Typical risk matrix: Impact (rows) × Feasibility (columns) = Risk (1-5 or Low/Medium/High/Critical). Define risk acceptance criteria: which risk levels require treatment? Example: Critical and High risks must be mitigated, Medium risks require justification for acceptance, Low risks can be accepted. Document risk values for each threat scenario. This prioritizes your security engineering effort - focus on highest risks first.",
+      "work_products": ["[WP-15-07] Risk values"],
+      "r155_mapping": ["7.2.2.2(c)", "7.3.3"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "iso_21434",
+      "clause_id": "15.9",
+      "title": "Risk treatment",
+      "guidance": "Decide how to handle each identified risk. Options: (1) Avoid - remove the feature/function causing risk; (2) Reduce - implement mitigations (most common); (3) Share - transfer risk via insurance, contracts, or design choices; (4) Retain - accept the risk with justification. For risks requiring reduction: define cybersecurity goals stating what security property must be achieved. Goals should be SMART: Specific, Measurable, Achievable, Relevant, Time-bound. Example goal: 'Prevent unauthorized firmware modification' not 'Make system secure'. Each goal flows into Clause 10 as cybersecurity requirements.",
+      "work_products": ["[WP-15-08] Risk treatment decisions", "[WP-15-09] Cybersecurity goals"],
+      "r155_mapping": ["7.2.2.2(d)", "7.3.4"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "iso_21434",
+      "clause_id": "Annex A",
+      "title": "Cybersecurity Assurance Levels (CAL)",
+      "guidance": "CAL provides a mechanism to scale cybersecurity rigor based on risk. Four levels: CAL 1 (lowest) to CAL 4 (highest). Higher CAL requires more rigorous methods, more independence in verification, and more comprehensive documentation. CAL is assigned based on: impact severity, attack feasibility, and stakeholder requirements. Typical mapping: Safety-critical functions → CAL 3-4; Privacy-critical → CAL 2-3; Convenience features → CAL 1-2. CAL influences work product depth, review requirements, and testing intensity. Note: CAL is informative in ISO 21434, but customers often mandate specific CAL levels contractually.",
+      "work_products": [],
+      "r155_mapping": [],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "iso_21434",
+      "clause_id": "Annex D",
+      "title": "Cybersecurity relevance example",
+      "guidance": "Provides guidance for determining if cybersecurity analysis applies to an item. Decision factors: (1) Does the item have electrical/electronic components?; (2) Does it connect to external interfaces?; (3) Does it process, store, or transmit data?; (4) Could compromise affect safety, privacy, financial, or operational aspects? If any answer is 'yes' and potential for cyber threats exists, cybersecurity is relevant. Most modern automotive components are cybersecurity-relevant due to connectivity. When in doubt, apply TARA - it's better to analyze and find no risk than to skip analysis and miss threats.",
+      "work_products": [],
+      "r155_mapping": [],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "iso_21434",
+      "clause_id": "Annex E",
+      "title": "Cybersecurity interface agreement considerations",
+      "guidance": "Details what should be included in a Cybersecurity Interface Agreement (CIA) between customer and supplier. Key elements: (1) Scope - which items/components covered; (2) Responsibility matrix - who does what for each ISO 21434 clause; (3) Work product exchange - which artifacts shared, in what format; (4) Vulnerability handling - disclosure timelines, coordination procedures; (5) Incident response - notification requirements, joint response procedures; (6) Change management - how to handle design changes affecting cybersecurity; (7) Audit rights - customer access to supplier evidence. Tip: Define CIA early in supplier selection - it affects supplier capability requirements.",
+      "work_products": [],
+      "r155_mapping": ["7.2.2.5", "7.3.2"],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "iso_21434",
+      "clause_id": "Annex F",
+      "title": "Vulnerability scoring systems guidance",
+      "guidance": "Provides guidance on using vulnerability scoring systems like CVSS (Common Vulnerability Scoring System). Key considerations for automotive: (1) Base score may not reflect automotive context - a 'critical' IT vulnerability might be 'medium' in isolated automotive ECU; (2) Consider environmental score adjustments for your specific implementation; (3) Temporal score changes as exploits become available; (4) CVSS alone is insufficient - combine with automotive-specific impact assessment. Recommendation: Use CVSS as input, but apply automotive-specific attack feasibility and impact analysis per Clause 15.",
+      "work_products": [],
+      "r155_mapping": ["7.2.2.2(g)"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "iso_21434",
+      "clause_id": "Annex G",
+      "title": "Attack feasibility rating methods",
+      "guidance": "Defines methods for rating attack feasibility. Primary method: Attack Potential approach with five factors: (1) Elapsed time - 0 (≤1 day) to 19 (>6 months); (2) Expertise - 0 (layman) to 8 (multiple experts); (3) Knowledge - 0 (public) to 11 (critical/restricted); (4) Window of opportunity - 0 (unlimited) to 10 (very difficult); (5) Equipment - 0 (standard) to 9 (bespoke). Sum factors to get attack potential: 0-9 (basic), 10-13 (enhanced-basic), 14-19 (moderate), 20-24 (high), 25+ (beyond high). Alternative: CVSS-based approach for known vulnerabilities. Choose method consistently across your organization.",
+      "work_products": [],
+      "r155_mapping": ["7.2.2.2(c)", "7.3.3"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "iso_21434",
+      "clause_id": "Annex H",
+      "title": "Example TARA methods",
+      "guidance": "Provides example approaches for conducting TARA. Methods include: (1) STRIDE per element - apply STRIDE to each component in architecture; (2) Attack trees - decompose threats into attack steps; (3) HEAVENS (HEAling Vulnerabilities to ENhance Software Security) - automotive-specific method; (4) EVITA - European research project method; (5) TVRA (Threat Vulnerability and Risk Analysis) - ETSI method adapted for automotive. No single method is mandated - choose based on organizational experience and customer requirements. Key: whatever method used, ensure it systematically identifies threats and rates risks consistently.",
+      "work_products": [],
+      "r155_mapping": [],
       "cal_relevant": 1
     }
   ]

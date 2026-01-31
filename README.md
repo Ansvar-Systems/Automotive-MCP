@@ -145,16 +145,15 @@ The server uses a read-only SQLite database with full-text search (FTS5) to prov
 - **UNECE R156**: 16 items (12 articles + 4 annexes) - Full regulation text including:
   - Article 7: SUMS requirements
   - All official annexes
-- **ISO 21434**: 1 clause with expert guidance (Clause 9.3)
-- **Total**: 33 regulation items with ~294KB of authoritative text
+- **ISO 21434**: 25 clauses with expert guidance, R155 mappings, and work products
+- **Total**: 58 items (33 regulation + 25 standard clauses) with ~312KB of content
 
 ### Future Enhancements 🚀
 
-- 📋 Comprehensive ISO 21434 clause guidance (30+ clauses)
-- 📋 Cross-framework mappings (R155 ↔ ISO 21434)
+- 📋 Cross-framework mappings tool (query R155 ↔ ISO 21434 relationships)
 - 📋 TARA methodology tools and threat scenario library
 - 📋 Type approval checklist generation
-- 📋 ISO 21434 work products tool
+- 📋 Work products export (ReqIF, CSV, Markdown)
 
 ## Installation
 
@@ -243,9 +242,10 @@ Claude should use the `list_sources` tool and show R155, R156, and ISO 21434.
 - ✅ **UNECE R156** - All 16 items (12 articles + 4 annexes) for software update management
 - ✅ **Full-text search** - Sub-millisecond queries across 294KB of authoritative regulation text
 
-**ISO 21434 (Limited):**
-- ⚠️ **Clause 9.3 only** - Vulnerability analysis guidance
-- 📋 **Coming in Phase 2** - Comprehensive guidance for 30+ key clauses (Q1 2026)
+**ISO 21434 Guidance:**
+- ✅ **25 clauses** - Comprehensive expert guidance for all major clauses (5-15) plus key annexes
+- ✅ **R155 mappings** - Each clause linked to corresponding R155 requirements
+- ✅ **Work products** - 40+ work product references with descriptions
 
 **Not Yet Included:**
 - ❌ Cross-framework mappings (R155 ↔ ISO 21434)
@@ -259,8 +259,8 @@ Claude should use the `list_sources` tool and show R155, R156, and ISO 21434.
 |--------|-------|---------|------|
 | **UNECE R155** | 17 | Articles 1-12, Annexes 1-5 | 223KB |
 | **UNECE R156** | 16 | Articles 1-12, Annexes 1-4 | 64KB |
-| **ISO 21434** | 1 | Clause 9.3 (Vulnerability Analysis) | ~2KB |
-| **Total** | **34** | Complete R155/R156, partial ISO 21434 | **~289KB** |
+| **ISO 21434** | 25 | Clauses 5-15, TARA sub-clauses, Annexes A/D-H | ~25KB |
+| **Total** | **58** | Complete R155/R156, comprehensive ISO 21434 | **~312KB** |
 
 **Key R155 Content:**
 - Article 7: Complete CSMS specifications (largest article, ~22KB)
@@ -866,7 +866,7 @@ For issues, questions, or contributions:
 **Content:**
 - **UNECE R155**: 17 items (12 articles + 5 annexes) - 148KB threat catalog in Annex 5
 - **UNECE R156**: 16 items (12 articles + 4 annexes) - Complete SUMS requirements
-- **ISO 21434**: 1 clause with expert guidance (Clause 9.3)
+- **ISO 21434**: 25 clauses with expert guidance, R155 mappings, and work products
 - **Total**: 33 items, 294KB of authoritative UNECE text
 
 **CI/CD:**
