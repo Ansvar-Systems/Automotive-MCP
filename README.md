@@ -130,7 +130,7 @@ The server uses a read-only SQLite database with full-text search (FTS5) to prov
 ### Current Release (v0.1.0) ✅
 
 **Production Infrastructure:**
-- ✅ **3 core tools** - `list_sources`, `get_requirement`, `search_requirements`
+- ✅ **4 core tools** - `list_sources`, `get_requirement`, `search_requirements`, `list_work_products`
 - ✅ **SQLite database** - FTS5 full-text search with BM25 ranking (620KB)
 - ✅ **MCP protocol** - Full stdio transport support
 - ✅ **Type-safe API** - TypeScript with strict mode
@@ -273,7 +273,7 @@ Claude should use the `list_sources` tool and show R155, R156, and ISO 21434.
 
 ## Available Tools
 
-The server provides 3 MCP tools for accessing automotive cybersecurity requirements:
+The server provides 4 MCP tools for accessing automotive cybersecurity requirements:
 
 ### 1. list_sources
 
@@ -396,11 +396,47 @@ Full-text search across all regulations and standards using FTS5 with BM25 ranki
 }
 ```
 
+### 4. list_work_products
+
+List ISO 21434 work products (deliverables) required for cybersecurity engineering.
+
+**Input:**
+- `clause_id` (optional): Filter to specific clause (e.g., "15" for TARA, "6" for cybersecurity case)
+- `phase` (optional): Filter by lifecycle phase - organizational, project, continual, concept, development, validation, production, operations, decommissioning, tara
+
+**Example:**
+```json
+{
+  "phase": "tara"
+}
+```
+
+**Returns:**
+```json
+{
+  "work_products": [
+    {
+      "id": "WP-15-01",
+      "name": "TARA report",
+      "clause_id": "15",
+      "clause_title": "Threat analysis and risk assessment (TARA)",
+      "cal_relevant": true,
+      "r155_refs": ["5.1.1(b)", "7.2.2.2(b)", "7.3.3"]
+    }
+  ],
+  "summary": {
+    "total_work_products": 44,
+    "clauses_covered": 19,
+    "cal_relevant_count": 31
+  }
+}
+```
+
 ## Quality & Testing
 
 This MCP server is built to production standards:
 
-- ✅ **75 automated tests** - 100% pass rate across all test suites
+- ✅ **99 automated tests** - 100% pass rate across all test suites
 - ✅ **Type-safe** - Strict TypeScript with comprehensive type definitions
 - ✅ **Fast queries** - 0.05ms average (200x faster than 10ms target)
 - ✅ **Secure** - Read-only database, SQL injection protection
