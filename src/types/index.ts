@@ -182,6 +182,23 @@ export interface ListWorkProductsOutput {
   phases: string[];
 }
 
+export interface ExportComplianceMatrixInput {
+  regulation?: string;
+  format?: 'markdown' | 'csv';
+  include_guidance?: boolean;
+}
+
+export interface ExportComplianceMatrixOutput {
+  format: string;
+  content: string;
+  statistics: {
+    total_requirements: number;
+    mapped_requirements: number;
+    coverage_percent: number;
+    unique_work_products: number;
+  };
+}
+
 export interface GetTypeApprovalChecklistInput {
   regulation: string;
   vehicle_category?: string;

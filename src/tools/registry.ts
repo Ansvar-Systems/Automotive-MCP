@@ -17,7 +17,8 @@ import { listSources } from './list.js';
 import { getRequirement } from './get.js';
 import { searchRequirements } from './search.js';
 import { listWorkProducts } from './workproducts.js';
-import type { ListSourcesInput, GetRequirementInput, SearchRequirementsInput, ListWorkProductsInput } from '../types/index.js';
+import { exportComplianceMatrix } from './export.js';
+import type { ListSourcesInput, GetRequirementInput, SearchRequirementsInput, ListWorkProductsInput, ExportComplianceMatrixInput } from '../types/index.js';
 
 /**
  * Tool definition with name, description, input schema, and handler function
@@ -143,6 +144,37 @@ const TOOLS: ToolDefinition[] = [
     handler: (db: Database.Database, args: unknown) => {
       const input = args as ListWorkProductsInput;
       return listWorkProducts(db, input);
+    },
+  },
+  {
+    name: 'export_compliance_matrix',
+    description:
+      'Generate a compliance traceability matrix showing regulation requirements mapped to ISO 21434 clauses and work products. Export as Markdown table or CSV for spreadsheet import. Useful for audit documentation, gap analysis, and compliance tracking.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        regulation: {
+          type: 'string',
+          enum: ['r155', 'r156'],
+          description:
+            'Regulation to generate matrix for. Default: "r155".',
+        },
+        format: {
+          type: 'string',
+          enum: ['markdown', 'csv'],
+          description:
+            'Output format. "markdown" for documentation, "csv" for spreadsheet import. Default: "markdown".',
+        },
+        include_guidance: {
+          type: 'boolean',
+          description:
+            'Include ISO 21434 guidance summaries in output. Default: false.',
+        },
+      },
+    },
+    handler: (db: Database.Database, args: unknown) => {
+      const input = args as ExportComplianceMatrixInput;
+      return exportComplianceMatrix(db, input);
     },
   },
 ];

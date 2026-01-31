@@ -130,7 +130,7 @@ The server uses a read-only SQLite database with full-text search (FTS5) to prov
 ### Current Release (v0.1.0) ✅
 
 **Production Infrastructure:**
-- ✅ **4 core tools** - `list_sources`, `get_requirement`, `search_requirements`, `list_work_products`
+- ✅ **5 core tools** - `list_sources`, `get_requirement`, `search_requirements`, `list_work_products`, `export_compliance_matrix`
 - ✅ **SQLite database** - FTS5 full-text search with BM25 ranking (620KB)
 - ✅ **MCP protocol** - Full stdio transport support
 - ✅ **Type-safe API** - TypeScript with strict mode
@@ -273,7 +273,7 @@ Claude should use the `list_sources` tool and show R155, R156, and ISO 21434.
 
 ## Available Tools
 
-The server provides 4 MCP tools for accessing automotive cybersecurity requirements:
+The server provides 5 MCP tools for accessing automotive cybersecurity requirements:
 
 ### 1. list_sources
 
@@ -432,11 +432,42 @@ List ISO 21434 work products (deliverables) required for cybersecurity engineeri
 }
 ```
 
+### 5. export_compliance_matrix
+
+Generate a compliance traceability matrix for audit documentation.
+
+**Input:**
+- `regulation` (optional): "r155" or "r156" (default: "r155")
+- `format` (optional): "markdown" or "csv" (default: "markdown")
+- `include_guidance` (optional): Include ISO 21434 guidance summaries
+
+**Example:**
+```json
+{
+  "regulation": "r155",
+  "format": "csv"
+}
+```
+
+**Returns:**
+```json
+{
+  "format": "csv",
+  "content": "Requirement,Title,ISO 21434 Clauses,Work Products,Status\n\"R155 7\",\"Specifications\",\"15, 8, 6...\",\"WP-15-01...\",Mapped",
+  "statistics": {
+    "total_requirements": 12,
+    "mapped_requirements": 2,
+    "coverage_percent": 17,
+    "unique_work_products": 36
+  }
+}
+```
+
 ## Quality & Testing
 
 This MCP server is built to production standards:
 
-- ✅ **99 automated tests** - 100% pass rate across all test suites
+- ✅ **105 automated tests** - 100% pass rate across all test suites
 - ✅ **Type-safe** - Strict TypeScript with comprehensive type definitions
 - ✅ **Fast queries** - 0.05ms average (200x faster than 10ms target)
 - ✅ **Secure** - Read-only database, SQL injection protection
