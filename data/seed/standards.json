@@ -27,6 +27,13 @@
       "title": "AUTOSAR Specification of Secure Onboard Communication",
       "version": "R22-11",
       "note": "AUTOSAR security specifications for ECU communication. Includes SecOC, Crypto Stack, and security modules."
+    },
+    {
+      "id": "gbt",
+      "full_name": "GB/T Automotive Cybersecurity Standards",
+      "title": "Chinese National Standards for Vehicle Cybersecurity",
+      "version": "2024",
+      "note": "Mandatory standards for China market entry. Includes GB/T 40857, GB/T 40856, GB/T 40855, and related standards."
     }
   ],
   "clauses": [
@@ -533,6 +540,114 @@
       "work_products": ["[AUTOSAR-13] Diagnostic Security Specification"],
       "r155_mapping": ["7.3.4"],
       "cal_relevant": 1
+    },
+    {
+      "standard": "gbt",
+      "clause_id": "Overview",
+      "title": "Chinese Automotive Cybersecurity Standards Overview",
+      "guidance": "China has developed mandatory cybersecurity standards for vehicles sold in the Chinese market. Key standards: (1) GB/T 40857-2021 - Vehicle cybersecurity general technical requirements; (2) GB/T 40856-2021 - Software update engineering requirements; (3) GB/T 40855-2021 - Vehicle gateway security requirements; (4) GB 44495-2024 - Mandatory vehicle data security standard. These standards are heavily influenced by UNECE R155/R156 but adapted for Chinese regulatory context. Compliance is required for China Compulsory Certification (CCC) for connected vehicles. Work with Chinese testing labs (CATARC, CAERI) for certification.",
+      "work_products": ["[GBT-01] Cybersecurity Compliance Documentation", "[GBT-02] China CCC Application Package"],
+      "r155_mapping": [],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "gbt",
+      "clause_id": "40857",
+      "title": "GB/T 40857-2021 Vehicle Cybersecurity Technical Requirements",
+      "guidance": "Core cybersecurity requirements for intelligent connected vehicles. Structure mirrors R155 but with Chinese-specific requirements: (1) Organizational security - establish cybersecurity management system; (2) Vehicle development - threat analysis, security design, testing; (3) Production security - secure manufacturing processes; (4) Post-production - monitoring, incident response, updates; (5) Technical requirements - specific controls for communication, gateway, ECU security. Key difference from R155: more prescriptive technical requirements rather than risk-based approach. Applies to M and N category vehicles with connectivity features.",
+      "work_products": ["[GBT-03] CSMS Documentation (Chinese)", "[GBT-04] Vehicle Type Security Assessment"],
+      "r155_mapping": ["7.2", "7.3"],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "gbt",
+      "clause_id": "40857-5",
+      "title": "GB/T 40857 Section 5: Organizational Requirements",
+      "guidance": "Cybersecurity management system requirements for manufacturers. Requirements: (1) Cybersecurity policy - documented and approved by management; (2) Organizational structure - designated cybersecurity roles; (3) Resource allocation - adequate personnel and tools; (4) Competence requirements - staff training and qualification; (5) Supply chain security - requirements flow-down to suppliers; (6) Continuous improvement - regular review and update of CSMS. Similar to R155 Article 6 CSMS certificate requirements. Chinese authorities may audit CSMS implementation.",
+      "work_products": ["[GBT-05] CSMS Policy (Chinese)", "[GBT-06] Organization Chart", "[GBT-07] Training Records"],
+      "r155_mapping": ["7.2.2.2(a)", "7.2.2.5"],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "gbt",
+      "clause_id": "40857-6",
+      "title": "GB/T 40857 Section 6: Vehicle Development Requirements",
+      "guidance": "Security engineering during vehicle development. Key requirements: (1) Threat analysis - identify threats to vehicle systems; (2) Risk assessment - evaluate likelihood and impact; (3) Security concept - define security architecture; (4) Security requirements - derive from risk assessment; (5) Security design - implement controls; (6) Security verification - testing and validation. Requires documented evidence throughout development lifecycle. Testing must cover both functional security and penetration testing. Chinese labs will verify compliance through document review and vehicle testing.",
+      "work_products": ["[GBT-08] Threat Analysis Report", "[GBT-09] Security Requirements Specification", "[GBT-10] Security Test Report"],
+      "r155_mapping": ["7.3.3", "7.3.4", "7.3.6"],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "gbt",
+      "clause_id": "40857-7",
+      "title": "GB/T 40857 Section 7: Technical Security Requirements",
+      "guidance": "Specific technical controls required for vehicles. Areas covered: (1) External interface security - protect Bluetooth, WiFi, cellular, V2X; (2) Internal network security - gateway protection, network segmentation; (3) ECU security - secure boot, secure storage, secure communication; (4) Data security - encryption, access control, secure deletion; (5) Diagnostic security - authentication, authorization; (6) Update security - secure OTA implementation. More prescriptive than R155 - specifies minimum cryptographic algorithms (SM2/SM3/SM4 Chinese algorithms often required), authentication mechanisms, and network segmentation approaches.",
+      "work_products": ["[GBT-11] Technical Security Architecture", "[GBT-12] Cryptographic Implementation Document"],
+      "r155_mapping": ["7.3.4", "7.3.8"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "gbt",
+      "clause_id": "40856",
+      "title": "GB/T 40856-2021 Software Update Requirements",
+      "guidance": "Requirements for vehicle software update systems (Chinese equivalent to R156). Key requirements: (1) Update management system - organizational processes for managing updates; (2) Secure update mechanism - authentication, integrity verification; (3) Rollback capability - ability to revert failed updates; (4) User notification - inform vehicle owners of updates; (5) Update logging - maintain audit trail; (6) OTA infrastructure security - secure backend systems. Applies to all vehicles capable of software updates. Requires demonstration that updates cannot be manipulated and failed updates don't compromise vehicle safety.",
+      "work_products": ["[GBT-13] SUMS Documentation", "[GBT-14] OTA Security Architecture", "[GBT-15] Update Process Description"],
+      "r155_mapping": [],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "gbt",
+      "clause_id": "40855",
+      "title": "GB/T 40855-2021 Gateway Security Requirements",
+      "guidance": "Security requirements for vehicle gateways. Gateway is critical security boundary. Requirements: (1) Access control - control traffic between network domains; (2) Message filtering - whitelist/blacklist for allowed messages; (3) Authentication - verify source of messages; (4) Anomaly detection - identify suspicious traffic patterns; (5) Secure boot - verify gateway firmware integrity; (6) Secure communication - protect inter-domain traffic; (7) Diagnostic protection - secure diagnostic routing. Chinese standards emphasize gateway as primary security control point. Expect detailed testing of gateway filtering rules during certification.",
+      "work_products": ["[GBT-16] Gateway Security Specification", "[GBT-17] Gateway Test Report"],
+      "r155_mapping": ["7.3.4"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "gbt",
+      "clause_id": "44495",
+      "title": "GB 44495-2024 Vehicle Data Security",
+      "guidance": "Mandatory standard for vehicle data security (effective 2026). This is a GB (mandatory) not GB/T (recommended) standard. Key requirements: (1) Data classification - categorize data by sensitivity; (2) Personal data protection - consent, minimization, anonymization; (3) Important data protection - data that affects national security, public interest; (4) Cross-border transfer - restrictions on exporting certain data; (5) Data localization - some data must be stored in China; (6) Security assessment - required for important data processing. Critical for connected vehicles: must implement data security controls and may need to establish China data centers. Consult with China data privacy lawyers.",
+      "work_products": ["[GBT-18] Data Security Assessment", "[GBT-19] Data Classification Matrix", "[GBT-20] Cross-border Transfer Assessment"],
+      "r155_mapping": [],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "gbt",
+      "clause_id": "Crypto",
+      "title": "Chinese Cryptographic Requirements",
+      "guidance": "China requires use of Chinese cryptographic algorithms in certain contexts. Key algorithms: (1) SM2 - elliptic curve cryptography (similar to ECDSA); (2) SM3 - hash function (similar to SHA-256); (3) SM4 - block cipher (similar to AES-128); (4) SM9 - identity-based cryptography. When required: government/public sector applications must use SM algorithms; commercial applications may have flexibility. Vehicle cybersecurity: check with certification body whether SM algorithms are required for your use case. Many implementations support dual-stack (SM + international algorithms). Hardware: look for chips supporting SM algorithms or use software implementations.",
+      "work_products": ["[GBT-21] Cryptographic Algorithm Selection Rationale"],
+      "r155_mapping": ["7.3.8"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "gbt",
+      "clause_id": "Certification",
+      "title": "China CCC Certification Process",
+      "guidance": "Process for obtaining China Compulsory Certification for connected vehicles. Steps: (1) Select accredited testing lab (CATARC, CAERI, CAQC); (2) Submit application with technical documentation; (3) Factory audit - verify CSMS implementation; (4) Vehicle testing - functional and security testing; (5) Report review - lab submits to CNCA; (6) Certificate issuance - valid for 5 years; (7) Surveillance - annual factory audits. Timeline: 6-12 months from application to certificate. Cost: varies by vehicle type and lab. Tips: engage Chinese partner early, prepare documentation in Chinese, budget for multiple test iterations.",
+      "work_products": ["[GBT-22] CCC Application Form", "[GBT-23] Factory Audit Checklist"],
+      "r155_mapping": [],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "gbt",
+      "clause_id": "V2X",
+      "title": "Chinese V2X Security Requirements",
+      "guidance": "Security requirements for Vehicle-to-Everything communication in China. China uses C-V2X (cellular) technology, not DSRC. Key standards: (1) YD/T 3957 - LTE-V2X security; (2) T/CSAE 53-2020 - V2X PKI certificate policy; (3) T/ITS 0058 - V2X application security. Requirements: (1) PKI-based authentication - vehicles must have valid certificates; (2) Message signing - all V2X messages authenticated; (3) Certificate management - enrollment, update, revocation; (4) Privacy protection - pseudonym certificates. China V2X PKI is managed by designated Certificate Authorities. Foreign OEMs must work with Chinese CA system for V2X deployment.",
+      "work_products": ["[GBT-24] V2X Security Architecture", "[GBT-25] Certificate Management Plan"],
+      "r155_mapping": ["7.3.4"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "gbt",
+      "clause_id": "Testing",
+      "title": "Chinese Cybersecurity Testing Requirements",
+      "guidance": "Testing requirements for GB/T compliance verification. Test categories: (1) Document review - verify CSMS, development process documentation; (2) Functional testing - verify security controls work as designed; (3) Penetration testing - attempt to bypass security controls; (4) Fuzz testing - malformed input testing; (5) Vulnerability scanning - automated vulnerability detection. Chinese labs follow national testing guidelines. Key labs: CATARC (Tianjin), CAERI (Chongqing), China Auto (Shanghai). Prepare test vehicles with debug access enabled. Testing typically takes 2-4 weeks per vehicle type. Plan for retesting if failures found.",
+      "work_products": ["[GBT-26] Test Plan", "[GBT-27] Test Vehicle Specification"],
+      "r155_mapping": ["7.3.6"],
+      "cal_relevant": 0
     }
   ]
 }

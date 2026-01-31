@@ -149,7 +149,7 @@ The server uses a read-only SQLite database with full-text search (FTS5) to prov
 - **VDA TISAX**: 14 control areas for supplier qualification
 - **SAE J3061**: 7 lifecycle clauses (legacy reference)
 - **AUTOSAR**: 8 security modules for ECU implementation
-- **Total**: 87 items (33 regulation + 56 standard clauses) with ~345KB of content
+- **Total**: 99 items (33 regulation + 68 standard clauses) with ~360KB of content
 
 ### Future Enhancements 🚀
 
@@ -254,10 +254,7 @@ Claude should use the `list_sources` tool and show R155, R156, and ISO 21434.
 - ✅ **VDA TISAX** - 14 control areas with assessment level guidance (AL1-AL3)
 - ✅ **SAE J3061** - 7 lifecycle phases plus TARA methods annex
 - ✅ **AUTOSAR Security** - 8 modules (SecOC, CSM, KeyM, IdsM, Secure Boot, etc.)
-
-**Not Yet Included:**
-- ❌ Chinese GB/T automotive cybersecurity standards
-- ❌ TARA threat scenario library (beyond R155 Annex 5)
+- ✅ **Chinese GB/T** - 12 clauses covering GB/T 40857, 40856, 40855, GB 44495, CCC certification
 
 ### Content Inventory
 
@@ -269,7 +266,8 @@ Claude should use the `list_sources` tool and show R155, R156, and ISO 21434.
 | **VDA TISAX** | 14 | Control areas 1-13 + Prototype protection | ~15KB |
 | **SAE J3061** | 7 | Lifecycle clauses 5-10 + Annex A | ~8KB |
 | **AUTOSAR** | 8 | SecOC, CSM, KeyM, IdsM, Secure Boot, etc. | ~10KB |
-| **Total** | **87** | 4 standards + 2 regulations | **~345KB** |
+| **Chinese GB/T** | 12 | GB/T 40857, 40856, 40855, GB 44495, CCC, V2X | ~15KB |
+| **Total** | **99** | 5 standards + 2 regulations | **~360KB** |
 
 **Key R155 Content:**
 - Article 7: Complete CSMS specifications (largest article, ~22KB)
