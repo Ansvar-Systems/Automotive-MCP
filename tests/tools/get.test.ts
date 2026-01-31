@@ -104,7 +104,7 @@ describe('get_requirement tool', () => {
       1
     );
 
-    // Insert framework mapping
+    // Insert framework mapping (forward: R155 → ISO)
     db.prepare(`
       INSERT INTO framework_mappings (source_type, source_id, source_ref, target_type, target_id, target_ref, relationship, notes)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?)
@@ -117,6 +117,21 @@ describe('get_requirement tool', () => {
       '9.3',
       'satisfies',
       'R155 risk assessment maps directly to ISO 21434 clause 9.3'
+    );
+
+    // Insert reverse mapping (ISO → R155) - typical direction in real data
+    db.prepare(`
+      INSERT INTO framework_mappings (source_type, source_id, source_ref, target_type, target_id, target_ref, relationship, notes)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(
+      'standard',
+      'iso_21434',
+      '9.3',
+      'regulation',
+      'r155',
+      '7.2.2.2',
+      'satisfies',
+      'ISO 21434 clause 9.3 satisfies R155 7.2.2.2'
     );
   });
 
@@ -200,6 +215,48 @@ describe('get_requirement tool', () => {
 
     expect(result).toBeDefined();
     expect(result.maps_to).toBeUndefined();
+  });
+
+  it('should include reverse mappings (satisfied_by) when requested', () => {
+    const input: GetRequirementInput = {
+      source: 'r155',
+      reference: '7.2.2.2',
+      include_mappings: true
+    };
+
+    const result = getRequirement(db, input);
+
+    expect(result).toBeDefined();
+    // R155 7.2.2.2 should show which ISO clauses satisfy it
+    expect(result.satisfied_by).toBeDefined();
+    expect(result.satisfied_by).toHaveLength(1);
+    expect(result.satisfied_by?.[0]).toEqual({
+      target_type: 'standard',
+      target_id: 'iso_21434',
+      target_ref: '9.3',
+      relationship: 'satisfies'
+    });
+  });
+
+  it('should include forward mappings (maps_to) for standards', () => {
+    const input: GetRequirementInput = {
+      source: 'iso_21434',
+      reference: '9.3',
+      include_mappings: true
+    };
+
+    const result = getRequirement(db, input);
+
+    expect(result).toBeDefined();
+    // ISO 21434 9.3 should show which R155 requirements it satisfies
+    expect(result.maps_to).toBeDefined();
+    expect(result.maps_to).toHaveLength(1);
+    expect(result.maps_to?.[0]).toEqual({
+      target_type: 'regulation',
+      target_id: 'r155',
+      target_ref: '7.2.2.2',
+      relationship: 'satisfies'
+    });
   });
 
   it('should throw error when source is not found', () => {

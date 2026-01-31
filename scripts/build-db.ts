@@ -295,10 +295,16 @@ function loadStandards(db: Database.Database): void {
     VALUES (?, ?, ?, ?, ?, ?)
   `);
 
+  const insertMapping = db.prepare(`
+    INSERT OR IGNORE INTO framework_mappings (source_type, source_id, source_ref, target_type, target_id, target_ref, relationship, notes)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+
   // Load in transaction
   const loadAll = db.transaction(() => {
     let stdCount = 0;
     let clauseCount = 0;
+    let mappingCount = 0;
 
     // Insert standards
     if (data.standards) {
@@ -314,7 +320,7 @@ function loadStandards(db: Database.Database): void {
       }
     }
 
-    // Insert clauses
+    // Insert clauses and their R155 mappings
     if (data.clauses) {
       for (const clause of data.clauses) {
         insertClause.run(
@@ -326,15 +332,33 @@ function loadStandards(db: Database.Database): void {
           clause.cal_relevant || 0
         );
         clauseCount++;
+
+        // Insert R155 mappings if present
+        if (clause.r155_mapping && Array.isArray(clause.r155_mapping)) {
+          for (const r155Ref of clause.r155_mapping) {
+            insertMapping.run(
+              'standard',           // source_type
+              clause.standard,      // source_id (e.g., 'iso_21434')
+              clause.clause_id,     // source_ref (e.g., '15')
+              'regulation',         // target_type
+              'r155',               // target_id
+              r155Ref,              // target_ref (e.g., '7.2.2.2(a)')
+              'satisfies',          // relationship
+              null                  // notes
+            );
+            mappingCount++;
+          }
+        }
       }
     }
 
-    return { stdCount, clauseCount };
+    return { stdCount, clauseCount, mappingCount };
   });
 
   const result = loadAll();
   console.log(`✓ Loaded ${result.stdCount} standards`);
   console.log(`✓ Loaded ${result.clauseCount} clauses`);
+  console.log(`✓ Loaded ${result.mappingCount} cross-framework mappings`);
 }
 
 function buildDatabase() {

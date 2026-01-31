@@ -105,7 +105,9 @@ export function getRequirement(db: Database.Database, input: GetRequirementInput
     // Include mappings if requested
     if (include_mappings) {
       const sourceType = isRegulation ? 'regulation' : 'standard';
-      const mappings = db.prepare(`
+
+      // Forward mappings (this source → other targets)
+      const forwardMappings = db.prepare(`
         SELECT
           target_type,
           target_id,
@@ -120,11 +122,37 @@ export function getRequirement(db: Database.Database, input: GetRequirementInput
         relationship: string;
       }>;
 
-      if (mappings.length > 0) {
-        result.maps_to = mappings.map((m): MappingReference => ({
+      if (forwardMappings.length > 0) {
+        result.maps_to = forwardMappings.map((m): MappingReference => ({
           target_type: m.target_type,
           target_id: m.target_id,
           target_ref: m.target_ref,
+          relationship: m.relationship
+        }));
+      }
+
+      // Reverse mappings (other sources → this target)
+      // This shows which standards/clauses satisfy this regulation requirement
+      const reverseMappings = db.prepare(`
+        SELECT
+          source_type,
+          source_id,
+          source_ref,
+          relationship
+        FROM framework_mappings
+        WHERE target_type = ? AND target_id = ? AND target_ref = ?
+      `).all(sourceType, source, reference) as Array<{
+        source_type: string;
+        source_id: string;
+        source_ref: string;
+        relationship: string;
+      }>;
+
+      if (reverseMappings.length > 0) {
+        result.satisfied_by = reverseMappings.map((m): MappingReference => ({
+          target_type: m.source_type,
+          target_id: m.source_id,
+          target_ref: m.source_ref,
           relationship: m.relationship
         }));
       }

@@ -173,7 +173,8 @@ export interface GetRequirementOutput {
   title: string | null;
   text: string | null; // null for paid standards
   guidance: string;
-  maps_to?: MappingReference[];
+  maps_to?: MappingReference[];        // Forward: this requirement → other frameworks
+  satisfied_by?: MappingReference[];   // Reverse: other frameworks → this requirement
   work_products?: string[];
 }
 
