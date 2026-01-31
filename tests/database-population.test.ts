@@ -76,9 +76,9 @@ describe('Database Population', () => {
   });
 
   describe('Standards', () => {
-    it('should load 1 standard', () => {
+    it('should load 4 standards', () => {
       const count = db.prepare('SELECT COUNT(*) as count FROM standards').get() as { count: number };
-      expect(count.count).toBe(1);
+      expect(count.count).toBe(4);
     });
 
     it('should have ISO 21434 with correct metadata', () => {
@@ -91,9 +91,9 @@ describe('Database Population', () => {
   });
 
   describe('Standard Clauses', () => {
-    it('should load 25 clauses', () => {
+    it('should load 56 clauses', () => {
       const count = db.prepare('SELECT COUNT(*) as count FROM standard_clauses').get() as { count: number };
-      expect(count.count).toBe(25);
+      expect(count.count).toBe(56);
     });
 
     it('should have clause 9.3 with correct data', () => {
@@ -149,7 +149,7 @@ describe('Database Population', () => {
       const count = db.prepare(
         'SELECT COUNT(*) as count FROM standard_clauses_fts'
       ).get() as { count: number };
-      expect(count.count).toBe(25);
+      expect(count.count).toBe(56);
     });
 
     it('should search standard clauses by keyword', () => {

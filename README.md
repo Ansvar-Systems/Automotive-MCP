@@ -146,7 +146,10 @@ The server uses a read-only SQLite database with full-text search (FTS5) to prov
   - Article 7: SUMS requirements
   - All official annexes
 - **ISO 21434**: 25 clauses with expert guidance, R155 mappings, and work products
-- **Total**: 58 items (33 regulation + 25 standard clauses) with ~312KB of content
+- **VDA TISAX**: 14 control areas for supplier qualification
+- **SAE J3061**: 7 lifecycle clauses (legacy reference)
+- **AUTOSAR**: 8 security modules for ECU implementation
+- **Total**: 87 items (33 regulation + 56 standard clauses) with ~345KB of content
 
 ### Future Enhancements 🚀
 
@@ -247,11 +250,14 @@ Claude should use the `list_sources` tool and show R155, R156, and ISO 21434.
 - ✅ **R155 mappings** - Each clause linked to corresponding R155 requirements
 - ✅ **Work products** - 40+ work product references with descriptions
 
+**Additional Frameworks:**
+- ✅ **VDA TISAX** - 14 control areas with assessment level guidance (AL1-AL3)
+- ✅ **SAE J3061** - 7 lifecycle phases plus TARA methods annex
+- ✅ **AUTOSAR Security** - 8 modules (SecOC, CSM, KeyM, IdsM, Secure Boot, etc.)
+
 **Not Yet Included:**
-- ❌ Cross-framework mappings (R155 ↔ ISO 21434)
-- ❌ TARA methodology and threat scenario library
-- ❌ VDA TISAX, SAE J3061, AUTOSAR guidance
-- ❌ Work product templates and export formats
+- ❌ Chinese GB/T automotive cybersecurity standards
+- ❌ TARA threat scenario library (beyond R155 Annex 5)
 
 ### Content Inventory
 
@@ -260,7 +266,10 @@ Claude should use the `list_sources` tool and show R155, R156, and ISO 21434.
 | **UNECE R155** | 17 | Articles 1-12, Annexes 1-5 | 223KB |
 | **UNECE R156** | 16 | Articles 1-12, Annexes 1-4 | 64KB |
 | **ISO 21434** | 25 | Clauses 5-15, TARA sub-clauses, Annexes A/D-H | ~25KB |
-| **Total** | **58** | Complete R155/R156, comprehensive ISO 21434 | **~312KB** |
+| **VDA TISAX** | 14 | Control areas 1-13 + Prototype protection | ~15KB |
+| **SAE J3061** | 7 | Lifecycle clauses 5-10 + Annex A | ~8KB |
+| **AUTOSAR** | 8 | SecOC, CSM, KeyM, IdsM, Secure Boot, etc. | ~10KB |
+| **Total** | **87** | 4 standards + 2 regulations | **~345KB** |
 
 **Key R155 Content:**
 - Article 7: Complete CSMS specifications (largest article, ~22KB)

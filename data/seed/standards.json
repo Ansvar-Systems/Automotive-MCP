@@ -6,6 +6,27 @@
       "title": "Road vehicles — Cybersecurity engineering",
       "version": "2021",
       "note": "Standard text requires paid license. Clause IDs and expert guidance provided."
+    },
+    {
+      "id": "tisax",
+      "full_name": "VDA ISA / TISAX",
+      "title": "Trusted Information Security Assessment Exchange",
+      "version": "6.0",
+      "note": "VDA Information Security Assessment catalog. Required for German OEM supplier qualification. Assessment levels AL1-AL3."
+    },
+    {
+      "id": "sae_j3061",
+      "full_name": "SAE J3061",
+      "title": "Cybersecurity Guidebook for Cyber-Physical Vehicle Systems",
+      "version": "2016",
+      "note": "SAE recommended practice. Predecessor to ISO 21434. Still referenced in legacy programs."
+    },
+    {
+      "id": "autosar",
+      "full_name": "AUTOSAR Cybersecurity",
+      "title": "AUTOSAR Specification of Secure Onboard Communication",
+      "version": "R22-11",
+      "note": "AUTOSAR security specifications for ECU communication. Includes SecOC, Crypto Stack, and security modules."
     }
   ],
   "clauses": [
@@ -232,6 +253,285 @@
       "guidance": "Provides example approaches for conducting TARA. Methods include: (1) STRIDE per element - apply STRIDE to each component in architecture; (2) Attack trees - decompose threats into attack steps; (3) HEAVENS (HEAling Vulnerabilities to ENhance Software Security) - automotive-specific method; (4) EVITA - European research project method; (5) TVRA (Threat Vulnerability and Risk Analysis) - ETSI method adapted for automotive. No single method is mandated - choose based on organizational experience and customer requirements. Key: whatever method used, ensure it systematically identifies threats and rates risks consistently.",
       "work_products": [],
       "r155_mapping": [],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "tisax",
+      "clause_id": "Overview",
+      "title": "TISAX Overview and Assessment Levels",
+      "guidance": "TISAX (Trusted Information Security Assessment Exchange) is the automotive industry's information security assessment standard, managed by ENX Association. Key concepts: (1) Assessment Levels - AL1 (normal protection, self-assessment), AL2 (high protection, remote assessment), AL3 (very high protection, on-site assessment); (2) Scope Labels - 'Info high' for confidential data, 'Info very high' for strictly confidential, 'Proto' for prototype protection, 'Vehicle' for test vehicles; (3) Validity - 3 years from assessment date; (4) Exchange - Results shared via ENX portal with OEM customers. TISAX is mandatory for suppliers working with VW, BMW, Mercedes, and most German OEMs. Start the process 6-9 months before you need the certificate.",
+      "work_products": ["[TISAX-01] ISMS Documentation", "[TISAX-02] Risk Assessment", "[TISAX-03] Statement of Applicability"],
+      "r155_mapping": [],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "tisax",
+      "clause_id": "1",
+      "title": "Information Security Policies",
+      "guidance": "Requires documented information security policies approved by management. Key requirements: (1) Information security policy - high-level commitment and direction; (2) Topic-specific policies - detailed policies for access control, cryptography, supplier security, etc.; (3) Review cycle - policies must be reviewed at planned intervals or when significant changes occur; (4) Communication - policies must be communicated to employees and relevant external parties. Maps to ISO 27001 Clause 5.2 and ISO 21434 Clause 5. Tip: Your ISO 21434 cybersecurity policy can satisfy TISAX if it covers information security scope.",
+      "work_products": ["[TISAX-04] Information Security Policy", "[TISAX-05] Topic-specific Policies"],
+      "r155_mapping": ["7.2.2.2(a)"],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "tisax",
+      "clause_id": "2",
+      "title": "Organization of Information Security",
+      "guidance": "Establishes roles, responsibilities, and organizational structure for information security. Key elements: (1) Information Security Officer (ISO) - appointed with adequate authority and resources; (2) Segregation of duties - separate conflicting responsibilities; (3) Contact with authorities - procedures for reporting incidents to regulators; (4) Contact with special interest groups - engagement with Auto-ISAC, CERT communities; (5) Project management security - integrate security into all projects. For AL3 assessments, expect auditors to interview the ISO and verify their authority.",
+      "work_products": ["[TISAX-06] Organizational Security Structure", "[TISAX-07] Roles and Responsibilities Matrix"],
+      "r155_mapping": ["7.2.2.2(a)"],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "tisax",
+      "clause_id": "3",
+      "title": "Human Resource Security",
+      "guidance": "Covers security aspects of employee lifecycle. Key controls: (1) Screening - background checks appropriate to role sensitivity; (2) Terms of employment - security responsibilities in contracts; (3) Awareness training - regular security awareness programs; (4) Disciplinary process - consequences for security violations; (5) Termination procedures - access revocation, asset return. For prototype protection (Proto label), stricter screening may be required. Document training records and maintain evidence of awareness program completion.",
+      "work_products": ["[TISAX-08] Security Awareness Program", "[TISAX-09] Employee Security Agreements"],
+      "r155_mapping": [],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "tisax",
+      "clause_id": "4",
+      "title": "Asset Management",
+      "guidance": "Requires identification and protection of information assets. Key requirements: (1) Asset inventory - maintain register of all information assets; (2) Ownership - assign owners responsible for asset protection; (3) Acceptable use - define rules for using assets; (4) Classification - label assets by sensitivity (public, internal, confidential, strictly confidential); (5) Media handling - procedures for removable media, disposal. For automotive: include CAD files, test data, calibration parameters, and customer technical information in scope.",
+      "work_products": ["[TISAX-10] Asset Inventory", "[TISAX-11] Information Classification Scheme"],
+      "r155_mapping": [],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "tisax",
+      "clause_id": "5",
+      "title": "Access Control",
+      "guidance": "Establishes controls for accessing information systems. Key areas: (1) Access control policy - business requirements for access; (2) User access management - registration, provisioning, review, removal; (3) User responsibilities - password policy, clear desk; (4) System access controls - secure logon, session timeout, privilege restriction; (5) Application access - need-to-know enforcement. For AL3: expect technical verification of access controls, privileged access management, and multi-factor authentication for sensitive systems.",
+      "work_products": ["[TISAX-12] Access Control Policy", "[TISAX-13] User Access Review Records"],
+      "r155_mapping": [],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "tisax",
+      "clause_id": "6",
+      "title": "Cryptography",
+      "guidance": "Governs use of cryptographic controls. Requirements: (1) Cryptographic policy - when and how to use encryption; (2) Key management - generation, distribution, storage, rotation, destruction; (3) Algorithm selection - use industry-standard algorithms (AES-256, RSA-2048+, SHA-256+); (4) Certificate management - PKI procedures if applicable. For automotive embedded systems: align with AUTOSAR Crypto Stack requirements. Document crypto inventory showing where encryption is used and with what algorithms.",
+      "work_products": ["[TISAX-14] Cryptographic Policy", "[TISAX-15] Key Management Procedures"],
+      "r155_mapping": ["7.3.8"],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "tisax",
+      "clause_id": "7",
+      "title": "Physical and Environmental Security",
+      "guidance": "Protects physical facilities and equipment. Key controls: (1) Secure areas - perimeter security, entry controls, securing offices; (2) Equipment security - siting, protection, maintenance, disposal; (3) Clear desk/screen - policy enforcement; (4) Cabling security - protect power and network cables. For prototype protection: dedicated secure rooms, visitor escort requirements, photography prohibitions, prototype tracking. AL3 assessments include physical site inspection.",
+      "work_products": ["[TISAX-16] Physical Security Procedures", "[TISAX-17] Secure Area Register"],
+      "r155_mapping": [],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "tisax",
+      "clause_id": "8",
+      "title": "Operations Security",
+      "guidance": "Covers secure operation of information processing facilities. Key areas: (1) Documented procedures - operating procedures for IT systems; (2) Change management - controlled changes to systems; (3) Capacity management - monitoring and projections; (4) Separation of environments - dev/test/prod separation; (5) Malware protection - anti-virus, endpoint detection; (6) Backup - regular backups with testing; (7) Logging and monitoring - security event logging, log protection; (8) Vulnerability management - scanning, patching. For automotive: include vehicle test systems, HIL/SIL environments in scope.",
+      "work_products": ["[TISAX-18] Operating Procedures", "[TISAX-19] Change Management Records", "[TISAX-20] Backup and Recovery Plan"],
+      "r155_mapping": ["7.2.2.2(g)"],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "tisax",
+      "clause_id": "9",
+      "title": "Communications Security",
+      "guidance": "Protects information in networks. Requirements: (1) Network security management - network controls, segregation; (2) Information transfer - policies for email, file transfer, messaging; (3) Confidentiality agreements - NDAs with external parties; (4) Network services security - SLAs with network providers. For supplier data exchange: secure file transfer (SFTP, encrypted email), no customer data on public cloud without approval. VPN requirements for remote access to customer systems.",
+      "work_products": ["[TISAX-21] Network Security Architecture", "[TISAX-22] Data Transfer Procedures"],
+      "r155_mapping": [],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "tisax",
+      "clause_id": "10",
+      "title": "Supplier Relationships",
+      "guidance": "Manages security in supplier relationships. Key requirements: (1) Supplier security policy - requirements for suppliers handling your data; (2) Supply chain security - addressing security through the chain; (3) Supplier agreements - security clauses in contracts; (4) Monitoring and review - ongoing supplier assessment. Critical for automotive tier structure: you must flow down TISAX-equivalent requirements to your sub-suppliers. Document supplier security assessments and maintain approved supplier list.",
+      "work_products": ["[TISAX-23] Supplier Security Requirements", "[TISAX-24] Supplier Assessment Records"],
+      "r155_mapping": ["7.2.2.5", "7.3.2"],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "tisax",
+      "clause_id": "11",
+      "title": "Incident Management",
+      "guidance": "Establishes incident response capabilities. Requirements: (1) Incident management process - detection, reporting, response, recovery; (2) Reporting procedures - internal and external notification; (3) Assessment and decision - severity classification; (4) Response procedures - containment, eradication, recovery; (5) Learning from incidents - post-incident review, improvements. For OEM customer data breaches: know your contractual notification timelines (often 24-72 hours). Maintain incident log and conduct tabletop exercises.",
+      "work_products": ["[TISAX-25] Incident Response Plan", "[TISAX-26] Incident Log"],
+      "r155_mapping": ["7.2.2.2(g)", "7.2.2.2(h)"],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "tisax",
+      "clause_id": "12",
+      "title": "Business Continuity",
+      "guidance": "Ensures information security during disruptions. Key elements: (1) Business continuity planning - maintain security during crisis; (2) Redundancy - backup systems for critical functions; (3) Testing - regular BCP testing and updates. For automotive suppliers: consider impact on customer production if your systems fail. Define RTOs (Recovery Time Objectives) aligned with customer requirements. Include cybersecurity scenarios (ransomware) in BCP testing.",
+      "work_products": ["[TISAX-27] Business Continuity Plan", "[TISAX-28] BCP Test Records"],
+      "r155_mapping": [],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "tisax",
+      "clause_id": "13",
+      "title": "Compliance",
+      "guidance": "Ensures compliance with legal and contractual requirements. Areas covered: (1) Legal requirements - identify applicable laws (GDPR, export controls); (2) Intellectual property - respect IP rights, license compliance; (3) Privacy - personal data protection; (4) Cryptographic regulations - export/import controls on crypto; (5) Independent review - internal audit, external assessment. For TISAX: the assessment itself is a compliance verification. Maintain evidence of compliance monitoring between assessments.",
+      "work_products": ["[TISAX-29] Compliance Register", "[TISAX-30] Internal Audit Records"],
+      "r155_mapping": [],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "tisax",
+      "clause_id": "Proto",
+      "title": "Prototype Protection",
+      "guidance": "Additional requirements for protecting physical prototypes and test vehicles. Key controls: (1) Secure storage - locked facilities, access logging; (2) Transportation - covered transport, GPS tracking for vehicles; (3) Camouflage - disguising prototype features; (4) Photography prohibition - no photos in prototype areas; (5) Visitor management - strict escort requirements; (6) Destruction - secure disposal of prototype components. Required when handling OEM prototype parts or test vehicles. Assessment includes physical inspection of prototype handling areas.",
+      "work_products": ["[TISAX-31] Prototype Protection Procedures", "[TISAX-32] Prototype Tracking Log"],
+      "r155_mapping": [],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "sae_j3061",
+      "clause_id": "Overview",
+      "title": "SAE J3061 Overview",
+      "guidance": "SAE J3061 (2016) was the first automotive cybersecurity standard, predating ISO 21434. Key concepts: (1) Cybersecurity lifecycle - concept, development, production, operation, decommissioning; (2) Feature-based development - integrates with existing automotive processes; (3) Threat Analysis and Risk Assessment (TARA) - originated many concepts later refined in ISO 21434; (4) Guiding principles - defense in depth, least privilege, fail-safe. While superseded by ISO 21434 for new programs, J3061 is still referenced in legacy contracts and provides good introductory material. Many J3061 concepts map directly to ISO 21434.",
+      "work_products": ["[J3061-01] Cybersecurity Plan", "[J3061-02] Threat Analysis Report"],
+      "r155_mapping": [],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "sae_j3061",
+      "clause_id": "5",
+      "title": "Guiding Principles",
+      "guidance": "Foundational security principles for vehicle cybersecurity. Principles: (1) Defense in depth - multiple layers of security controls; (2) Least privilege - minimal access rights for functions; (3) Separation of domains - isolate critical from non-critical systems; (4) Fail-safe design - secure defaults, graceful degradation; (5) No security by obscurity - don't rely on hidden designs; (6) Simplicity - reduce attack surface through simple designs. These principles remain valid and should guide all automotive security architecture decisions.",
+      "work_products": [],
+      "r155_mapping": ["7.3.4"],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "sae_j3061",
+      "clause_id": "6",
+      "title": "Concept Phase",
+      "guidance": "Initiates cybersecurity for a vehicle feature. Activities: (1) Item definition - scope, boundaries, interfaces; (2) Cybersecurity goals - high-level security objectives; (3) Preliminary TARA - initial threat identification; (4) Cybersecurity concept - high-level security architecture. Similar to ISO 21434 Clause 9 but with different terminology. J3061 uses 'feature' where ISO 21434 uses 'item'. The outputs feed into detailed design phase.",
+      "work_products": ["[J3061-03] Item Definition", "[J3061-04] Cybersecurity Goals", "[J3061-05] Preliminary TARA"],
+      "r155_mapping": ["7.3.3"],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "sae_j3061",
+      "clause_id": "7",
+      "title": "Development Phase",
+      "guidance": "Detailed cybersecurity engineering during product development. Key activities: (1) System-level TARA - detailed threat analysis; (2) Security requirements - derived from TARA and cybersecurity goals; (3) Security architecture - detailed security design; (4) Security implementation - coding standards, secure coding; (5) Security testing - verification and validation. J3061 introduced the concept of security testing levels analogous to ISO 26262 ASIL decomposition.",
+      "work_products": ["[J3061-06] Detailed TARA", "[J3061-07] Security Requirements", "[J3061-08] Security Test Plan"],
+      "r155_mapping": ["7.3.4", "7.3.6"],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "sae_j3061",
+      "clause_id": "8",
+      "title": "Production Phase",
+      "guidance": "Cybersecurity during manufacturing. Focus areas: (1) Secure manufacturing - protect keys, certificates, software; (2) Secure flashing - authenticated software installation; (3) Production security controls - physical and logical access; (4) End-of-line testing - verify security features work. Similar to ISO 21434 Clause 12 but less detailed. Key concern: protecting cryptographic material during production.",
+      "work_products": ["[J3061-09] Production Security Plan"],
+      "r155_mapping": ["7.2.2.1(b)"],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "sae_j3061",
+      "clause_id": "9",
+      "title": "Operation and Maintenance Phase",
+      "guidance": "Cybersecurity for vehicles in the field. Key activities: (1) Vulnerability monitoring - track new vulnerabilities; (2) Incident response - detect and respond to attacks; (3) Security updates - patch vulnerabilities; (4) Field monitoring - collect security telemetry. J3061 was early in recognizing the need for post-production security monitoring. Maps to ISO 21434 Clause 8 (continual activities) and Clause 13 (operations).",
+      "work_products": ["[J3061-10] Incident Response Plan", "[J3061-11] Vulnerability Management Plan"],
+      "r155_mapping": ["7.2.2.2(g)", "7.2.2.2(h)"],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "sae_j3061",
+      "clause_id": "10",
+      "title": "Supporting Processes",
+      "guidance": "Organizational processes supporting cybersecurity. Includes: (1) Cybersecurity governance - organizational structure, responsibilities; (2) Cybersecurity culture - awareness, training; (3) Tool qualification - security of development tools; (4) Supplier management - cybersecurity requirements for suppliers. Similar to ISO 21434 Clauses 5 and 7. J3061 was less prescriptive about organizational requirements than ISO 21434.",
+      "work_products": ["[J3061-12] Cybersecurity Policy"],
+      "r155_mapping": ["7.2.2.2(a)", "7.2.2.5"],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "sae_j3061",
+      "clause_id": "Annex A",
+      "title": "TARA Method Examples",
+      "guidance": "Provides example TARA methods. Methods described: (1) EVITA - uses attack trees and attack potential calculation; (2) HEAVENS - threat modeling with security levels; (3) TVRA - ETSI method adapted for vehicles; (4) Attack trees - hierarchical threat decomposition; (5) Misuse cases - extend use cases with attacker perspective. These methods influenced ISO 21434 Annex H. Choose a method that fits your organization's risk assessment experience.",
+      "work_products": [],
+      "r155_mapping": [],
+      "cal_relevant": 0
+    },
+    {
+      "standard": "autosar",
+      "clause_id": "Overview",
+      "title": "AUTOSAR Cybersecurity Overview",
+      "guidance": "AUTOSAR provides standardized security specifications for automotive ECUs. Key security components: (1) SecOC (Secure Onboard Communication) - message authentication for CAN, FlexRay, Ethernet; (2) Crypto Stack - standardized cryptographic services; (3) Key Manager - secure key storage and lifecycle; (4) Secure Boot - verified boot chain; (5) HSM integration - hardware security module abstraction. AUTOSAR security modules implement the technical controls required by ISO 21434 and R155. Understanding AUTOSAR is essential for ECU-level security implementation.",
+      "work_products": [],
+      "r155_mapping": ["7.3.4", "7.3.8"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "autosar",
+      "clause_id": "SecOC",
+      "title": "Secure Onboard Communication",
+      "guidance": "SecOC provides message authentication for in-vehicle networks. Key features: (1) Message Authentication Code (MAC) - protects message integrity and authenticity; (2) Freshness Value - prevents replay attacks; (3) Truncated MAC - balance security vs. bandwidth; (4) Key management interface - integration with Key Manager. Configuration: Define security profiles per PDU (Protocol Data Unit), specify MAC length (24-128 bits), configure freshness management strategy. SecOC is mandatory for safety-critical and security-relevant communication per R155 threat mitigations.",
+      "work_products": ["[AUTOSAR-01] SecOC Configuration", "[AUTOSAR-02] Security Profile Specification"],
+      "r155_mapping": ["7.3.4"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "autosar",
+      "clause_id": "CSM",
+      "title": "Crypto Service Manager",
+      "guidance": "CSM provides standardized cryptographic services. Capabilities: (1) Symmetric encryption - AES (128/256-bit); (2) Asymmetric operations - RSA, ECC; (3) Hash functions - SHA-256, SHA-384; (4) MAC generation - CMAC, HMAC; (5) Random number generation - interface to hardware RNG; (6) Key management - key derivation, wrapping. CSM abstracts crypto hardware (HSM, SHE) providing portability. Configuration requires defining crypto jobs, primitives, and key elements. Always use hardware-backed crypto for production.",
+      "work_products": ["[AUTOSAR-03] Crypto Service Configuration", "[AUTOSAR-04] Key Element Specification"],
+      "r155_mapping": ["7.3.8"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "autosar",
+      "clause_id": "KeyM",
+      "title": "Key Manager",
+      "guidance": "KeyM manages cryptographic keys throughout their lifecycle. Functions: (1) Key storage - secure storage in NVM or HSM; (2) Key derivation - derive session keys from master keys; (3) Key update - secure key rotation procedures; (4) Key verification - validate key integrity; (5) Certificate handling - X.509 certificate chain validation. Key hierarchy typically: Hardware Unique Key (HUK) → Master Key → Domain Keys → Session Keys. Design key hierarchy before implementation - changes are costly.",
+      "work_products": ["[AUTOSAR-05] Key Hierarchy Design", "[AUTOSAR-06] Key Lifecycle Procedures"],
+      "r155_mapping": ["7.3.8"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "autosar",
+      "clause_id": "SecureBoot",
+      "title": "Secure Boot",
+      "guidance": "Verified boot ensures only authenticated software runs on ECU. Boot chain: (1) Hardware Root of Trust - immutable bootloader in ROM; (2) First-stage bootloader - verified by hardware; (3) Second-stage bootloader - verified by first stage; (4) Application - verified by bootloader. Each stage verifies the next using digital signatures (RSA/ECDSA). Failure handling: fail to safe state, log attempt, alert. Secure boot is a fundamental control for R155 compliance - prevents unauthorized firmware execution.",
+      "work_products": ["[AUTOSAR-07] Secure Boot Design", "[AUTOSAR-08] Boot Chain Verification"],
+      "r155_mapping": ["7.3.4"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "autosar",
+      "clause_id": "IdsM",
+      "title": "Intrusion Detection System Manager",
+      "guidance": "IdsM coordinates intrusion detection across the vehicle. Capabilities: (1) Security event collection - gather events from network, ECUs; (2) Event qualification - filter and prioritize events; (3) Event reporting - send to security operations center; (4) Local response - trigger defensive actions. Event sources: SecOC authentication failures, anomalous CAN traffic, diagnostic abuse, secure boot failures. IdsM is key for R155 Article 7.2.2.2(g) - monitoring for cyber threats. Define security event taxonomy aligned with VSOC requirements.",
+      "work_products": ["[AUTOSAR-09] IDS Configuration", "[AUTOSAR-10] Security Event Taxonomy"],
+      "r155_mapping": ["7.2.2.2(g)", "7.3.7"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "autosar",
+      "clause_id": "Ethernet",
+      "title": "Automotive Ethernet Security",
+      "guidance": "Security for Ethernet-based in-vehicle networks. Standards: (1) MACsec (802.1AE) - Layer 2 encryption and authentication; (2) IPsec - Layer 3 security for IP traffic; (3) TLS - Transport layer security for TCP connections; (4) SOME/IP-SD security - service discovery protection. Automotive Ethernet enables higher bandwidth attacks than CAN. Implement network segmentation (VLANs), firewall rules between domains, and authentication for all cross-domain communication. Consider using MACsec for backbone traffic.",
+      "work_products": ["[AUTOSAR-11] Ethernet Security Architecture", "[AUTOSAR-12] Network Segmentation Design"],
+      "r155_mapping": ["7.3.4"],
+      "cal_relevant": 1
+    },
+    {
+      "standard": "autosar",
+      "clause_id": "Diagnostics",
+      "title": "Secure Diagnostics",
+      "guidance": "Security for UDS (Unified Diagnostic Services). Key concerns: (1) Authentication - SecurityAccess (0x27) with strong algorithms; (2) Authorization - restrict services by authentication level; (3) Secure boot unlock - controlled access to flash programming; (4) Diagnostic session management - timeout, logout. Common attacks target diagnostics for firmware extraction, calibration theft, odometer manipulation. Implement strong seed/key algorithms, rate limiting, and logging. Post-production diagnostic access is a key R155 threat vector.",
+      "work_products": ["[AUTOSAR-13] Diagnostic Security Specification"],
+      "r155_mapping": ["7.3.4"],
       "cal_relevant": 1
     }
   ]
