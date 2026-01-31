@@ -1,6 +1,7 @@
 {
   "name": "@ansvar/automotive-cybersecurity-mcp",
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "mcpName": "io.github.Ansvar-Systems/automotive-cybersecurity",
   "description": "MCP server for automotive cybersecurity regulations, standards, and TARA methodology",
   "type": "module",
   "main": "dist/index.js",
