@@ -236,21 +236,40 @@ What automotive cybersecurity sources are available?
 
 Claude should use the `list_sources` tool and show R155, R156, and ISO 21434.
 
-## What You Can Do Right Now (Phase 1)
+## What's Included
 
-Even with sample data, you can:
+**Complete UNECE Regulations:**
+- ✅ **UNECE R155** - All 17 items (12 articles + 5 annexes) including full Annex 5 threat catalog
+- ✅ **UNECE R156** - All 16 items (12 articles + 4 annexes) for software update management
+- ✅ **Full-text search** - Sub-millisecond queries across 294KB of authoritative regulation text
 
-✅ **Test the workflow** - See how AI-powered regulatory search works
-✅ **Validate the concept** - Confirm this solves your use case
-✅ **Explore the tools** - Try all 3 MCP tools (list, get, search)
-✅ **Evaluate performance** - Experience sub-millisecond query speed
-✅ **See real examples** - R155 Article 7.2.2.2 and ISO 21434 Clause 9.3
-✅ **Integrate your workflows** - Build automation before full content arrives
-✅ **Provide feedback** - Shape Phase 2 development priorities
+**ISO 21434 (Limited):**
+- ⚠️ **Clause 9.3 only** - Vulnerability analysis guidance
+- 📋 **Coming in Phase 2** - Comprehensive guidance for 30+ key clauses (Q1 2026)
 
-⚠️ **Phase 1 Limitation:** Only 2 sample requirements included. Full content (30+ R155 articles, 50+ ISO clauses) coming in Phase 2 (Q1 2026).
+**Not Yet Included:**
+- ❌ Cross-framework mappings (R155 ↔ ISO 21434)
+- ❌ TARA methodology and threat scenario library
+- ❌ VDA TISAX, SAE J3061, AUTOSAR guidance
+- ❌ Work product templates and export formats
 
-**Early Adopter Benefit:** Set up now, automatically get full content when v0.2.0 releases (just `npm update`).
+### Content Inventory
+
+| Source | Items | Content | Size |
+|--------|-------|---------|------|
+| **UNECE R155** | 17 | Articles 1-12, Annexes 1-5 | 223KB |
+| **UNECE R156** | 16 | Articles 1-12, Annexes 1-4 | 64KB |
+| **ISO 21434** | 1 | Clause 9.3 (Vulnerability Analysis) | ~2KB |
+| **Total** | **34** | Complete R155/R156, partial ISO 21434 | **~289KB** |
+
+**Key R155 Content:**
+- Article 7: Complete CSMS specifications (largest article, ~22KB)
+- Annex 5: Full threat catalog with 70+ threat scenarios (~148KB)
+- Annexes 1-4: Communication forms, approval marks, certificates
+
+**Key R156 Content:**
+- Article 7: Complete SUMS requirements
+- Annexes 1-4: All approval documentation templates
 
 ## Available Tools
 
@@ -270,7 +289,7 @@ List available automotive cybersecurity regulations and standards.
 }
 ```
 
-**Returns (Phase 1 sample data):**
+**Returns:**
 ```json
 {
   "sources": [
@@ -702,7 +721,7 @@ npm test
 ### UNECE Regulations (R155/R156)
 - **License:** Public domain (UN documents)
 - **Source:** [UNECE WP.29](https://unece.org/transport/vehicle-regulations)
-- **Status in MCP:** Sample/subset data (Phase 1)
+- **Status:** Complete R155/R156 Revision 2 (all articles and annexes)
 
 ### ISO 21434
 - **License:** Paid standard (copyright ISO)
@@ -731,8 +750,8 @@ Contributions welcome! Please:
 ### Is this legally valid for compliance?
 **Yes, for reference.** The regulations (R155/R156) are public domain. However, always verify critical compliance decisions with the official source documents. This tool helps you work faster, not replace your judgment.
 
-### Why only sample data in Phase 1?
-**Speed to market.** We prioritized building rock-solid infrastructure (database, search, testing) first. Phase 2 (Q1 2026) focuses on content expansion. You benefit from a stable foundation that won't need breaking changes.
+### Why is ISO 21434 limited to one clause?
+**Content licensing and scope.** ISO 21434 is a copyrighted standard—we can only include expert guidance summaries, not the full text. Phase 2 (Q1 2026) will expand to 30+ key clauses with practical implementation guidance. R155/R156 regulations are public domain and fully included.
 
 ### Can I use this for paid client work?
 **Yes.** Apache 2.0 license allows commercial use. Many consultants use this to speed up their R155/ISO 21434 advisory work.
