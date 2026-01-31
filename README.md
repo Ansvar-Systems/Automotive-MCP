@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![CI](https://github.com/Ansvar-Systems/Automotive-MCP/actions/workflows/ci.yml/badge.svg)](https://github.com/Ansvar-Systems/Automotive-MCP/actions/workflows/ci.yml)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue)](https://www.typescriptlang.org/)
-[![Tests](https://img.shields.io/badge/tests-91%20passed-brightgreen)](#)
+[![Tests](https://img.shields.io/badge/tests-105%20passed-brightgreen)](#)
 [![Database](https://img.shields.io/badge/database-620KB-orange)](#)
 
 **Stop wasting hours searching through PDF regulations.** Ask Claude about automotive cybersecurity requirements in natural language and get instant, accurate answers with source references.
@@ -127,14 +127,14 @@ The server uses a read-only SQLite database with full-text search (FTS5) to prov
 
 ## Features
 
-### Current Release (v0.1.0) ✅
+### Current Release (v1.0.0) ✅
 
 **Production Infrastructure:**
 - ✅ **5 core tools** - `list_sources`, `get_requirement`, `search_requirements`, `list_work_products`, `export_compliance_matrix`
-- ✅ **SQLite database** - FTS5 full-text search with BM25 ranking (620KB)
+- ✅ **SQLite database** - FTS5 full-text search with BM25 ranking (~360KB)
 - ✅ **MCP protocol** - Full stdio transport support
 - ✅ **Type-safe API** - TypeScript with strict mode
-- ✅ **Comprehensive tests** - 91 tests, 100% pass rate
+- ✅ **Comprehensive tests** - 105 tests, 100% pass rate
 - ✅ **Performance** - Sub-millisecond queries (<1ms avg)
 
 **Complete Content:**
@@ -153,10 +153,9 @@ The server uses a read-only SQLite database with full-text search (FTS5) to prov
 
 ### Future Enhancements 🚀
 
-- 📋 Cross-framework mappings tool (query R155 ↔ ISO 21434 relationships)
 - 📋 TARA methodology tools and threat scenario library
 - 📋 Type approval checklist generation
-- 📋 Work products export (ReqIF, CSV, Markdown)
+- 📋 ReqIF export format for PLM integration
 
 ## Installation
 
@@ -476,7 +475,7 @@ This MCP server is built to production standards:
 
 - ✅ **105 automated tests** - 100% pass rate across all test suites
 - ✅ **Type-safe** - Strict TypeScript with comprehensive type definitions
-- ✅ **Fast queries** - 0.05ms average (200x faster than 10ms target)
+- ✅ **Fast queries** - <2ms average per query
 - ✅ **Secure** - Read-only database, SQL injection protection
 - ✅ **MCP compliant** - Verified with MCP protocol testing
 - ✅ **Well-tested** - Unit, integration, and manual testing complete
@@ -838,8 +837,8 @@ Contributions welcome! Please:
 ### Is this legally valid for compliance?
 **Yes, for reference.** The regulations (R155/R156) are public domain. However, always verify critical compliance decisions with the official source documents. This tool helps you work faster, not replace your judgment.
 
-### Why is ISO 21434 limited to one clause?
-**Content licensing and scope.** ISO 21434 is a copyrighted standard—we can only include expert guidance summaries, not the full text. Phase 2 (Q1 2026) will expand to 30+ key clauses with practical implementation guidance. R155/R156 regulations are public domain and fully included.
+### How much ISO 21434 content is included?
+**25 clauses with expert guidance.** ISO 21434 is copyrighted—we include clause titles, expert guidance summaries, work products, and R155 mappings (not full text). This covers all major clauses (5-15) plus key annexes. R155/R156 regulations are public domain and fully included.
 
 ### Can I use this for paid client work?
 **Yes.** Apache 2.0 license allows commercial use. Many consultants use this to speed up their R155/ISO 21434 advisory work.
@@ -850,11 +849,11 @@ Contributions welcome! Please:
 ### Will this work with Claude Pro / Claude API?
 **Claude Desktop only for now.** MCP is currently supported in Claude Desktop. Once Anthropic adds MCP support to web/API, this will work there too (no changes needed).
 
-### How do I get Phase 2 updates?
-**Automatic.** If you install via npm/npx, running `npm update -g @ansvar/automotive-cybersecurity-mcp` (or just restarting Claude Desktop with npx) will get the latest version with full content.
+### How do I get updates?
+**Automatic.** If you install via npm/npx, running `npm update -g @ansvar/automotive-cybersecurity-mcp` (or just restarting Claude Desktop with npx) will get the latest version. v1.0.0 includes all Phase 1 & 2 features.
 
 ### Can I add my own company's interpretations?
-**Yes (future).** Phase 4 roadmap includes custom guidance/notes. For now, you can fork the repo and modify `data/seed/*.json` files to add internal notes.
+**Yes.** Fork the repo and modify `data/seed/*.json` files to add internal notes, then rebuild the database with `npm run build:db`.
 
 ### Is my data sent anywhere?
 **No.** Everything runs locally on your machine. The database is read-only SQLite. No network calls, no telemetry, no data collection.
@@ -869,11 +868,12 @@ For issues, questions, or contributions:
 ## Performance & Statistics
 
 **Current Implementation:**
-- **Code:** 1,839 lines TypeScript (9 source files)
-- **Tests:** 91 test cases (100% passing)
-- **Database:** 620KB SQLite with FTS5 indexes
-- **Content:** 33 regulation items (294KB of authoritative text)
-- **Query Speed:** <1ms average (sub-millisecond)
+- **Code:** ~2,000 lines TypeScript (10 source files)
+- **Tests:** 105 test cases (100% passing)
+- **Database:** ~360KB SQLite with FTS5 indexes
+- **Content:** 99 items (33 regulation + 68 standard clauses)
+- **Mappings:** 87 bidirectional R155 ↔ ISO 21434 mappings
+- **Query Speed:** <2ms average
 - **Build Time:** <500ms for full database rebuild
 - **Dependencies:** MCP SDK + better-sqlite3 only
 
@@ -901,23 +901,19 @@ For issues, questions, or contributions:
 
 ## Roadmap
 
-### ✅ Phase 1 (Complete - v0.1.0)
+### ✅ Phase 1 & 2 (Complete - v1.0.0)
 - ✅ TypeScript MCP server with stdio transport
 - ✅ SQLite database with FTS5 full-text search
-- ✅ 3 core tools: list_sources, get_requirement, search_requirements
+- ✅ 5 core tools: list_sources, get_requirement, search_requirements, list_work_products, export_compliance_matrix
 - ✅ **Complete R155/R156 regulations** - All 33 items (articles + annexes)
+- ✅ **ISO 21434 guidance** - 25 clauses with expert guidance
+- ✅ **Cross-framework mappings** - 87 bidirectional R155 ↔ ISO 21434 mappings
+- ✅ **Work products tool** - ISO 21434 work product requirements by clause/phase
+- ✅ **Global standards** - VDA TISAX, SAE J3061, AUTOSAR, Chinese GB/T
 - ✅ Enterprise CI/CD with security scanning
-- ✅ Comprehensive testing (91 tests, 100% pass rate)
-- ✅ Production-ready infrastructure
-- ✅ Complete documentation suite
+- ✅ Comprehensive testing (105 tests, 100% pass rate)
 
-### 🚀 Phase 2 (Next - Q1 2026) - ISO 21434 & Mappings
-- [ ] **ISO 21434 guidance** - Expert guidance for 30+ key clauses
-- [ ] **Cross-framework mappings** - R155 ↔ ISO 21434 mappings
-- [ ] **Work products tool** - ISO 21434 work product requirements
-- [ ] **Enhanced search** - Multi-source relevance ranking
-
-### 📋 Phase 3 (Q2 2026) - TARA Methodology
+### 📋 Phase 3 (Next - Q2 2026) - TARA Methodology
 - [ ] **TARA guidance tool** - Threat analysis and risk assessment methodology
 - [ ] **Threat scenario library** - 20+ automotive threat scenarios
 - [ ] **Attack feasibility ratings** - ISO 21434 Annex G methodology
@@ -927,7 +923,7 @@ For issues, questions, or contributions:
 - [ ] **Type approval checklist** - R155/R156 audit preparation
 - [ ] **Evidence generation** - Compliance documentation
 - [ ] **Gap analysis** - Compare implementation vs requirements
-- [ ] **Change tracking** - Monitor regulation updates
+- [ ] **ReqIF export** - PLM system integration
 
 ## Acknowledgments
 
@@ -937,53 +933,41 @@ For issues, questions, or contributions:
 
 ## Version History
 
-### 0.1.0 (2026-01-29) - Production Release with Complete R155/R156
+### 1.0.0 (2026-01-31) - Production-Ready with Global Market Coverage
 
-**🎉 Production-Ready Release - Complete Regulatory Content**
+**🎉 Major Release - Complete Automotive Compliance Platform**
 
 **Features:**
-- ✅ 3 core MCP tools fully implemented and tested
-- ✅ SQLite database with FTS5 full-text search (BM25 ranking, 620KB)
+- ✅ 5 MCP tools fully implemented and tested
+- ✅ SQLite database with FTS5 full-text search (~360KB)
+- ✅ 87 bidirectional cross-framework mappings (ISO 21434 ↔ R155)
+- ✅ Work products tool with lifecycle phase filtering
+- ✅ Compliance matrix export (CSV/Markdown)
+- ✅ 105 tests, 100% pass rate
+
+**Content (99 items across 5 standards + 2 regulations):**
+- **UNECE R155**: 17 items - Complete with Annex 5 threat catalog
+- **UNECE R156**: 16 items - Complete SUMS requirements
+- **ISO 21434**: 25 clauses - Expert guidance, work products, R155 mappings
+- **VDA TISAX**: 12 clauses - AL1-AL3 assessment levels
+- **SAE J3061**: 7 clauses - Legacy guidebook compatibility
+- **AUTOSAR**: 12 modules - SecOC, CSM, KeyM, IdsM, etc.
+- **Chinese GB/T**: 12 clauses - GB/T 40857, 40856, 40855, GB 44495, CCC
+
+**Global Market Support:**
+- 🇪🇺 EU: R155/R156, ISO 21434, TISAX
+- 🇺🇸 US: SAE J3061, ISO 21434
+- 🇨🇳 China: GB/T standards, SM2/SM3/SM4 crypto, CCC certification
+
+---
+
+### 0.1.0 (2026-01-29) - Initial Release
+
+**Features:**
+- ✅ 3 core MCP tools (list_sources, get_requirement, search_requirements)
 - ✅ Complete UNECE R155 and R156 regulation text
-- ✅ TypeScript with strict type checking
-- ✅ Comprehensive test suite (91 tests, 100% pass rate)
+- ✅ ISO 21434 basic clause structure
 - ✅ Enterprise CI/CD with security scanning
-- ✅ Read-only database with security protections
-- ✅ MCP protocol compliance verified
-
-**Content:**
-- **UNECE R155**: 17 items (12 articles + 5 annexes) - 148KB threat catalog in Annex 5
-- **UNECE R156**: 16 items (12 articles + 4 annexes) - Complete SUMS requirements
-- **ISO 21434**: 25 clauses with expert guidance, R155 mappings, and work products
-- **Total**: 33 items, 294KB of authoritative UNECE text
-
-**CI/CD:**
-- GitHub Actions workflows (CI, npm publish, CodeQL)
-- Gitleaks secret scanning
-- Multi-platform testing (Ubuntu/macOS/Windows)
-- Automated npm publishing with provenance
-- Dependabot dependency updates
-
-**Performance:**
-- Sub-millisecond query speed (<1ms avg)
-- 620KB database with complete R155/R156 content
-- Fast build times (<500ms)
-
-**Documentation:**
-- Comprehensive README with usage examples
-- QUICK_START.md (5-minute guide)
-- docs/USAGE_GUIDE.md (scenarios & ROI)
-- docs/CI_CD.md (workflow documentation)
-- R155_R156_INTEGRATION_SUMMARY.md (technical details)
-
-**Data Attribution:**
-- R155/R156 content sourced from [EU Compliance MCP](https://github.com/Ansvar-Systems/EU_compliance_MCP)
-- Apache 2.0 license compatible
-
-**Next Steps:**
-- Phase 2: ISO 21434 comprehensive guidance (30+ clauses)
-- Cross-framework mappings (R155 ↔ ISO 21434)
-- TARA methodology tools
 
 ## Acknowledgments
 
