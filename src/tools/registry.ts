@@ -16,7 +16,8 @@ import {
 import { listSources } from './list.js';
 import { getRequirement } from './get.js';
 import { searchRequirements } from './search.js';
-import type { ListSourcesInput, GetRequirementInput, SearchRequirementsInput } from '../types/index.js';
+import { listWorkProducts } from './workproducts.js';
+import type { ListSourcesInput, GetRequirementInput, SearchRequirementsInput, ListWorkProductsInput } from '../types/index.js';
 
 /**
  * Tool definition with name, description, input schema, and handler function
@@ -117,6 +118,31 @@ const TOOLS: ToolDefinition[] = [
     handler: (db: Database.Database, args: unknown) => {
       const input = args as SearchRequirementsInput;
       return searchRequirements(db, input);
+    },
+  },
+  {
+    name: 'list_work_products',
+    description:
+      'List ISO 21434 work products (deliverables) required for cybersecurity engineering. Shows which artifacts to produce for each clause, whether CAL-dependent, and which R155 requirements they help satisfy. Filter by specific clause or lifecycle phase.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        clause_id: {
+          type: 'string',
+          description:
+            'Filter to a specific ISO 21434 clause (e.g., "15" for TARA, "6" for cybersecurity case). Omit for all clauses.',
+        },
+        phase: {
+          type: 'string',
+          enum: ['organizational', 'project', 'continual', 'concept', 'development', 'validation', 'production', 'operations', 'decommissioning', 'tara'],
+          description:
+            'Filter by lifecycle phase. Options: organizational, project, continual, concept, development, validation, production, operations, decommissioning, tara.',
+        },
+      },
+    },
+    handler: (db: Database.Database, args: unknown) => {
+      const input = args as ListWorkProductsInput;
+      return listWorkProducts(db, input);
     },
   },
 ];

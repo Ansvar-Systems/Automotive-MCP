@@ -158,6 +158,30 @@ export interface GetWorkProductsInput {
   iso_clause?: string;
 }
 
+export interface ListWorkProductsInput {
+  clause_id?: string;
+  phase?: string;
+}
+
+export interface WorkProductItem {
+  id: string | null;
+  name: string;
+  clause_id: string;
+  clause_title: string;
+  cal_relevant: boolean;
+  r155_refs: string[];
+}
+
+export interface ListWorkProductsOutput {
+  work_products: WorkProductItem[];
+  summary: {
+    total_work_products: number;
+    clauses_covered: number;
+    cal_relevant_count: number;
+  };
+  phases: string[];
+}
+
 export interface GetTypeApprovalChecklistInput {
   regulation: string;
   vehicle_category?: string;
