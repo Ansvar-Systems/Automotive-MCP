@@ -38,3 +38,4 @@ coverage/
 .mcpregistry_*
 .playwright-mcp/
 .serena/
+.vercel
