@@ -1,0 +1,50 @@
+{
+  "manifest_version": "0.3",
+  "name": "automotive-cybersecurity-mcp",
+  "display_name": "Automotive Cybersecurity MCP Server",
+  "version": "1.0.1",
+  "description": "MCP server for automotive cybersecurity regulations, standards, and TARA methodology",
+  "author": {
+    "name": "Ansvar Systems",
+    "email": "hello@ansvar.eu",
+    "url": "https://ansvar.eu"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ansvar-Systems/Automotive-MCP"
+  },
+  "homepage": "https://ansvar.eu",
+  "keywords": [
+    "mcp",
+    "automotive",
+    "cybersecurity",
+    "unece",
+    "r155",
+    "r156",
+    "iso21434",
+    "tara"
+  ],
+  "server": {
+    "type": "node",
+    "entry_point": "dist/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/dist/index.js"],
+      "env": {}
+    }
+  },
+  "tools": [
+    { "name": "list_sources" },
+    { "name": "get_requirement" },
+    { "name": "search_requirements" },
+    { "name": "list_work_products" },
+    { "name": "export_compliance_matrix" }
+  ],
+  "compatibility": {
+    "platforms": ["darwin", "win32", "linux"],
+    "runtimes": {
+      "node": ">=18.0.0"
+    }
+  }
+}
