@@ -1,4 +1,4 @@
-import type Database from 'better-sqlite3';
+import type Database from '@ansvar/mcp-sqlite';
 import type { ExportComplianceMatrixInput, ExportComplianceMatrixOutput } from '../types/index.js';
 
 /**
@@ -15,7 +15,7 @@ import type { ExportComplianceMatrixInput, ExportComplianceMatrixOutput } from '
  * @returns Compliance matrix in requested format
  */
 export function exportComplianceMatrix(
-  db: Database.Database,
+  db: InstanceType<typeof Database>,
   input: ExportComplianceMatrixInput
 ): ExportComplianceMatrixOutput {
   const { regulation = 'r155', format = 'markdown', include_guidance = false } = input;

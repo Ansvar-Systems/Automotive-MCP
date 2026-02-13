@@ -6,7 +6,7 @@
  */
 
 import type { Server } from '@modelcontextprotocol/sdk/server/index.js';
-import type Database from 'better-sqlite3';
+import type Database from '@ansvar/mcp-sqlite';
 import {
   CallToolRequest,
   CallToolResult,
@@ -31,7 +31,7 @@ interface ToolDefinition {
     properties: Record<string, unknown>;
     required?: string[];
   };
-  handler: (db: Database.Database, args: unknown) => unknown;
+  handler: (db: InstanceType<typeof Database>, args: unknown) => unknown;
 }
 
 /**
@@ -53,7 +53,7 @@ const TOOLS: ToolDefinition[] = [
         },
       },
     },
-    handler: (db: Database.Database, args: unknown) => {
+    handler: (db: InstanceType<typeof Database>, args: unknown) => {
       const input = args as ListSourcesInput;
       return listSources(db, input);
     },
@@ -83,7 +83,7 @@ const TOOLS: ToolDefinition[] = [
       },
       required: ['source', 'reference'],
     },
-    handler: (db: Database.Database, args: unknown) => {
+    handler: (db: InstanceType<typeof Database>, args: unknown) => {
       const input = args as GetRequirementInput;
       return getRequirement(db, input);
     },
@@ -116,7 +116,7 @@ const TOOLS: ToolDefinition[] = [
       },
       required: ['query'],
     },
-    handler: (db: Database.Database, args: unknown) => {
+    handler: (db: InstanceType<typeof Database>, args: unknown) => {
       const input = args as SearchRequirementsInput;
       return searchRequirements(db, input);
     },
@@ -141,7 +141,7 @@ const TOOLS: ToolDefinition[] = [
         },
       },
     },
-    handler: (db: Database.Database, args: unknown) => {
+    handler: (db: InstanceType<typeof Database>, args: unknown) => {
       const input = args as ListWorkProductsInput;
       return listWorkProducts(db, input);
     },
@@ -172,7 +172,7 @@ const TOOLS: ToolDefinition[] = [
         },
       },
     },
-    handler: (db: Database.Database, args: unknown) => {
+    handler: (db: InstanceType<typeof Database>, args: unknown) => {
       const input = args as ExportComplianceMatrixInput;
       return exportComplianceMatrix(db, input);
     },
@@ -185,7 +185,7 @@ const TOOLS: ToolDefinition[] = [
  * @param server - MCP server instance
  * @param db - SQLite database connection
  */
-export function registerTools(server: Server, db: Database.Database): void {
+export function registerTools(server: Server, db: InstanceType<typeof Database>): void {
   // Register ListToolsRequest handler
   server.setRequestHandler(ListToolsRequestSchema, async () => ({
     tools: TOOLS.map((tool) => ({

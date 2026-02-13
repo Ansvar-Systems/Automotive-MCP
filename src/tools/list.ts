@@ -1,4 +1,4 @@
-import type Database from 'better-sqlite3';
+import type Database from '@ansvar/mcp-sqlite';
 import type { ListSourcesInput, SourceInfo } from '../types/index.js';
 
 /**
@@ -8,7 +8,7 @@ import type { ListSourcesInput, SourceInfo } from '../types/index.js';
  * @param input - Filter options (source_type)
  * @returns Array of source information objects
  */
-export function listSources(db: Database.Database, input: ListSourcesInput): SourceInfo[] {
+export function listSources(db: InstanceType<typeof Database>, input: ListSourcesInput): SourceInfo[] {
   const { source_type = 'all' } = input;
   const sources: SourceInfo[] = [];
 

@@ -1,4 +1,4 @@
-import type Database from 'better-sqlite3';
+import type Database from '@ansvar/mcp-sqlite';
 import type { ListWorkProductsInput, ListWorkProductsOutput, WorkProductItem } from '../types/index.js';
 
 /**
@@ -11,7 +11,7 @@ import type { ListWorkProductsInput, ListWorkProductsOutput, WorkProductItem } f
  * @param input - Optional filters for clause or lifecycle phase
  * @returns List of work products with clause references and R155 mappings
  */
-export function listWorkProducts(db: Database.Database, input: ListWorkProductsInput): ListWorkProductsOutput {
+export function listWorkProducts(db: InstanceType<typeof Database>, input: ListWorkProductsInput): ListWorkProductsOutput {
   const { clause_id, phase } = input;
 
   // Define lifecycle phases for filtering

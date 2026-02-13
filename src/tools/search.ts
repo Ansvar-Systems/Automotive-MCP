@@ -1,4 +1,4 @@
-import type Database from 'better-sqlite3';
+import type Database from '@ansvar/mcp-sqlite';
 import type { SearchRequirementsInput, SearchResult } from '../types/index.js';
 
 /**
@@ -40,7 +40,7 @@ function sanitizeQuery(query: string): string {
   return trimmed;
 }
 
-export function searchRequirements(db: Database.Database, input: SearchRequirementsInput): SearchResult[] {
+export function searchRequirements(db: InstanceType<typeof Database>, input: SearchRequirementsInput): SearchResult[] {
   const { query, sources, limit = 10 } = input;
 
   // Return empty array for empty queries

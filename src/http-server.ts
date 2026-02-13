@@ -13,7 +13,7 @@ import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import { createServer, IncomingMessage, ServerResponse } from 'node:http';
 import { randomUUID } from 'crypto';
-import Database from 'better-sqlite3';
+import Database from '@ansvar/mcp-sqlite';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { registerTools } from './tools/registry.js';
@@ -30,7 +30,7 @@ const DB_PATH =
   join(__dirname, '..', 'data', 'automotive.db');
 
 // Database connection
-function getDatabase(): Database.Database {
+function getDatabase(): InstanceType<typeof Database> {
   try {
     return new Database(DB_PATH, { readonly: true });
   } catch (error) {

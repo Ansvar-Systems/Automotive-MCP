@@ -1,4 +1,4 @@
-import type Database from 'better-sqlite3';
+import type Database from '@ansvar/mcp-sqlite';
 import type { GetRequirementInput, GetRequirementOutput, MappingReference } from '../types/index.js';
 
 /**
@@ -14,7 +14,7 @@ import type { GetRequirementInput, GetRequirementOutput, MappingReference } from
  * @returns Requirement details with text/guidance and optional mappings
  * @throws Error if source or reference is not found
  */
-export function getRequirement(db: Database.Database, input: GetRequirementInput): GetRequirementOutput {
+export function getRequirement(db: InstanceType<typeof Database>, input: GetRequirementInput): GetRequirementOutput {
   const { source, reference, include_mappings = false } = input;
 
   try {
