@@ -12,18 +12,21 @@
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import { createServer, IncomingMessage, ServerResponse } from 'node:http';
-import { randomUUID } from 'crypto';
+import { createHash, randomUUID } from 'crypto';
+import { readFileSync, statSync } from 'fs';
 import Database from '@ansvar/mcp-sqlite';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { registerTools } from './tools/registry.js';
+import type { AboutContext } from './tools/about.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Configuration
 const SERVER_NAME = 'automotive-cybersecurity-mcp';
-const SERVER_VERSION = '1.0.1';
+const PKG_PATH = join(__dirname, '..', 'package.json');
+const pkgVersion: string = JSON.parse(readFileSync(PKG_PATH, 'utf-8')).version;
 const PORT = parseInt(process.env.PORT || '3000', 10);
 const DB_PATH =
   process.env.AUTOMOTIVE_CYBERSEC_DB_PATH ||
@@ -38,6 +41,21 @@ function getDatabase(): InstanceType<typeof Database> {
   }
 }
 
+function computeAboutContext(): AboutContext {
+  let fingerprint = 'unknown';
+  let dbBuilt = new Date().toISOString();
+  try {
+    const dbBuffer = readFileSync(DB_PATH);
+    fingerprint = createHash('sha256').update(dbBuffer).digest('hex').slice(0, 12);
+    const dbStat = statSync(DB_PATH);
+    dbBuilt = dbStat.mtime.toISOString();
+  } catch {
+    // Non-fatal
+  }
+  return { version: pkgVersion, fingerprint, dbBuilt };
+}
+
+const aboutContext = computeAboutContext();
 const db = getDatabase();
 
 // Session management
@@ -50,7 +68,7 @@ function createMCPServer(): Server {
   const server = new Server(
     {
       name: SERVER_NAME,
-      version: SERVER_VERSION,
+      version: pkgVersion,
     },
     {
       capabilities: {
@@ -59,8 +77,8 @@ function createMCPServer(): Server {
     },
   );
 
-  // Register all tools via shared registry
-  registerTools(server, db);
+  // Register all tools via shared registry (with about context)
+  registerTools(server, db, aboutContext);
 
   return server;
 }
@@ -74,7 +92,7 @@ function handleHealthCheck(_req: IncomingMessage, res: ServerResponse): void {
     JSON.stringify({
       status: 'ok',
       server: SERVER_NAME,
-      version: SERVER_VERSION,
+      version: pkgVersion,
     }),
   );
 }
@@ -205,7 +223,7 @@ const httpServer = createServer(async (req, res) => {
 
 // Start server
 httpServer.listen(PORT, () => {
-  console.log(`${SERVER_NAME} v${SERVER_VERSION} HTTP server listening on port ${PORT}`);
+  console.log(`${SERVER_NAME} v${pkgVersion} HTTP server listening on port ${PORT}`);
   console.log(`  Health: http://localhost:${PORT}/health`);
   console.log(`  MCP:    http://localhost:${PORT}/mcp`);
   console.log(`  DB:     ${DB_PATH}`);

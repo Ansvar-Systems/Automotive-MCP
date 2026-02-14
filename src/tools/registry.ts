@@ -18,6 +18,7 @@ import { getRequirement } from './get.js';
 import { searchRequirements } from './search.js';
 import { listWorkProducts } from './workproducts.js';
 import { exportComplianceMatrix } from './export.js';
+import { getAbout, type AboutContext } from './about.js';
 import type { ListSourcesInput, GetRequirementInput, SearchRequirementsInput, ListWorkProductsInput, ExportComplianceMatrixInput } from '../types/index.js';
 
 /**
@@ -179,16 +180,38 @@ const TOOLS: ToolDefinition[] = [
   },
 ];
 
+function createAboutTool(context: AboutContext): ToolDefinition {
+  return {
+    name: 'about',
+    description:
+      'Server metadata, dataset statistics, freshness, and provenance. ' +
+      'Call this to verify data coverage, currency, and content basis before relying on results.',
+    inputSchema: {
+      type: 'object',
+      properties: {},
+    },
+    handler: (db) => {
+      return getAbout(db, context);
+    },
+  };
+}
+
+export function buildTools(context: AboutContext): ToolDefinition[] {
+  return [...TOOLS, createAboutTool(context)];
+}
+
 /**
  * Register all tool handlers with the MCP server.
  *
  * @param server - MCP server instance
  * @param db - SQLite database connection
+ * @param context - Optional about context for metadata tool
  */
-export function registerTools(server: Server, db: InstanceType<typeof Database>): void {
+export function registerTools(server: Server, db: InstanceType<typeof Database>, context?: AboutContext): void {
+  const allTools = context ? buildTools(context) : TOOLS;
   // Register ListToolsRequest handler
   server.setRequestHandler(ListToolsRequestSchema, async () => ({
-    tools: TOOLS.map((tool) => ({
+    tools: allTools.map((tool) => ({
       name: tool.name,
       description: tool.description,
       inputSchema: tool.inputSchema,
@@ -200,7 +223,7 @@ export function registerTools(server: Server, db: InstanceType<typeof Database>)
     const { name, arguments: args } = request.params;
 
     // Find tool by name
-    const tool = TOOLS.find((t) => t.name === name);
+    const tool = allTools.find((t) => t.name === name);
 
     if (!tool) {
       return {
