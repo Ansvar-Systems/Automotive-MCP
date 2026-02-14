@@ -36,13 +36,60 @@ A Model Context Protocol (MCP) server that gives Claude direct access to UNECE R
 
 ## Quick Start
 
-**⚡ 30-Second Setup:**
+### Use Remotely (No Install Needed)
 
-Add to `~/.claude/claude_desktop_config.json`:
+> Connect directly to the hosted version — zero dependencies, nothing to install.
+
+**Endpoint:** `https://automotive-cybersecurity-mcp.vercel.app/mcp`
+
+| Client | How to Connect |
+|--------|---------------|
+| **Claude.ai** | Settings > Connectors > Add Integration > paste URL |
+| **Claude Code** | `claude mcp add automotive-cybersecurity --transport http https://automotive-cybersecurity-mcp.vercel.app/mcp` |
+| **Claude Desktop** | Add to config (see below) |
+| **GitHub Copilot** | Add to VS Code settings (see below) |
+
+**Claude Desktop** — add to `claude_desktop_config.json`:
+
 ```json
 {
   "mcpServers": {
-    "automotive": {
+    "automotive-cybersecurity": {
+      "type": "url",
+      "url": "https://automotive-cybersecurity-mcp.vercel.app/mcp"
+    }
+  }
+}
+```
+
+**GitHub Copilot** — add to VS Code `settings.json`:
+
+```json
+{
+  "github.copilot.chat.mcp.servers": {
+    "automotive-cybersecurity": {
+      "type": "http",
+      "url": "https://automotive-cybersecurity-mcp.vercel.app/mcp"
+    }
+  }
+}
+```
+
+### Use Locally (npm)
+
+```bash
+npx @ansvar/automotive-cybersecurity-mcp
+```
+
+**Claude Desktop** — add to `claude_desktop_config.json`:
+
+**macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+**Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "automotive-cybersecurity": {
       "command": "npx",
       "args": ["-y", "@ansvar/automotive-cybersecurity-mcp"]
     }
@@ -50,13 +97,18 @@ Add to `~/.claude/claude_desktop_config.json`:
 }
 ```
 
-Restart Claude Desktop, then ask: *"What does R155 Article 7 require?"*
+**Cursor / VS Code:**
 
-**📚 Documentation:**
-- **[QUICK_START.md](QUICK_START.md)** - 5-minute guide with examples
-- **[docs/USAGE_GUIDE.md](docs/USAGE_GUIDE.md)** - Complete usage scenarios & ROI
-- **[docs/CI_CD.md](docs/CI_CD.md)** - CI/CD workflows and npm publishing
-- **[R155_R156_INTEGRATION_SUMMARY.md](R155_R156_INTEGRATION_SUMMARY.md)** - Technical details
+```json
+{
+  "mcp.servers": {
+    "automotive-cybersecurity": {
+      "command": "npx",
+      "args": ["-y", "@ansvar/automotive-cybersecurity-mcp"]
+    }
+  }
+}
+```
 
 ## Usage Examples
 
