@@ -87,12 +87,22 @@ function createMCPServer(): Server {
  * Handle health check requests.
  */
 function handleHealthCheck(_req: IncomingMessage, res: ServerResponse): void {
-  res.writeHead(200, { 'Content-Type': 'application/json' });
+  let dbOk = false;
+  try {
+    db.prepare('SELECT 1').get();
+    dbOk = true;
+  } catch {
+    // DB not accessible
+  }
+
+  const status = dbOk ? 'ok' : 'degraded';
+  res.writeHead(dbOk ? 200 : 503, { 'Content-Type': 'application/json' });
   res.end(
     JSON.stringify({
-      status: 'ok',
+      status,
       server: SERVER_NAME,
       version: pkgVersion,
+      database: dbOk ? 'available' : 'unavailable',
     }),
   );
 }

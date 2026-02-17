@@ -1,0 +1,164 @@
+{
+  "$schema": "Golden contract tests for Automotive Cybersecurity MCP",
+  "version": "1.0.0",
+  "description": "These tests validate data accuracy by checking specific known data points against expected values. Minimum 10 tests required.",
+  "tests": [
+    {
+      "id": "GT-001",
+      "description": "R155 regulation metadata is correct",
+      "tool": "list_sources",
+      "input": { "source_type": "regulation" },
+      "assertions": [
+        { "path": "[0].id", "operator": "equals", "expected": "r155" },
+        { "path": "[0].version", "operator": "equals", "expected": "Revision 2" },
+        { "path": "[0].effective_date", "operator": "equals", "expected": "2024-07-07" }
+      ]
+    },
+    {
+      "id": "GT-002",
+      "description": "R156 regulation metadata is correct",
+      "tool": "list_sources",
+      "input": { "source_type": "regulation" },
+      "assertions": [
+        { "path": "[1].id", "operator": "equals", "expected": "r156" },
+        { "path": "[1].title", "operator": "equals", "expected": "Software Update and Software Updates Management System" }
+      ]
+    },
+    {
+      "id": "GT-003",
+      "description": "R155 Article 1 (Scope) has correct title and non-empty text",
+      "tool": "get_requirement",
+      "input": { "source": "r155", "reference": "1" },
+      "assertions": [
+        { "path": "title", "operator": "equals", "expected": "Scope" },
+        { "path": "text", "operator": "contains", "expected": "This Regulation applies to vehicles" },
+        { "path": "text", "operator": "not_empty" }
+      ]
+    },
+    {
+      "id": "GT-004",
+      "description": "R155 Article 7 (Specifications) contains CSMS requirements",
+      "tool": "get_requirement",
+      "input": { "source": "r155", "reference": "7" },
+      "assertions": [
+        { "path": "title", "operator": "equals", "expected": "Specifications" },
+        { "path": "text", "operator": "contains", "expected": "7.2.2.2" },
+        { "path": "text", "operator": "contains", "expected": "Cybersecurity Management System" },
+        { "path": "text", "operator": "min_length", "expected": 20000 }
+      ]
+    },
+    {
+      "id": "GT-005",
+      "description": "R155 has exactly 17 content items (12 articles + 5 annexes)",
+      "tool": "search_requirements",
+      "input": { "query": "vehicle", "sources": ["r155"], "limit": 50 },
+      "assertions": [
+        { "path": "results", "operator": "min_count", "expected": 1 }
+      ],
+      "db_validation": {
+        "query": "SELECT COUNT(*) as count FROM regulation_content WHERE regulation = 'r155'",
+        "expected": { "count": 17 }
+      }
+    },
+    {
+      "id": "GT-006",
+      "description": "R156 Article 7 contains SUMS requirements",
+      "tool": "get_requirement",
+      "input": { "source": "r156", "reference": "7" },
+      "assertions": [
+        { "path": "text", "operator": "contains", "expected": "Software" },
+        { "path": "text", "operator": "min_length", "expected": 5000 }
+      ]
+    },
+    {
+      "id": "GT-007",
+      "description": "ISO 21434 standard is listed with correct metadata",
+      "tool": "list_sources",
+      "input": { "source_type": "standard" },
+      "assertions": [
+        { "path": "[0].id", "operator": "equals", "expected": "iso_21434" },
+        { "path": "[0].version", "operator": "equals", "expected": "2021" }
+      ]
+    },
+    {
+      "id": "GT-008",
+      "description": "ISO 21434 Clause 5 (Organizational cybersecurity management) exists",
+      "tool": "get_requirement",
+      "input": { "source": "iso_21434", "reference": "5" },
+      "assertions": [
+        { "path": "title", "operator": "equals", "expected": "Organizational cybersecurity management" },
+        { "path": "guidance", "operator": "contains", "expected": "cybersecurity policy" }
+      ]
+    },
+    {
+      "id": "GT-009",
+      "description": "FTS search for 'cybersecurity management' returns relevant results",
+      "tool": "search_requirements",
+      "input": { "query": "cybersecurity management", "limit": 10 },
+      "assertions": [
+        { "path": "results", "operator": "min_count", "expected": 1 },
+        { "path": "results[0]", "operator": "has_key", "expected": "source" }
+      ]
+    },
+    {
+      "id": "GT-010",
+      "description": "Cross-framework mapping from ISO 21434 to R155 exists",
+      "tool": "get_requirement",
+      "input": { "source": "iso_21434", "reference": "5", "include_mappings": true },
+      "assertions": [
+        { "path": "maps_to", "operator": "min_count", "expected": 1 }
+      ]
+    },
+    {
+      "id": "GT-011",
+      "description": "Work products are listed for ISO 21434",
+      "tool": "list_work_products",
+      "input": {},
+      "assertions": [
+        { "path": "work_products", "operator": "min_count", "expected": 10 }
+      ]
+    },
+    {
+      "id": "GT-012",
+      "description": "Negative test: non-existent regulation returns empty/error",
+      "tool": "get_requirement",
+      "input": { "source": "nonexistent_regulation", "reference": "1" },
+      "assertions": [
+        { "path": "", "operator": "is_error_or_empty" }
+      ]
+    },
+    {
+      "id": "GT-013",
+      "description": "Export compliance matrix returns valid statistics",
+      "tool": "export_compliance_matrix",
+      "input": { "regulation": "r155", "format": "markdown" },
+      "assertions": [
+        { "path": "statistics.total_requirements", "operator": "greater_than", "expected": 0 },
+        { "path": "statistics.coverage_percent", "operator": "greater_than_or_equal", "expected": 0 },
+        { "path": "format", "operator": "equals", "expected": "markdown" }
+      ]
+    },
+    {
+      "id": "GT-014",
+      "description": "All 5 standards are present",
+      "tool": "list_sources",
+      "input": { "source_type": "standard" },
+      "assertions": [
+        { "path": "", "operator": "count", "expected": 5 }
+      ]
+    },
+    {
+      "id": "GT-015",
+      "description": "About tool returns valid metadata",
+      "tool": "about",
+      "input": {},
+      "assertions": [
+        { "path": "server.name", "operator": "equals", "expected": "Automotive Cybersecurity MCP" },
+        { "path": "dataset.jurisdiction", "operator": "equals", "expected": "International (UNECE) + ISO" },
+        { "path": "security.access_model", "operator": "equals", "expected": "read-only" },
+        { "path": "dataset.counts.regulations", "operator": "equals", "expected": 2 },
+        { "path": "dataset.counts.standards", "operator": "equals", "expected": 5 }
+      ]
+    }
+  ]
+}

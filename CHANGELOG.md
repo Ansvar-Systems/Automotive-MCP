@@ -7,6 +7,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-02-17
+
+### Added
+- `sources.yml` data provenance documentation for all data sources
+- Golden contract tests (`fixtures/golden-tests.json`) with 15 data accuracy tests
+- Drift detection hashes (`fixtures/golden-hashes.json`) for seed data integrity
+- `db_metadata` table in SQLite schema (schema_version, built_at, server_version)
+- `about` tool listed in `server.json` and `manifest.json` (was implemented but undocumented)
+- Security scanning: Semgrep SAST, Trivy vulnerability scan, Socket supply chain, OSSF Scorecard
+- Database connectivity check in health endpoints (returns 503 when DB unavailable)
+- Version field in Vercel health endpoint response
+
+### Fixed
+- Hardcoded version strings in `api/mcp.ts` now read dynamically from `package.json`
+- Division by zero in `export_compliance_matrix` markdown generator when total requirements is 0
+- `__dirname` undefined in `tests/r155-r156-completeness.test.ts` (ESM without `fileURLToPath`)
+- `better-sqlite3` now explicitly declared in `devDependencies` for build script and tests
+- Dockerfile removed stale `npm rebuild better-sqlite3` (runtime uses `@ansvar/mcp-sqlite` WASM)
+- `vercel.json` `includeFiles` glob now matches both npm and pnpm `node_modules` layouts
+
+### Changed
+- Health endpoints return structured `{status, server, version, database}` response
+- CI security audit job now fails on high/critical vulnerabilities (removed `continue-on-error`)
+
+## [1.0.1] - 2026-02-01
+
+### Added
+- `list_work_products` tool for ISO 21434 work products by clause or lifecycle phase
+- `export_compliance_matrix` tool for R155/R156-to-ISO-21434 traceability (Markdown + CSV)
+- `about` tool for server metadata, dataset statistics, fingerprint, and provenance
+- Work products table with 40+ ISO 21434 deliverables
+- Cross-framework mapping table (R155 to ISO 21434)
+- Streamable HTTP transport for Docker deployment
+- Vercel serverless deployment support
+- Docker support with health check
+- npm provenance publishing
+- Dependabot configuration
+
+### Changed
+- Migrated SQLite runtime from `better-sqlite3` to `@ansvar/mcp-sqlite` (WASM, Vercel-compatible)
+
 ## [0.1.0] - 2026-01-29
 
 ### Added
@@ -58,6 +99,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ISO 21434 Clause 9.3 guidance
 - Basic testing framework
 
-[Unreleased]: https://github.com/Ansvar-Systems/Automotive-MCP/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/Ansvar-Systems/Automotive-MCP/compare/v1.0.2...HEAD
+[1.0.2]: https://github.com/Ansvar-Systems/Automotive-MCP/compare/v1.0.1...v1.0.2
+[1.0.1]: https://github.com/Ansvar-Systems/Automotive-MCP/compare/v0.1.0...v1.0.1
 [0.1.0]: https://github.com/Ansvar-Systems/Automotive-MCP/releases/tag/v0.1.0
 [0.0.1]: https://github.com/Ansvar-Systems/Automotive-MCP/releases/tag/v0.0.1

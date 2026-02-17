@@ -1,0 +1,17 @@
+name: Socket Security
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  socket:
+    name: Socket Supply Chain
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: SocketDev/socket-security-action@v1
+        with:
+          api_key: ${{ secrets.SOCKET_API_KEY }}

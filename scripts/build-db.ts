@@ -200,6 +200,15 @@ CREATE TABLE IF NOT EXISTS framework_mappings (
 
 CREATE INDEX IF NOT EXISTS idx_mappings_source ON framework_mappings(source_type, source_id, source_ref);
 CREATE INDEX IF NOT EXISTS idx_mappings_target ON framework_mappings(target_type, target_id, target_ref);
+
+-- ============================================================================
+-- Database Metadata
+-- ============================================================================
+
+CREATE TABLE IF NOT EXISTS db_metadata (
+  key TEXT PRIMARY KEY,
+  value TEXT NOT NULL
+);
 `;
 
 /**
@@ -398,6 +407,16 @@ function buildDatabase() {
     console.log('\nLoading seed data...');
     loadRegulations(db);
     loadStandards(db);
+
+    // Insert db_metadata
+    const pkgPath = join(__dirname, '..', 'package.json');
+    const pkgVersion: string = JSON.parse(readFileSync(pkgPath, 'utf-8')).version;
+    const insertMeta = db.prepare('INSERT INTO db_metadata (key, value) VALUES (?, ?)');
+    insertMeta.run('schema_version', '1.0.0');
+    insertMeta.run('built_at', new Date().toISOString());
+    insertMeta.run('built_by', `build-db.ts v${pkgVersion}`);
+    insertMeta.run('server_version', pkgVersion);
+    console.log('✓ Metadata written');
 
     console.log('\n✓ Database populated successfully');
     console.log(`Database ready at: ${DB_PATH}`);

@@ -1,6 +1,5 @@
 # Build stage
 FROM node:22-alpine AS builder
-RUN apk add --no-cache python3 make g++
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
@@ -10,12 +9,9 @@ RUN npm run build
 
 # Production stage
 FROM node:22-alpine AS production
-RUN apk add --no-cache python3 make g++
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm ci --production
-RUN npm rebuild better-sqlite3
-RUN apk del python3 make g++ && npm cache clean --force
+RUN npm ci --production && npm cache clean --force
 
 # Security: non-root user
 RUN addgroup -g 1001 -S nodejs && adduser -S nodejs -u 1001

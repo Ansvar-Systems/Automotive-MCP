@@ -3,13 +3,17 @@ import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import Database from '@ansvar/mcp-sqlite';
 import { join } from 'path';
-import { existsSync, copyFileSync } from 'fs';
+import { existsSync, copyFileSync, readFileSync } from 'fs';
 
 import { registerTools } from '../src/tools/registry.js';
 
 const SOURCE_DB = process.env.AUTOMOTIVE_CYBERSEC_DB_PATH
   || join(process.cwd(), 'data', 'automotive.db');
 const TMP_DB = '/tmp/automotive.db';
+
+const pkgVersion: string = JSON.parse(
+  readFileSync(join(process.cwd(), 'package.json'), 'utf-8')
+).version;
 
 let db: InstanceType<typeof Database> | null = null;
 
@@ -37,7 +41,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'GET') {
     res.status(200).json({
       name: 'automotive-cybersecurity-mcp',
-      version: '1.0.1',
+      version: pkgVersion,
       protocol: 'mcp-streamable-http',
     });
     return;
@@ -52,7 +56,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const database = getDatabase();
 
     const server = new Server(
-      { name: 'automotive-cybersecurity-mcp', version: '1.0.1' },
+      { name: 'automotive-cybersecurity-mcp', version: pkgVersion },
       { capabilities: { tools: {} } }
     );
 

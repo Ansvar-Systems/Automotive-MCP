@@ -1,0 +1,104 @@
+## Data Source Provenance
+## Automotive Cybersecurity MCP Server
+## Last updated: 2026-02-17
+
+sources:
+  - id: r155
+    name: "UN Regulation No. 155"
+    full_name: "Uniform provisions concerning the approval of vehicles with regards to cyber security and cyber security management system"
+    type: regulation
+    authority: UNECE (United Nations Economic Commission for Europe)
+    authoritative_url: "https://unece.org/transport/documents/2021/03/standards/un-regulation-no-155"
+    eur_lex_url: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A42021X0387"
+    version: "Revision 2"
+    effective_date: "2024-07-07"
+    data_obtained: "2026-01-29"
+    data_method: "Extracted via EU Compliance MCP from EUR-Lex"
+    content_scope: "12 articles + 5 annexes (full text)"
+    update_frequency: manual
+    license: "UNECE regulations reusable under EUR-Lex reuse policy"
+
+  - id: r156
+    name: "UN Regulation No. 156"
+    full_name: "Uniform provisions concerning the approval of vehicles with regards to software update and software updates management system"
+    type: regulation
+    authority: UNECE (United Nations Economic Commission for Europe)
+    authoritative_url: "https://unece.org/transport/documents/2021/03/standards/un-regulation-no-156"
+    eur_lex_url: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A42021X0388"
+    version: "Revision 2"
+    effective_date: "2024-07-07"
+    data_obtained: "2026-01-29"
+    data_method: "Extracted via EU Compliance MCP from EUR-Lex"
+    content_scope: "12 articles + 4 annexes (full text)"
+    update_frequency: manual
+    license: "UNECE regulations reusable under EUR-Lex reuse policy"
+
+  - id: iso_21434
+    name: "ISO/SAE 21434:2021"
+    full_name: "Road vehicles — Cybersecurity engineering"
+    type: standard
+    authority: ISO / SAE International
+    authoritative_url: "https://www.iso.org/standard/70918.html"
+    version: "2021"
+    data_obtained: "2026-01-28"
+    data_method: "Manual curation of clause structure and expert guidance"
+    content_scope: "68 clauses — clause IDs, titles, and expert guidance only (NO full text — requires paid license)"
+    update_frequency: manual
+    license: "ISO standard text is copyrighted. Only clause structure and cross-reference mappings provided."
+    note: "Full ISO 21434 text is NOT included. Guidance is expert-authored, not ISO-authored."
+
+  - id: tisax
+    name: "VDA ISA / TISAX"
+    full_name: "Trusted Information Security Assessment Exchange"
+    type: standard
+    authority: VDA (German Association of the Automotive Industry) / ENX Association
+    authoritative_url: "https://www.enx.com/en-us/tisax/"
+    version: "6.0"
+    data_obtained: "2026-01-28"
+    data_method: "Manual entry from publicly available assessment catalog structure"
+    content_scope: "Standard metadata only — no clause-level content"
+    update_frequency: manual
+
+  - id: sae_j3061
+    name: "SAE J3061"
+    full_name: "Cybersecurity Guidebook for Cyber-Physical Vehicle Systems"
+    type: standard
+    authority: SAE International
+    authoritative_url: "https://www.sae.org/standards/content/j3061_201601/"
+    version: "2016"
+    data_obtained: "2026-01-28"
+    data_method: "Manual entry"
+    content_scope: "Standard metadata only — no clause-level content"
+    update_frequency: manual
+
+  - id: autosar
+    name: "AUTOSAR Cybersecurity"
+    full_name: "AUTOSAR Specification of Secure Onboard Communication"
+    type: standard
+    authority: AUTOSAR (AUTomotive Open System ARchitecture)
+    authoritative_url: "https://www.autosar.org/"
+    version: "R22-11"
+    data_obtained: "2026-01-28"
+    data_method: "Manual entry"
+    content_scope: "Standard metadata only — no clause-level content"
+    update_frequency: manual
+
+  - id: gbt
+    name: "GB/T Automotive Cybersecurity Standards"
+    full_name: "Chinese National Standards for Vehicle Cybersecurity"
+    type: standard
+    authority: SAC (Standardization Administration of China)
+    authoritative_url: "https://www.sac.gov.cn/"
+    version: "2024"
+    data_obtained: "2026-01-28"
+    data_method: "Manual entry"
+    content_scope: "Standard metadata only — no clause-level content. Covers GB/T 40857, GB/T 40856, GB/T 40855."
+    update_frequency: manual
+
+cross_references:
+  - type: "regulation-to-standard"
+    description: "R155 Article 7 requirements mapped to ISO 21434 clauses"
+    source: "r155"
+    target: "iso_21434"
+    mapping_count: "~100 mappings"
+    mapping_method: "Expert curation based on UNECE/ISO alignment guidance"

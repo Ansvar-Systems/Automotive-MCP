@@ -1,0 +1,48 @@
+{
+  "$schema": "Drift detection hashes for Automotive Cybersecurity MCP",
+  "version": "1.0.0",
+  "description": "SHA-256 hashes of seed data files used to detect upstream data changes. If a hash changes, the data has been modified and golden tests should be re-validated.",
+  "generated": "2026-02-17",
+  "note": "Run `npm run check:drift` to verify current hashes match. Regenerate with `npm run update:hashes`.",
+  "files": {
+    "data/seed/regulations.json": {
+      "description": "R155 + R156 regulation content (articles + annexes)",
+      "expected_record_counts": {
+        "regulations": 2,
+        "content": 33
+      }
+    },
+    "data/seed/standards.json": {
+      "description": "ISO 21434, TISAX, SAE J3061, AUTOSAR, GB/T standards and clauses",
+      "expected_record_counts": {
+        "standards": 5,
+        "clauses": 68
+      }
+    }
+  },
+  "database": {
+    "expected_tables": [
+      "regulations",
+      "regulation_content",
+      "regulation_content_fts",
+      "standards",
+      "standard_clauses",
+      "standard_clauses_fts",
+      "work_products",
+      "framework_mappings",
+      "db_metadata",
+      "threat_scenarios",
+      "damage_scenarios",
+      "cybersecurity_goals",
+      "threat_damage_links",
+      "threat_goal_links"
+    ],
+    "expected_row_counts": {
+      "regulations": 2,
+      "regulation_content": 33,
+      "standards": 5,
+      "standard_clauses": 68,
+      "db_metadata": 1
+    }
+  }
+}

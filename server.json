@@ -37,6 +37,10 @@
     {
       "name": "export_compliance_matrix",
       "description": "Generate compliance traceability matrix in CSV or Markdown format"
+    },
+    {
+      "name": "about",
+      "description": "Returns server metadata, dataset statistics, provenance, and data fingerprint"
     }
   ],
   "remoteInstructions": "This server provides comprehensive automotive cybersecurity compliance data. Use list_sources to see available frameworks, search_requirements for keyword queries, get_requirement for specific articles/clauses, list_work_products for ISO 21434 deliverables, and export_compliance_matrix for audit documentation."

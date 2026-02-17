@@ -39,7 +39,8 @@
     { "name": "get_requirement" },
     { "name": "search_requirements" },
     { "name": "list_work_products" },
-    { "name": "export_compliance_matrix" }
+    { "name": "export_compliance_matrix" },
+    { "name": "about" }
   ],
   "compatibility": {
     "platforms": ["darwin", "win32", "linux"],

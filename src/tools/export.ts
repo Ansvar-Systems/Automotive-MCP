@@ -232,7 +232,7 @@ function generateMarkdown(
   lines.push('## Summary');
   lines.push('');
   lines.push(`- **Total Requirements:** ${total}`);
-  lines.push(`- **Mapped to ISO 21434:** ${mapped} (${Math.round(mapped/total*100)}%)`);
+  lines.push(`- **Mapped to ISO 21434:** ${mapped} (${total > 0 ? Math.round(mapped/total*100) : 0}%)`);
   lines.push(`- **Unmapped:** ${total - mapped}`);
 
   return lines.join('\n');

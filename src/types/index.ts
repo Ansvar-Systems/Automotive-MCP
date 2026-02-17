@@ -81,6 +81,10 @@ export interface WorkProduct {
   template_available: boolean;  // Changed from number
 }
 
+// ============================================================================
+// TARA Types (Planned — DB tables exist but are not yet populated or exposed)
+// ============================================================================
+
 export interface ThreatScenario {
   id: string;
   category: string;
@@ -141,12 +145,14 @@ export interface ListSourcesInput {
   source_type?: 'regulation' | 'standard' | 'all';
 }
 
+/** @planned TARA guidance input — not yet implemented */
 export interface GetTaraGuidanceInput {
   asset_type?: string;
   threat_category?: string;
   phase?: string;
 }
 
+/** @planned Standards mapping input — not yet implemented */
 export interface MapStandardsInput {
   source: string;
   source_reference?: string;
