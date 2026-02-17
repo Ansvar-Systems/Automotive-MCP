@@ -20,6 +20,15 @@ export function exportComplianceMatrix(
 ): ExportComplianceMatrixOutput {
   const { regulation = 'r155', format = 'markdown', include_guidance = false } = input;
 
+  const validFormats = ['markdown', 'csv'];
+  if (format && !validFormats.includes(format)) {
+    throw new Error(`Invalid format: ${format}. Valid formats: ${validFormats.join(', ')}`);
+  }
+  const validRegulations = ['r155', 'r156'];
+  if (regulation && !validRegulations.includes(regulation)) {
+    throw new Error(`Invalid regulation: ${regulation}. Valid regulations: ${validRegulations.join(', ')}`);
+  }
+
   // Get all regulation articles
   const articles = db.prepare(`
     SELECT

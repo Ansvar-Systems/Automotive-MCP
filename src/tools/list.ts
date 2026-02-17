@@ -10,6 +10,12 @@ import type { ListSourcesInput, SourceInfo } from '../types/index.js';
  */
 export function listSources(db: InstanceType<typeof Database>, input: ListSourcesInput): SourceInfo[] {
   const { source_type = 'all' } = input;
+
+  const validTypes = ['regulation', 'standard', 'all'];
+  if (source_type && !validTypes.includes(source_type)) {
+    throw new Error(`Invalid source_type: ${source_type}. Valid types: ${validTypes.join(', ')}`);
+  }
+
   const sources: SourceInfo[] = [];
 
   // Get regulations if requested

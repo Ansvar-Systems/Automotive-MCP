@@ -15,7 +15,8 @@ import type { GetRequirementInput, GetRequirementOutput, MappingReference } from
  * @throws Error if source or reference is not found
  */
 export function getRequirement(db: InstanceType<typeof Database>, input: GetRequirementInput): GetRequirementOutput {
-  const { source, reference, include_mappings = false } = input;
+  const { source: rawSource, reference, include_mappings = false } = input;
+  const source = rawSource.toLowerCase();
 
   try {
     // First, determine if source is a regulation or standard

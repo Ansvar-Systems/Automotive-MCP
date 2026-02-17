@@ -41,7 +41,9 @@ function sanitizeQuery(query: string): string {
 }
 
 export function searchRequirements(db: InstanceType<typeof Database>, input: SearchRequirementsInput): SearchResult[] {
-  const { query, sources, limit = 10 } = input;
+  const { query, sources: rawSources, limit: rawLimit = 10 } = input;
+  const sources = rawSources?.map(s => s.toLowerCase());
+  const limit = Math.max(0, Math.min(rawLimit, 100));
 
   // Return empty array for empty queries
   if (!query || query.trim() === '') {

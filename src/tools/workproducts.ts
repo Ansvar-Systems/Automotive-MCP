@@ -28,6 +28,10 @@ export function listWorkProducts(db: InstanceType<typeof Database>, input: ListW
     'tara': ['15', '15.3', '15.4', '15.5', '15.6', '15.7', '15.8', '15.9']
   };
 
+  if (phase && !phaseClauseMap[phase]) {
+    throw new Error(`Invalid phase: ${phase}. Valid phases: ${Object.keys(phaseClauseMap).join(', ')}`);
+  }
+
   // Build query
   let query = `
     SELECT
