@@ -11,9 +11,14 @@ const SOURCE_DB = process.env.AUTOMOTIVE_CYBERSEC_DB_PATH
   || join(process.cwd(), 'data', 'automotive.db');
 const TMP_DB = '/tmp/automotive.db';
 
-const pkgVersion: string = JSON.parse(
-  readFileSync(join(process.cwd(), 'package.json'), 'utf-8')
-).version;
+let pkgVersion = 'unknown';
+try {
+  pkgVersion = JSON.parse(
+    readFileSync(join(process.cwd(), 'package.json'), 'utf-8')
+  ).version;
+} catch {
+  // package.json may not be available in all deployment contexts
+}
 
 let db: InstanceType<typeof Database> | null = null;
 

@@ -1,21 +1,40 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { existsSync, readFileSync } from 'fs';
+import { existsSync, copyFileSync, readFileSync } from 'fs';
 import { join } from 'path';
+import Database from '@ansvar/mcp-sqlite';
 
-const pkgVersion: string = JSON.parse(
-  readFileSync(join(process.cwd(), 'package.json'), 'utf-8')
-).version;
+let pkgVersion = 'unknown';
+try {
+  pkgVersion = JSON.parse(
+    readFileSync(join(process.cwd(), 'package.json'), 'utf-8')
+  ).version;
+} catch {
+  // package.json may not be available in all deployment contexts
+}
 
-const DB_PATH = join(process.cwd(), 'data', 'automotive.db');
+const SOURCE_DB = join(process.cwd(), 'data', 'automotive.db');
 const TMP_DB = '/tmp/automotive.db';
 
 export default function handler(_req: VercelRequest, res: VercelResponse) {
-  const dbAvailable = existsSync(TMP_DB) || existsSync(DB_PATH);
+  let dbOk = false;
+  try {
+    if (!existsSync(TMP_DB) && existsSync(SOURCE_DB)) {
+      copyFileSync(SOURCE_DB, TMP_DB);
+    }
+    if (existsSync(TMP_DB)) {
+      const db = new Database(TMP_DB, { readonly: true });
+      db.prepare('SELECT 1').get();
+      db.close();
+      dbOk = true;
+    }
+  } catch {
+    // DB not accessible or corrupted
+  }
 
-  res.status(dbAvailable ? 200 : 503).json({
-    status: dbAvailable ? 'ok' : 'degraded',
+  res.status(dbOk ? 200 : 503).json({
+    status: dbOk ? 'ok' : 'degraded',
     server: 'automotive-cybersecurity-mcp',
     version: pkgVersion,
-    database: dbAvailable ? 'available' : 'unavailable',
+    database: dbOk ? 'available' : 'unavailable',
   });
 }

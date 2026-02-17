@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "SHA-256 hashes of seed data files used to detect upstream data changes. If a hash changes, the data has been modified and golden tests should be re-validated.",
   "generated": "2026-02-17",
-  "note": "Run `npm run check:drift` to verify current hashes match. Regenerate with `npm run update:hashes`.",
+  "note": "Drift detection metadata for seed data integrity verification.",
   "files": {
     "data/seed/regulations.json": {
       "description": "R155 + R156 regulation content (articles + annexes)",
