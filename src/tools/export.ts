@@ -70,6 +70,8 @@ export function exportComplianceMatrix(
         ON sc.standard = fm.source_id
         AND sc.clause_id = fm.source_ref
       WHERE fm.target_type = 'regulation'
+        AND fm.source_type = 'standard'
+        AND fm.source_id = 'iso_21434'
         AND fm.target_id = ?
         AND (fm.target_ref = ? OR fm.target_ref LIKE ? || '.%' OR fm.target_ref LIKE ? || '(%')
     `).all(regulation, article.reference, article.reference, article.reference) as Array<{

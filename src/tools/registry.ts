@@ -1,5 +1,5 @@
 /**
- * Shared tool registry for the Automotive Cybersecurity MCP server.
+ * Shared tool registry for the Automotive MCP server.
  * Single source of truth for tool definitions and handlers.
  *
  * Pattern: Based on EU Compliance MCP architecture
@@ -70,7 +70,7 @@ const TOOLS: ToolDefinition[] = [
   {
     name: 'list_sources',
     description:
-      'List available automotive cybersecurity regulations and standards. Call this first to discover available sources before using other tools. Returns metadata including version, type (regulation/standard), item counts, and whether full text is available. Returns an empty array if no sources match the filter. Do NOT use this to retrieve requirement content — use get_requirement instead.',
+      'List available automotive regulations and standards. Call this first to discover available sources before using other tools. Returns metadata including version, type (regulation/standard), item counts, and whether full text is available. Returns an empty array if no sources match the filter. Do NOT use this to retrieve requirement content — use get_requirement instead.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -79,7 +79,7 @@ const TOOLS: ToolDefinition[] = [
           enum: ['regulation', 'standard', 'all'],
           default: 'all',
           description:
-            'Filter by source type. "regulation" returns UNECE regulations, "standard" returns ISO standards, "all" returns both. Default: "all".',
+            'Filter by source type. "regulation" returns UNECE regulations, "standard" returns curated standards metadata and guidance, "all" returns both. Default: "all".',
         },
       },
     },
@@ -91,7 +91,7 @@ const TOOLS: ToolDefinition[] = [
   {
     name: 'get_requirement',
     description:
-      'Retrieve a specific regulation article or standard clause. For regulations (UNECE R155/R156), returns full text. For standards (ISO 21434), returns guidance and work products only — full text is NOT included (requires paid license). Returns an error if the source or reference is not found. Use this for individual lookups; for bulk audit documentation, use export_compliance_matrix instead.',
+      'Retrieve a specific regulation article or standard clause. For regulations (UNECE R155/R156), returns full text. For standards, returns curated guidance and work products where available — full text is NOT included (requires licensed copies). Returns an error if the source or reference is not found. Use this for individual lookups; for bulk audit documentation, use export_compliance_matrix instead.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -122,7 +122,7 @@ const TOOLS: ToolDefinition[] = [
   {
     name: 'search_requirements',
     description:
-      'Full-text search across all regulations and standards using FTS5 with BM25 ranking. Search regulations (UNECE R155/R156 full text) and standards (ISO 21434 guidance). Returns results sorted by relevance with highlighted snippets. Returns an empty array for no matches (not an error). Empty or whitespace-only queries return empty results. Maximum 100 results per query. Use this for keyword/topic discovery; use get_requirement for retrieving a known specific item.',
+      'Full-text search across all regulations and standards using FTS5 with BM25 ranking. Search regulations (UNECE R155/R156 full text) and standards guidance metadata. Returns results sorted by relevance with highlighted snippets. Returns an empty array for no matches (not an error). Empty or whitespace-only queries return empty results. Maximum 100 results per query. Use this for keyword/topic discovery; use get_requirement for retrieving a known specific item.',
     inputSchema: {
       type: 'object',
       properties: {

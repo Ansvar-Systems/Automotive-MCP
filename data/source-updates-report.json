@@ -1,0 +1,127 @@
+{
+  "generated_at": "2026-02-18T17:02:17.531Z",
+  "summary": {
+    "regulations_count": 2,
+    "regulation_items_count": 33,
+    "standards_count": 33,
+    "standard_clauses_count": 559,
+    "pending_review_count": 19
+  },
+  "pending_review": [
+    {
+      "id": "iso_17978_sovd",
+      "full_name": "ISO 17978",
+      "current_version": "Multi-part",
+      "reason": "Uses \"Multi-part\" placeholder"
+    },
+    {
+      "id": "iso_14229",
+      "full_name": "ISO 14229",
+      "current_version": "Multi-part",
+      "reason": "Uses \"Multi-part\" placeholder"
+    },
+    {
+      "id": "iso_13209",
+      "full_name": "ISO 13209",
+      "current_version": "Multi-part",
+      "reason": "Uses \"Multi-part\" placeholder"
+    },
+    {
+      "id": "iso_22900",
+      "full_name": "ISO 22900",
+      "current_version": "Multi-part",
+      "reason": "Uses \"Multi-part\" placeholder"
+    },
+    {
+      "id": "iso_20077",
+      "full_name": "ISO 20077",
+      "current_version": "Multi-part",
+      "reason": "Uses \"Multi-part\" placeholder"
+    },
+    {
+      "id": "iso_20078",
+      "full_name": "ISO 20078",
+      "current_version": "Multi-part",
+      "reason": "Uses \"Multi-part\" placeholder"
+    },
+    {
+      "id": "iso_15031",
+      "full_name": "ISO 15031",
+      "current_version": "Multi-part",
+      "reason": "Uses \"Multi-part\" placeholder"
+    },
+    {
+      "id": "iso_27145",
+      "full_name": "ISO 27145",
+      "current_version": "Multi-part",
+      "reason": "Uses \"Multi-part\" placeholder"
+    },
+    {
+      "id": "sae_j1979_da",
+      "full_name": "SAE J1979-DA",
+      "current_version": "Digital Annex",
+      "reason": "Uses \"Digital Annex\" placeholder"
+    },
+    {
+      "id": "sae_j2534_1",
+      "full_name": "SAE J2534-1",
+      "current_version": "Current revision",
+      "reason": "Uses \"Current revision\" placeholder"
+    },
+    {
+      "id": "iso_15118",
+      "full_name": "ISO 15118",
+      "current_version": "Multi-part",
+      "reason": "Uses \"Multi-part\" placeholder"
+    },
+    {
+      "id": "iec_61851_1",
+      "full_name": "IEC 61851-1",
+      "current_version": "Current revision",
+      "reason": "Uses \"Current revision\" placeholder"
+    },
+    {
+      "id": "iec_62196_2",
+      "full_name": "IEC 62196-2",
+      "current_version": "Current revision",
+      "reason": "Uses \"Current revision\" placeholder"
+    },
+    {
+      "id": "iso_17409",
+      "full_name": "ISO 17409",
+      "current_version": "Current revision",
+      "reason": "Uses \"Current revision\" placeholder"
+    },
+    {
+      "id": "asam_mcd_2d",
+      "full_name": "ASAM MCD-2 D",
+      "current_version": "Current revision",
+      "reason": "Uses \"Current revision\" placeholder"
+    },
+    {
+      "id": "covesa_vss",
+      "full_name": "COVESA Vehicle Signal Specification",
+      "current_version": "Current revision",
+      "reason": "Uses \"Current revision\" placeholder"
+    },
+    {
+      "id": "iso_11898",
+      "full_name": "ISO 11898",
+      "current_version": "Multi-part",
+      "reason": "Uses \"Multi-part\" placeholder"
+    },
+    {
+      "id": "iso_17987",
+      "full_name": "ISO 17987",
+      "current_version": "Multi-part",
+      "reason": "Uses \"Multi-part\" placeholder"
+    },
+    {
+      "id": "iso_18541",
+      "full_name": "ISO 18541",
+      "current_version": "Multi-part",
+      "reason": "Uses \"Multi-part\" placeholder"
+    }
+  ],
+  "check_method": "Local metadata scan (no network fetch)."
+}

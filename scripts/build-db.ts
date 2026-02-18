@@ -345,7 +345,7 @@ function loadStandards(db: Database.Database): void {
         // Insert R155 mappings if present
         if (clause.r155_mapping && Array.isArray(clause.r155_mapping)) {
           for (const r155Ref of clause.r155_mapping) {
-            insertMapping.run(
+            const info = insertMapping.run(
               'standard',           // source_type
               clause.standard,      // source_id (e.g., 'iso_21434')
               clause.clause_id,     // source_ref (e.g., '15')
@@ -355,7 +355,45 @@ function loadStandards(db: Database.Database): void {
               'satisfies',          // relationship
               null                  // notes
             );
-            mappingCount++;
+            mappingCount += Number(info.changes || 0);
+          }
+        }
+
+        // Insert generalized mappings for any target framework (regulations or standards)
+        if (clause.mappings && Array.isArray(clause.mappings)) {
+          for (const mapping of clause.mappings) {
+            if (!mapping || typeof mapping !== 'object') {
+              continue;
+            }
+
+            const targetType = mapping.target_type;
+            const targetId = mapping.target_id;
+            const targetRef = mapping.target_ref;
+            const relationship = mapping.relationship || 'related';
+
+            if (!targetType || !targetId || !targetRef) {
+              continue;
+            }
+
+            if (!['regulation', 'standard'].includes(targetType)) {
+              continue;
+            }
+
+            if (!['satisfies', 'partial', 'related'].includes(relationship)) {
+              continue;
+            }
+
+            const info = insertMapping.run(
+              'standard',
+              clause.standard,
+              clause.clause_id,
+              targetType,
+              targetId,
+              targetRef,
+              relationship,
+              mapping.notes || null
+            );
+            mappingCount += Number(info.changes || 0);
           }
         }
       }

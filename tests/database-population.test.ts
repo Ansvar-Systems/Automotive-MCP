@@ -4,7 +4,7 @@
 
 import { describe, it, expect, beforeAll } from 'vitest';
 import Database from 'better-sqlite3';
-import { existsSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -12,6 +12,50 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const DB_PATH = join(__dirname, '..', 'data', 'automotive.db');
+const STANDARDS_SEED_PATH = join(__dirname, '..', 'data', 'seed', 'standards.json');
+const standardsSeed = JSON.parse(readFileSync(STANDARDS_SEED_PATH, 'utf-8')) as {
+  standards: unknown[];
+  clauses: Array<{
+    standard?: string;
+    clause_id?: string;
+    r155_mapping?: string[];
+    mappings?: Array<{
+      target_type?: string;
+      target_id?: string;
+      target_ref?: string;
+      relationship?: string;
+    }>;
+  }>;
+};
+const expectedStandardCount = standardsSeed.standards.length;
+const expectedClauseCount = standardsSeed.clauses.length;
+const expectedMappingCount = (() => {
+  const keys = new Set<string>();
+
+  for (const clause of standardsSeed.clauses) {
+    const sourceId = clause.standard;
+    const sourceRef = clause.clause_id;
+    if (!sourceId || !sourceRef) continue;
+
+    if (Array.isArray(clause.r155_mapping)) {
+      for (const targetRef of clause.r155_mapping) {
+        keys.add(`standard|${sourceId}|${sourceRef}|regulation|r155|${targetRef}|satisfies`);
+      }
+    }
+
+    if (Array.isArray(clause.mappings)) {
+      for (const mapping of clause.mappings) {
+        if (!mapping?.target_type || !mapping?.target_id || !mapping?.target_ref) continue;
+        const rel = mapping.relationship ?? 'related';
+        keys.add(
+          `standard|${sourceId}|${sourceRef}|${mapping.target_type}|${mapping.target_id}|${mapping.target_ref}|${rel}`
+        );
+      }
+    }
+  }
+
+  return keys.size;
+})();
 
 describe('Database Population', () => {
   let db: Database.Database;
@@ -76,9 +120,9 @@ describe('Database Population', () => {
   });
 
   describe('Standards', () => {
-    it('should load 5 standards', () => {
+    it('should load standards from seed file', () => {
       const count = db.prepare('SELECT COUNT(*) as count FROM standards').get() as { count: number };
-      expect(count.count).toBe(5);
+      expect(count.count).toBe(expectedStandardCount);
     });
 
     it('should have ISO 21434 with correct metadata', () => {
@@ -91,9 +135,9 @@ describe('Database Population', () => {
   });
 
   describe('Standard Clauses', () => {
-    it('should load 68 clauses', () => {
+    it('should load standard clauses from seed file', () => {
       const count = db.prepare('SELECT COUNT(*) as count FROM standard_clauses').get() as { count: number };
-      expect(count.count).toBe(68);
+      expect(count.count).toBe(expectedClauseCount);
     });
 
     it('should have clause 9.3 with correct data', () => {
@@ -149,7 +193,7 @@ describe('Database Population', () => {
       const count = db.prepare(
         'SELECT COUNT(*) as count FROM standard_clauses_fts'
       ).get() as { count: number };
-      expect(count.count).toBe(68);
+      expect(count.count).toBe(expectedClauseCount);
     });
 
     it('should search standard clauses by keyword', () => {
@@ -168,6 +212,13 @@ describe('Database Population', () => {
     it('should have foreign keys enabled', () => {
       const result = db.pragma('foreign_keys', { simple: true });
       expect(result).toBe(1);
+    });
+  });
+
+  describe('Framework Mappings', () => {
+    it('should load framework mappings from seed file', () => {
+      const count = db.prepare('SELECT COUNT(*) as count FROM framework_mappings').get() as { count: number };
+      expect(count.count).toBe(expectedMappingCount);
     });
   });
 });

@@ -1,6 +1,6 @@
 ## Data Source Provenance
 ## Automotive Cybersecurity MCP Server
-## Last updated: 2026-02-17
+## Last updated: 2026-02-18
 
 sources:
   - id: r155
@@ -94,6 +94,18 @@ sources:
     data_method: "Manual entry"
     content_scope: "Standard metadata only — no clause-level content. Covers GB/T 40857, GB/T 40856, GB/T 40855."
     update_frequency: manual
+
+## 2026-02-18 sector expansion (metadata + overview guidance in data/seed/standards.json):
+## Diagnostics/SOVD, ExVe APIs, EV charging, safety, AD scenario standards,
+## vehicle network foundations, and aftermarket service access.
+## Added source IDs:
+## iso_17978_sovd, iso_14229, iso_15765_2, iso_13400_2, iso_22901_1, iso_13209, iso_22900,
+## iso_20077, iso_20078, iso_15031, iso_27145, sae_j1979_da, sae_j2534_1,
+## iso_15118, iec_61851_1, iec_62196_2, iso_17409,
+## iso_26262, iso_21448, iso_24089,
+## asam_mcd_2d, covesa_vss,
+## iso_11898, iso_17987, iso_18541,
+## iso_34501, iso_34502, iso_22737.
 
 cross_references:
   - type: "regulation-to-standard"

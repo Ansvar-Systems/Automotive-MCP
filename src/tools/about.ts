@@ -73,8 +73,8 @@ export function getAbout(
       built: context.dbBuilt,
       jurisdiction: 'International (UNECE) + ISO',
       content_basis:
-        'UNECE R155/R156 regulation text from EUR-Lex. ISO 21434 structure and clause titles included; ' +
-        'full standard text requires licensed copy. Not an official legal publication.',
+        'UNECE R155/R156 regulation text from EUR-Lex. Automotive standards are included as curated metadata, ' +
+        'overview guidance, and selected clause structure where available. Full copyrighted standard text is not included.',
       counts,
       freshness: {
         last_checked: null,
@@ -82,13 +82,18 @@ export function getAbout(
       },
     },
     provenance: {
-      sources: ['EUR-Lex (UNECE regulations)', 'ISO (standard structure only)'],
+      sources: [
+        'EUR-Lex (UNECE regulations)',
+        'ISO/SAE standards metadata and structure',
+        'IEC standards metadata',
+        'ASAM and COVESA public specification metadata'
+      ],
       license:
         'Apache-2.0 (server code). UNECE regulation text reusable under EUR-Lex policy. ' +
-        'ISO standard text is copyrighted and not included \u2014 only clause structure and mappings are provided.',
+        'Copyrighted standards text is not included; only metadata, identifiers, and expert-authored guidance are provided.',
       authenticity_note:
-        'UNECE regulation text is derived from EUR-Lex. ISO 21434 content is limited to publicly available ' +
-        'clause titles and cross-reference mappings. Verify against official UNECE and ISO publications.',
+        'UNECE regulation text is derived from EUR-Lex. Standards content is limited to publicly available metadata, ' +
+        'curated guidance, and selected identifiers. Verify critical requirements against official publications.',
     },
     security: {
       access_model: 'read-only',

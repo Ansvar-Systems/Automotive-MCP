@@ -1,7 +1,7 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.Ansvar-Systems/automotive-cybersecurity",
-  "description": "Automotive cybersecurity: R155/R156 regulations, ISO 21434, TISAX, AUTOSAR, Chinese GB/T",
+  "description": "Automotive regulations and standards knowledge base: R155/R156, ISO/SAE cybersecurity, diagnostics (SOVD/UDS/DoIP), safety, EV charging, and service-data frameworks",
   "repository": {
     "url": "https://github.com/Ansvar-Systems/Automotive-MCP",
     "source": "github"
@@ -43,5 +43,5 @@
       "description": "Server metadata, dataset statistics, freshness, and provenance. No input parameters needed."
     }
   ],
-  "remoteInstructions": "This server provides comprehensive automotive cybersecurity compliance data. Use list_sources to see available frameworks, search_requirements for keyword queries, get_requirement for specific articles/clauses, list_work_products for ISO 21434 deliverables, and export_compliance_matrix for audit documentation."
+  "remoteInstructions": "This server provides automotive regulation and standards data across cybersecurity, diagnostics, software updates, safety, EV charging, and related interoperability frameworks. Use list_sources to discover frameworks, search_requirements for keyword queries, get_requirement for specific articles/clauses, list_work_products for ISO 21434 deliverables, and export_compliance_matrix for regulation-to-ISO 21434 traceability."
 }
