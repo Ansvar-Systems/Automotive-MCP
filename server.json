@@ -20,27 +20,27 @@
   "tools": [
     {
       "name": "list_sources",
-      "description": "List available automotive cybersecurity regulations and standards"
+      "description": "List available automotive cybersecurity regulations and standards. Call this first to discover available sources. Returns empty array if no sources match the filter."
     },
     {
       "name": "get_requirement",
-      "description": "Retrieve a specific regulation article or standard clause with cross-framework mappings"
+      "description": "Retrieve a specific regulation article or standard clause. Returns full text for regulations; guidance only for standards (full text requires paid license). Returns error if source/reference not found."
     },
     {
       "name": "search_requirements",
-      "description": "Full-text search across all regulations and standards using FTS5 with BM25 ranking"
+      "description": "Full-text search across all regulations and standards using FTS5 with BM25 ranking. Returns empty array for no matches. Maximum 100 results per query."
     },
     {
       "name": "list_work_products",
-      "description": "List ISO 21434 work products by clause or lifecycle phase"
+      "description": "List ISO 21434 work products (deliverables) by clause or lifecycle phase. Returns all work products if no filters specified."
     },
     {
       "name": "export_compliance_matrix",
-      "description": "Generate compliance traceability matrix in CSV or Markdown format"
+      "description": "Generate compliance traceability matrix in Markdown or CSV format. Large output — use for audit documentation, not individual lookups."
     },
     {
       "name": "about",
-      "description": "Returns server metadata, dataset statistics, provenance, and data fingerprint"
+      "description": "Server metadata, dataset statistics, freshness, and provenance. No input parameters needed."
     }
   ],
   "remoteInstructions": "This server provides comprehensive automotive cybersecurity compliance data. Use list_sources to see available frameworks, search_requirements for keyword queries, get_requirement for specific articles/clauses, list_work_products for ISO 21434 deliverables, and export_compliance_matrix for audit documentation."
