@@ -1031,3 +1031,30 @@ This project includes UNECE R155 and R156 regulation content sourced from the [E
 - Original source: https://github.com/Ansvar-Systems/EU_compliance_MCP
 
 We thank the EU Compliance MCP team for their excellent work in making EU and UNECE regulations accessible via MCP protocol.
+
+---
+
+## Directory Review Notes
+
+### Testing Account and Sample Data
+
+This server is read-only and does not require a login account for functional review.
+For directory review, use the bundled dataset and these sample prompts:
+- *"What does R155 Article 7 require for CSMS?"*
+- *"Search R156 requirements for software update assessment."*
+- *"List ISO 21434 work products for TARA."*
+
+### Remote Authentication (OAuth 2.0)
+
+The default server runtime is read-only and can be deployed without authentication.
+If you deploy a remote authenticated endpoint, use OAuth 2.0 over TLS with certificates from recognized authorities.
+
+### Privacy
+
+See [PRIVACY.md](PRIVACY.md) for data handling and retention notes.
+
+### Troubleshooting
+
+- If the server is not discovered in a client, verify the command path and that `npm run build` completed successfully.
+- If tool calls fail, confirm `data/automotive.db` exists and the process can read it.
+- If no results are returned, try broader search terms first (for example, `R155`, `R156`, or `ISO 21434`) and narrow from there.

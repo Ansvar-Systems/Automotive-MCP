@@ -32,7 +32,35 @@ interface ToolDefinition {
     properties: Record<string, unknown>;
     required?: string[];
   };
+  annotations?: {
+    title: string;
+    readOnlyHint: boolean;
+    destructiveHint: boolean;
+  };
   handler: (db: InstanceType<typeof Database>, args: unknown) => unknown;
+}
+
+const READ_ONLY_ANNOTATIONS = {
+  readOnlyHint: true,
+  destructiveHint: false,
+} as const;
+
+function toTitle(name: string): string {
+  return name
+    .split('_')
+    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+}
+
+function annotateTools(tools: ToolDefinition[]): ToolDefinition[] {
+  return tools.map((tool) => ({
+    ...tool,
+    annotations: tool.annotations ?? {
+      title: toTitle(tool.name),
+      readOnlyHint: READ_ONLY_ANNOTATIONS.readOnlyHint,
+      destructiveHint: READ_ONLY_ANNOTATIONS.destructiveHint,
+    },
+  }));
 }
 
 /**
@@ -42,15 +70,16 @@ const TOOLS: ToolDefinition[] = [
   {
     name: 'list_sources',
     description:
-      'List available automotive cybersecurity regulations and standards. Returns metadata including version, type (regulation/standard), item counts, and whether full text is available.',
+      'List available automotive cybersecurity regulations and standards. Call this first to discover available sources before using other tools. Returns metadata including version, type (regulation/standard), item counts, and whether full text is available. Returns an empty array if no sources match the filter. Do NOT use this to retrieve requirement content — use get_requirement instead.',
     inputSchema: {
       type: 'object',
       properties: {
         source_type: {
           type: 'string',
           enum: ['regulation', 'standard', 'all'],
+          default: 'all',
           description:
-            'Filter by source type. "regulation" returns UNECE regulations, "standard" returns ISO standards, "all" returns both.',
+            'Filter by source type. "regulation" returns UNECE regulations, "standard" returns ISO standards, "all" returns both. Default: "all".',
         },
       },
     },
@@ -62,7 +91,7 @@ const TOOLS: ToolDefinition[] = [
   {
     name: 'get_requirement',
     description:
-      'Retrieve a specific regulation article or standard clause. For regulations (UNECE R155/R156), returns full text. For standards (ISO 21434), returns guidance and work products only (full text requires paid license). Optionally includes cross-framework mappings.',
+      'Retrieve a specific regulation article or standard clause. For regulations (UNECE R155/R156), returns full text. For standards (ISO 21434), returns guidance and work products only — full text is NOT included (requires paid license). Returns an error if the source or reference is not found. Use this for individual lookups; for bulk audit documentation, use export_compliance_matrix instead.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -78,6 +107,7 @@ const TOOLS: ToolDefinition[] = [
         },
         include_mappings: {
           type: 'boolean',
+          default: false,
           description:
             'Include cross-framework mappings to related requirements in other regulations/standards. Default: false.',
         },
@@ -92,7 +122,7 @@ const TOOLS: ToolDefinition[] = [
   {
     name: 'search_requirements',
     description:
-      'Full-text search across all regulations and standards using FTS5 with BM25 ranking. Search regulations (UNECE R155/R156 full text) and standards (ISO 21434 guidance). Returns results sorted by relevance with highlighted snippets. Useful for finding requirements by topic, keyword, or concept.',
+      'Full-text search across all regulations and standards using FTS5 with BM25 ranking. Search regulations (UNECE R155/R156 full text) and standards (ISO 21434 guidance). Returns results sorted by relevance with highlighted snippets. Returns an empty array for no matches (not an error). Empty or whitespace-only queries return empty results. Maximum 100 results per query. Use this for keyword/topic discovery; use get_requirement for retrieving a known specific item.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -111,8 +141,11 @@ const TOOLS: ToolDefinition[] = [
         },
         limit: {
           type: 'number',
+          default: 10,
+          minimum: 1,
+          maximum: 100,
           description:
-            'Maximum number of results to return. Default: 10. Results are ranked by BM25 relevance score.',
+            'Maximum number of results to return. Default: 10, minimum: 1, maximum: 100. Results are ranked by BM25 relevance score.',
         },
       },
       required: ['query'],
@@ -125,7 +158,7 @@ const TOOLS: ToolDefinition[] = [
   {
     name: 'list_work_products',
     description:
-      'List ISO 21434 work products (deliverables) required for cybersecurity engineering. Shows which artifacts to produce for each clause, whether CAL-dependent, and which R155 requirements they help satisfy. Filter by specific clause or lifecycle phase.',
+      'List ISO 21434 work products (deliverables) required for cybersecurity engineering. Shows which artifacts to produce for each clause, whether CAL-dependent, and which R155 requirements they help satisfy. Returns all work products if no filters are specified. Phase filter maps to ISO 21434 clause groups (e.g., "tara" maps to clause 15). Do NOT use this for regulation text — use get_requirement or search_requirements instead.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -150,24 +183,27 @@ const TOOLS: ToolDefinition[] = [
   {
     name: 'export_compliance_matrix',
     description:
-      'Generate a compliance traceability matrix showing regulation requirements mapped to ISO 21434 clauses and work products. Export as Markdown table or CSV for spreadsheet import. Useful for audit documentation, gap analysis, and compliance tracking.',
+      'Generate a compliance traceability matrix showing regulation requirements mapped to ISO 21434 clauses and work products. Export as Markdown table or CSV for spreadsheet import. Produces large output — use for audit documentation, gap analysis, and compliance tracking. Do NOT use for individual requirement lookups; use get_requirement for single items instead.',
     inputSchema: {
       type: 'object',
       properties: {
         regulation: {
           type: 'string',
           enum: ['r155', 'r156'],
+          default: 'r155',
           description:
             'Regulation to generate matrix for. Default: "r155".',
         },
         format: {
           type: 'string',
           enum: ['markdown', 'csv'],
+          default: 'markdown',
           description:
             'Output format. "markdown" for documentation, "csv" for spreadsheet import. Default: "markdown".',
         },
         include_guidance: {
           type: 'boolean',
+          default: false,
           description:
             'Include ISO 21434 guidance summaries in output. Default: false.',
         },
@@ -184,7 +220,7 @@ function createAboutTool(context: AboutContext): ToolDefinition {
   return {
     name: 'about',
     description:
-      'Server metadata, dataset statistics, freshness, and provenance. ' +
+      'Server metadata, dataset statistics, freshness, and provenance. No input parameters needed. ' +
       'Call this to verify data coverage, currency, and content basis before relying on results.',
     inputSchema: {
       type: 'object',
@@ -208,13 +244,14 @@ export function buildTools(context: AboutContext): ToolDefinition[] {
  * @param context - Optional about context for metadata tool
  */
 export function registerTools(server: Server, db: InstanceType<typeof Database>, context?: AboutContext): void {
-  const allTools = context ? buildTools(context) : TOOLS;
+  const allTools = annotateTools(context ? buildTools(context) : TOOLS);
   // Register ListToolsRequest handler
   server.setRequestHandler(ListToolsRequestSchema, async () => ({
     tools: allTools.map((tool) => ({
       name: tool.name,
       description: tool.description,
       inputSchema: tool.inputSchema,
+      annotations: tool.annotations,
     })),
   }));
 
