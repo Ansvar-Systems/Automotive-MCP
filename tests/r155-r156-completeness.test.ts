@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll } from 'vitest';
-import Database from 'better-sqlite3';
+import Database from '@ansvar/mcp-sqlite';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -9,7 +9,7 @@ const __dirname = dirname(__filename);
 const DB_PATH = join(__dirname, '..', 'data', 'automotive.db');
 
 describe('R155/R156 Content Completeness - EU MCP Integration', () => {
-  let db: Database.Database;
+  let db: Database;
 
   beforeAll(() => {
     db = new Database(DB_PATH, { readonly: true });

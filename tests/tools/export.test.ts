@@ -1,11 +1,11 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
-import Database from 'better-sqlite3';
+import Database from '@ansvar/mcp-sqlite';
 import { join } from 'path';
 import { exportComplianceMatrix } from '../../src/tools/export.js';
 import type { ExportComplianceMatrixInput } from '../../src/types/index.js';
 
 describe('export_compliance_matrix tool', () => {
-  let db: Database.Database;
+  let db: Database;
 
   beforeAll(() => {
     const dbPath = join(process.cwd(), 'data', 'automotive.db');

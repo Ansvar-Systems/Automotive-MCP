@@ -3,7 +3,7 @@
  */
 
 import { describe, it, expect, beforeAll } from 'vitest';
-import Database from 'better-sqlite3';
+import Database from '@ansvar/mcp-sqlite';
 import { existsSync, readFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -58,7 +58,7 @@ const expectedMappingCount = (() => {
 })();
 
 describe('Database Population', () => {
-  let db: Database.Database;
+  let db: Database;
 
   beforeAll(() => {
     // Ensure database exists

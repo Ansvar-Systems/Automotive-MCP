@@ -1,11 +1,11 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
-import Database from 'better-sqlite3';
+import Database from '@ansvar/mcp-sqlite';
 import { join } from 'path';
 import { listWorkProducts } from '../../src/tools/workproducts.js';
 import type { ListWorkProductsInput } from '../../src/types/index.js';
 
 describe('list_work_products tool', () => {
-  let db: Database.Database;
+  let db: Database;
 
   beforeAll(() => {
     // Use the actual database for integration testing

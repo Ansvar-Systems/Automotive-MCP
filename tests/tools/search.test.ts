@@ -1,10 +1,10 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import Database from 'better-sqlite3';
+import Database from '@ansvar/mcp-sqlite';
 import { searchRequirements } from '../../src/tools/search.js';
 import type { SearchRequirementsInput } from '../../src/types/index.js';
 
 describe('search_requirements tool', () => {
-  let db: Database.Database;
+  let db: Database;
 
   beforeEach(() => {
     // Create in-memory database for testing
