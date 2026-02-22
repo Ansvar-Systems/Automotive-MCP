@@ -16,6 +16,15 @@ import type { GetRequirementInput, GetRequirementOutput, MappingReference } from
  */
 export function getRequirement(db: InstanceType<typeof Database>, input: GetRequirementInput): GetRequirementOutput {
   const { source: rawSource, reference, include_mappings = false } = input;
+
+  // Guard against missing required parameters to prevent TypeError on .toLowerCase()
+  if (!rawSource) {
+    throw new Error('Missing required parameter: source. Use list_sources to see available source IDs.');
+  }
+  if (!reference) {
+    throw new Error('Missing required parameter: reference. Use list_sources or search_requirements to find valid references.');
+  }
+
   const source = rawSource.toLowerCase();
 
   try {

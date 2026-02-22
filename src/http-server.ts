@@ -162,15 +162,12 @@ async function handleMCPRequest(
     };
 
     await server.connect(transport);
-
-    // Store the session
-    const sid = transport.sessionId;
-    if (sid) {
-      sessions.set(sid, transport);
-      console.log(`New session created: ${sid}`);
-    }
-
     await transport.handleRequest(req, res);
+
+    // Store the session (must be after handleRequest — sessionId is set during request handling)
+    if (transport.sessionId) {
+      sessions.set(transport.sessionId, transport);
+    }
     return;
   }
 
