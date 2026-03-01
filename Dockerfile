@@ -1,4 +1,5 @@
 FROM node:24-alpine AS builder
+RUN apk add --no-cache python3 make g++
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
@@ -10,9 +11,11 @@ RUN npm run build
 RUN npm run build:db
 
 FROM node:24-alpine AS production
+RUN apk add --no-cache python3 make g++
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev && npm cache clean --force
+RUN apk del python3 make g++
 RUN addgroup -g 1001 -S nodejs && adduser -S nodejs -u 1001
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/data/ ./data/
