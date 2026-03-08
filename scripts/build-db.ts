@@ -638,6 +638,51 @@ function loadAttackPatterns(db: Database.Database): void {
   console.log(`✓ Loaded ${result.count} attack patterns`);
 }
 
+/**
+ * Load TARA worked examples from seed JSON file
+ */
+function loadTaraExamples(db: Database.Database): void {
+  const seedPath = join(SEED_DIR, 'tara-examples.json');
+
+  if (!existsSync(seedPath)) {
+    console.log('⚠ No tara-examples.json found, skipping...');
+    return;
+  }
+
+  const data = JSON.parse(readFileSync(seedPath, 'utf-8'));
+
+  const insertExample = db.prepare(`
+    INSERT INTO tara_examples (id, system_name, item_definition, assets, threat_scenarios, damage_scenarios, risk_determinations, cybersecurity_goals, applicable_standards)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+
+  const loadAll = db.transaction(() => {
+    let count = 0;
+
+    if (data.examples) {
+      for (const ex of data.examples) {
+        insertExample.run(
+          ex.id,
+          ex.system_name,
+          ex.item_definition,
+          JSON.stringify(ex.assets),
+          JSON.stringify(ex.threat_scenarios),
+          JSON.stringify(ex.damage_scenarios),
+          JSON.stringify(ex.risk_determinations),
+          JSON.stringify(ex.cybersecurity_goals),
+          JSON.stringify(ex.applicable_standards)
+        );
+        count++;
+      }
+    }
+
+    return { count };
+  });
+
+  const result = loadAll();
+  console.log(`✓ Loaded ${result.count} TARA examples`);
+}
+
 function buildDatabase() {
   console.log('Building automotive cybersecurity database...');
 
@@ -677,6 +722,7 @@ function buildDatabase() {
     loadStandards(db);
     loadArchitecturePatterns(db);
     loadAttackPatterns(db);
+    loadTaraExamples(db);
 
     // Insert db_metadata
     const pkgPath = join(__dirname, '..', 'package.json');

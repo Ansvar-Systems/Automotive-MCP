@@ -1,0 +1,528 @@
+{
+  "examples": [
+    {
+      "id": "tara-tcu",
+      "system_name": "Telematics Control Unit (TCU)",
+      "item_definition": "The Telematics Control Unit provides cellular connectivity (4G/5G) for the vehicle, enabling remote diagnostics, over-the-air updates relay, emergency call (eCall), and fleet telemetry. It interfaces with the central gateway ECU via CAN-FD and Ethernet, connects to the OEM backend cloud via TLS-secured cellular links, and stores cryptographic material in a hardware security module (HSM). Trust boundaries exist between the cellular modem and application processor, between the TCU and the in-vehicle network, and between the TCU and the OEM cloud backend. The TCU processes personal data including GPS coordinates, driving patterns, and vehicle health data. It serves as a primary external attack surface due to its always-on cellular connection.",
+      "assets": [
+        "Cryptographic keys stored in HSM",
+        "Firmware image and bootloader",
+        "User telemetry data (GPS, driving patterns)",
+        "Cellular modem credentials (IMSI, SIM profile)",
+        "TLS session certificates",
+        "Vehicle diagnostic data",
+        "eCall configuration and location data"
+      ],
+      "threat_scenarios": [
+        {"id": "TS-TCU-01", "threat": "Remote code execution via cellular interface", "stride": "T,E", "attack_vector": "Exploit vulnerability in cellular modem firmware to gain code execution on the application processor", "feasibility": "Medium"},
+        {"id": "TS-TCU-02", "threat": "Eavesdropping on telemetry data", "stride": "I", "attack_vector": "Intercept cellular communications via rogue base station (IMSI catcher)", "feasibility": "Medium"},
+        {"id": "TS-TCU-03", "threat": "Firmware replacement with malicious image", "stride": "T", "attack_vector": "Compromise OTA relay channel to inject unsigned firmware", "feasibility": "Low"},
+        {"id": "TS-TCU-04", "threat": "Extraction of cryptographic keys", "stride": "I", "attack_vector": "Physical side-channel attack on HSM or debug port access", "feasibility": "Low"},
+        {"id": "TS-TCU-05", "threat": "Denial of eCall service", "stride": "D", "attack_vector": "Jam cellular frequencies or corrupt eCall configuration", "feasibility": "Medium"},
+        {"id": "TS-TCU-06", "threat": "Pivoting from TCU to in-vehicle network", "stride": "E", "attack_vector": "After compromising TCU, send crafted CAN-FD frames to gateway", "feasibility": "Low"},
+        {"id": "TS-TCU-07", "threat": "Vehicle tracking via location data exfiltration", "stride": "I", "attack_vector": "Exploit backend API vulnerability to extract GPS history", "feasibility": "Medium"},
+        {"id": "TS-TCU-08", "threat": "SIM cloning for unauthorized access", "stride": "S", "attack_vector": "Extract SIM credentials to clone cellular identity", "feasibility": "Low"}
+      ],
+      "damage_scenarios": [
+        {"id": "DS-TCU-01", "description": "Vehicle tracking and driver surveillance", "impact_category": "Privacy", "severity": "Major", "impact_rating": "S2"},
+        {"id": "DS-TCU-02", "description": "Loss of emergency call capability", "impact_category": "Safety", "severity": "Severe", "impact_rating": "S3"},
+        {"id": "DS-TCU-03", "description": "Unauthorized control of vehicle functions via network pivot", "impact_category": "Safety", "severity": "Severe", "impact_rating": "S3"},
+        {"id": "DS-TCU-04", "description": "Financial loss from unauthorized service usage", "impact_category": "Financial", "severity": "Moderate", "impact_rating": "S1"},
+        {"id": "DS-TCU-05", "description": "Reputational damage from fleet-wide telemetry breach", "impact_category": "Operational", "severity": "Major", "impact_rating": "S2"}
+      ],
+      "risk_determinations": [
+        {"threat_id": "TS-TCU-01", "damage_id": "DS-TCU-03", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-TCU-02", "damage_id": "DS-TCU-01", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-TCU-03", "damage_id": "DS-TCU-03", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-TCU-04", "damage_id": "DS-TCU-03", "risk_level": "Medium", "treatment": "Reduce"},
+        {"threat_id": "TS-TCU-05", "damage_id": "DS-TCU-02", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-TCU-06", "damage_id": "DS-TCU-03", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-TCU-07", "damage_id": "DS-TCU-01", "risk_level": "Medium", "treatment": "Reduce"},
+        {"threat_id": "TS-TCU-08", "damage_id": "DS-TCU-04", "risk_level": "Low", "treatment": "Reduce"}
+      ],
+      "cybersecurity_goals": [
+        {"id": "CSG-TCU-01", "description": "Prevent unauthorized remote code execution on TCU", "property": "Integrity", "cal": "CAL-3"},
+        {"id": "CSG-TCU-02", "description": "Protect confidentiality of telemetry and location data in transit and at rest", "property": "Confidentiality", "cal": "CAL-3"},
+        {"id": "CSG-TCU-03", "description": "Ensure availability of eCall service under attack conditions", "property": "Availability", "cal": "CAL-4"},
+        {"id": "CSG-TCU-04", "description": "Prevent unauthorized lateral movement from TCU to vehicle bus", "property": "Integrity", "cal": "CAL-4"},
+        {"id": "CSG-TCU-05", "description": "Authenticate all firmware updates with cryptographic signature verification", "property": "Authenticity", "cal": "CAL-3"}
+      ],
+      "applicable_standards": ["iso_21434", "r155", "iso_11452", "autosar"]
+    },
+    {
+      "id": "tara-gateway",
+      "system_name": "Central Gateway ECU",
+      "item_definition": "The Central Gateway ECU routes messages between heterogeneous in-vehicle networks: CAN, CAN-FD, LIN, FlexRay, and Automotive Ethernet. It enforces network segmentation by filtering, rate-limiting, and translating frames across domains (powertrain, chassis, body, infotainment, ADAS). The gateway maintains routing tables and firewall rules, performs intrusion detection on cross-domain traffic, and logs anomalous patterns. Trust boundaries exist at each domain interface. The gateway is the single chokepoint for all inter-domain communication, making it a high-value target. It runs an AUTOSAR Classic platform with a secure boot chain.",
+      "assets": [
+        "Routing tables and firewall rule sets",
+        "Intrusion detection signatures and logs",
+        "Secure boot chain and firmware",
+        "Diagnostic session credentials",
+        "Cross-domain message queues",
+        "Network topology configuration"
+      ],
+      "threat_scenarios": [
+        {"id": "TS-GW-01", "threat": "Routing table manipulation to bypass domain isolation", "stride": "T", "attack_vector": "Exploit diagnostic session to write malicious routing configuration", "feasibility": "Low"},
+        {"id": "TS-GW-02", "threat": "Flooding attack causing message queue exhaustion", "stride": "D", "attack_vector": "Inject high-rate CAN frames from compromised ECU to overwhelm gateway buffers", "feasibility": "Medium"},
+        {"id": "TS-GW-03", "threat": "Bypassing firewall rules via protocol translation flaws", "stride": "E", "attack_vector": "Craft frames that exploit CAN-to-Ethernet translation edge cases", "feasibility": "Low"},
+        {"id": "TS-GW-04", "threat": "Secure boot bypass to load modified firmware", "stride": "T", "attack_vector": "Exploit bootloader vulnerability or fault injection during boot", "feasibility": "Low"},
+        {"id": "TS-GW-05", "threat": "IDS evasion via fragmented or slow-rate attacks", "stride": "T,E", "attack_vector": "Send malicious traffic below IDS detection thresholds", "feasibility": "Medium"},
+        {"id": "TS-GW-06", "threat": "Extraction of IDS signatures for attack refinement", "stride": "I", "attack_vector": "Read IDS configuration via diagnostic services", "feasibility": "Medium"},
+        {"id": "TS-GW-07", "threat": "Repudiation of gateway log entries", "stride": "R", "attack_vector": "Modify or delete intrusion detection logs after compromise", "feasibility": "Low"}
+      ],
+      "damage_scenarios": [
+        {"id": "DS-GW-01", "description": "Loss of domain isolation allowing safety-critical bus access from infotainment", "impact_category": "Safety", "severity": "Severe", "impact_rating": "S3"},
+        {"id": "DS-GW-02", "description": "Denial of service on powertrain or chassis bus affecting vehicle control", "impact_category": "Safety", "severity": "Severe", "impact_rating": "S3"},
+        {"id": "DS-GW-03", "description": "Undetected persistent compromise of vehicle network", "impact_category": "Operational", "severity": "Major", "impact_rating": "S2"},
+        {"id": "DS-GW-04", "description": "Loss of forensic evidence after security incident", "impact_category": "Operational", "severity": "Moderate", "impact_rating": "S1"}
+      ],
+      "risk_determinations": [
+        {"threat_id": "TS-GW-01", "damage_id": "DS-GW-01", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-GW-02", "damage_id": "DS-GW-02", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-GW-03", "damage_id": "DS-GW-01", "risk_level": "Medium", "treatment": "Reduce"},
+        {"threat_id": "TS-GW-04", "damage_id": "DS-GW-01", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-GW-05", "damage_id": "DS-GW-03", "risk_level": "Medium", "treatment": "Reduce"},
+        {"threat_id": "TS-GW-06", "damage_id": "DS-GW-03", "risk_level": "Medium", "treatment": "Reduce"},
+        {"threat_id": "TS-GW-07", "damage_id": "DS-GW-04", "risk_level": "Low", "treatment": "Reduce"}
+      ],
+      "cybersecurity_goals": [
+        {"id": "CSG-GW-01", "description": "Maintain strict domain isolation between all vehicle network segments", "property": "Integrity", "cal": "CAL-4"},
+        {"id": "CSG-GW-02", "description": "Ensure gateway availability under bus flooding conditions", "property": "Availability", "cal": "CAL-4"},
+        {"id": "CSG-GW-03", "description": "Protect integrity of routing tables and firewall rules against unauthorized modification", "property": "Integrity", "cal": "CAL-4"},
+        {"id": "CSG-GW-04", "description": "Maintain tamper-evident logging of all cross-domain security events", "property": "Integrity", "cal": "CAL-2"}
+      ],
+      "applicable_standards": ["iso_21434", "r155", "autosar", "iso_11898"]
+    },
+    {
+      "id": "tara-diagnostic-interface",
+      "system_name": "Diagnostic Interface (DoIP/DoCAN)",
+      "item_definition": "The Diagnostic Interface provides wired (OBD-II/DoCAN) and network-based (DoIP over Ethernet) access for workshop tools, factory end-of-line programming, and field service operations. It implements UDS (Unified Diagnostic Services, ISO 14229) for ECU reprogramming, configuration, fault reading, and routine control. The interface supports multiple security access levels with seed-key authentication per ISO 14229. Trust boundaries exist between the external diagnostic tool, the diagnostic interface module, and the internal vehicle network. The interface can unlock safety-critical ECU functions including calibration writes and actuator control. Physical access to OBD-II port is assumed, but DoIP extends attack surface to workshop LAN.",
+      "assets": [
+        "UDS security access seed-key algorithms",
+        "ECU calibration and programming data",
+        "Diagnostic session state and tokens",
+        "Fault memory and freeze-frame data",
+        "Actuator control routines",
+        "Workshop authentication credentials"
+      ],
+      "threat_scenarios": [
+        {"id": "TS-DI-01", "threat": "Unauthorized ECU reprogramming via security access bypass", "stride": "E", "attack_vector": "Reverse-engineer seed-key algorithm from ECU firmware dump", "feasibility": "Medium"},
+        {"id": "TS-DI-02", "threat": "Fault memory manipulation to conceal defects", "stride": "T", "attack_vector": "Use standard UDS ClearDTC service after unauthorized access", "feasibility": "Medium"},
+        {"id": "TS-DI-03", "threat": "Remote diagnostic access via DoIP from workshop LAN", "stride": "E", "attack_vector": "Exploit DoIP gateway from compromised workshop network", "feasibility": "Medium"},
+        {"id": "TS-DI-04", "threat": "Actuator control abuse for physical damage", "stride": "T,E", "attack_vector": "Invoke RoutineControl services to activate actuators unsafely", "feasibility": "Low"},
+        {"id": "TS-DI-05", "threat": "Extraction of proprietary calibration data", "stride": "I", "attack_vector": "Use ReadMemoryByAddress to dump ECU intellectual property", "feasibility": "Medium"},
+        {"id": "TS-DI-06", "threat": "Denial of diagnostic services during safety recall", "stride": "D", "attack_vector": "Corrupt diagnostic routing or exhaust session limits", "feasibility": "Low"}
+      ],
+      "damage_scenarios": [
+        {"id": "DS-DI-01", "description": "Vehicle malfunction from unauthorized calibration changes", "impact_category": "Safety", "severity": "Severe", "impact_rating": "S3"},
+        {"id": "DS-DI-02", "description": "Concealment of safety-relevant defects via fault memory clearing", "impact_category": "Safety", "severity": "Major", "impact_rating": "S2"},
+        {"id": "DS-DI-03", "description": "Theft of proprietary ECU calibration IP", "impact_category": "Financial", "severity": "Major", "impact_rating": "S2"},
+        {"id": "DS-DI-04", "description": "Inability to perform safety recall updates", "impact_category": "Safety", "severity": "Major", "impact_rating": "S2"}
+      ],
+      "risk_determinations": [
+        {"threat_id": "TS-DI-01", "damage_id": "DS-DI-01", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-DI-02", "damage_id": "DS-DI-02", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-DI-03", "damage_id": "DS-DI-01", "risk_level": "Medium", "treatment": "Reduce"},
+        {"threat_id": "TS-DI-04", "damage_id": "DS-DI-01", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-DI-05", "damage_id": "DS-DI-03", "risk_level": "Medium", "treatment": "Reduce"},
+        {"threat_id": "TS-DI-06", "damage_id": "DS-DI-04", "risk_level": "Medium", "treatment": "Reduce"}
+      ],
+      "cybersecurity_goals": [
+        {"id": "CSG-DI-01", "description": "Enforce multi-level authentication for all diagnostic security access levels", "property": "Authenticity", "cal": "CAL-3"},
+        {"id": "CSG-DI-02", "description": "Prevent unauthorized ECU reprogramming and calibration modification", "property": "Integrity", "cal": "CAL-4"},
+        {"id": "CSG-DI-03", "description": "Protect diagnostic fault memory against unauthorized clearing", "property": "Integrity", "cal": "CAL-2"},
+        {"id": "CSG-DI-04", "description": "Restrict DoIP access to authenticated workshop equipment only", "property": "Authenticity", "cal": "CAL-3"}
+      ],
+      "applicable_standards": ["iso_21434", "r155", "iso_14229", "iso_13400"]
+    },
+    {
+      "id": "tara-ota-client",
+      "system_name": "OTA Update Client",
+      "item_definition": "The Over-the-Air Update Client manages the download, verification, installation, and rollback of firmware and software updates for all ECUs. It communicates with the OEM update backend via TLS, verifies package integrity with cryptographic signatures (ECDSA/RSA), manages A/B partition switching for safe rollback, and coordinates update campaigns across multiple ECUs. Trust boundaries exist between the cloud backend, the TCU relay, the OTA client, and the target ECUs. The system must handle partial update failures gracefully and maintain vehicle operability throughout the update process. Update metadata includes version manifests, dependency graphs, and installation scripts.",
+      "assets": [
+        "Code signing keys (public keys stored locally)",
+        "Update packages (firmware images)",
+        "Version manifest and dependency graph",
+        "A/B partition state and rollback metadata",
+        "Update campaign scheduling data",
+        "Installation scripts and pre/post-conditions"
+      ],
+      "threat_scenarios": [
+        {"id": "TS-OTA-01", "threat": "Installation of unsigned or tampered firmware package", "stride": "T", "attack_vector": "Man-in-the-middle attack on update download channel or compromised update server", "feasibility": "Low"},
+        {"id": "TS-OTA-02", "threat": "Rollback to vulnerable firmware version", "stride": "T", "attack_vector": "Manipulate version manifest to force installation of known-vulnerable older version", "feasibility": "Medium"},
+        {"id": "TS-OTA-03", "threat": "Denial of critical safety updates", "stride": "D", "attack_vector": "Block update server connectivity or corrupt download in progress", "feasibility": "Medium"},
+        {"id": "TS-OTA-04", "threat": "Bricking ECU through interrupted update", "stride": "D", "attack_vector": "Trigger power loss or communication disruption during flash write", "feasibility": "Medium"},
+        {"id": "TS-OTA-05", "threat": "Update server impersonation", "stride": "S", "attack_vector": "DNS hijack or certificate spoofing to redirect update downloads", "feasibility": "Low"},
+        {"id": "TS-OTA-06", "threat": "Extraction of proprietary update packages", "stride": "I", "attack_vector": "Intercept update downloads or extract from storage partition", "feasibility": "Medium"},
+        {"id": "TS-OTA-07", "threat": "Dependency confusion in multi-ECU update", "stride": "T", "attack_vector": "Modify dependency graph to install incompatible firmware combinations", "feasibility": "Low"}
+      ],
+      "damage_scenarios": [
+        {"id": "DS-OTA-01", "description": "Fleet-wide malicious firmware deployment", "impact_category": "Safety", "severity": "Severe", "impact_rating": "S3"},
+        {"id": "DS-OTA-02", "description": "Reintroduction of patched security vulnerabilities across fleet", "impact_category": "Safety", "severity": "Major", "impact_rating": "S2"},
+        {"id": "DS-OTA-03", "description": "Vehicles unable to receive critical safety patches", "impact_category": "Safety", "severity": "Major", "impact_rating": "S2"},
+        {"id": "DS-OTA-04", "description": "Permanent ECU failure requiring physical workshop repair", "impact_category": "Financial", "severity": "Major", "impact_rating": "S2"}
+      ],
+      "risk_determinations": [
+        {"threat_id": "TS-OTA-01", "damage_id": "DS-OTA-01", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-OTA-02", "damage_id": "DS-OTA-02", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-OTA-03", "damage_id": "DS-OTA-03", "risk_level": "Medium", "treatment": "Reduce"},
+        {"threat_id": "TS-OTA-04", "damage_id": "DS-OTA-04", "risk_level": "Medium", "treatment": "Reduce"},
+        {"threat_id": "TS-OTA-05", "damage_id": "DS-OTA-01", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-OTA-06", "damage_id": "DS-OTA-02", "risk_level": "Low", "treatment": "Accept"},
+        {"threat_id": "TS-OTA-07", "damage_id": "DS-OTA-04", "risk_level": "Medium", "treatment": "Reduce"}
+      ],
+      "cybersecurity_goals": [
+        {"id": "CSG-OTA-01", "description": "Verify cryptographic signature of every update package before installation", "property": "Authenticity", "cal": "CAL-4"},
+        {"id": "CSG-OTA-02", "description": "Prevent rollback to firmware versions with known vulnerabilities", "property": "Integrity", "cal": "CAL-3"},
+        {"id": "CSG-OTA-03", "description": "Maintain vehicle operability during and after any update failure", "property": "Availability", "cal": "CAL-4"},
+        {"id": "CSG-OTA-04", "description": "Authenticate OTA server identity before accepting update packages", "property": "Authenticity", "cal": "CAL-3"}
+      ],
+      "applicable_standards": ["iso_21434", "r155", "r156", "iso_24089"]
+    },
+    {
+      "id": "tara-v2x",
+      "system_name": "V2X Communication Module",
+      "item_definition": "The Vehicle-to-Everything (V2X) communication module enables direct short-range communication with other vehicles (V2V), infrastructure (V2I), pedestrians (V2P), and network services (V2N). It operates using DSRC (IEEE 802.11p) or C-V2X (3GPP PC5) at 5.9 GHz. Messages include Basic Safety Messages (BSMs) containing vehicle position, speed, heading, and brake status. The module uses a Public Key Infrastructure (PKI) for message signing with frequently rotating pseudonym certificates to protect driver privacy. Trust boundaries exist between the wireless interface, the V2X stack, the vehicle fusion layer, and safety-critical actuators that may respond to V2X data. The system must process messages within strict latency requirements (under 100 ms).",
+      "assets": [
+        "Pseudonym certificates and enrollment credentials",
+        "PKI root of trust and certificate revocation lists",
+        "Basic Safety Message (BSM) data streams",
+        "Misbehavior detection algorithms",
+        "Geographic position and kinematic data",
+        "V2I signal phase and timing information"
+      ],
+      "threat_scenarios": [
+        {"id": "TS-V2X-01", "threat": "Spoofed BSM injection causing false collision avoidance", "stride": "S,T", "attack_vector": "Broadcast fabricated BSMs with false position/speed data", "feasibility": "Medium"},
+        {"id": "TS-V2X-02", "threat": "Sybil attack creating phantom vehicles", "stride": "S", "attack_vector": "Use multiple pseudonym certificates simultaneously to simulate traffic congestion", "feasibility": "Medium"},
+        {"id": "TS-V2X-03", "threat": "Vehicle tracking through pseudonym linkage", "stride": "I", "attack_vector": "Correlate BSM timing and kinematic data across pseudonym changes", "feasibility": "Medium"},
+        {"id": "TS-V2X-04", "threat": "Denial of V2X safety services via channel jamming", "stride": "D", "attack_vector": "Flood 5.9 GHz channel to prevent BSM reception", "feasibility": "High"},
+        {"id": "TS-V2X-05", "threat": "Compromise of PKI enrollment authority", "stride": "E", "attack_vector": "Attack PKI backend to issue unauthorized certificates", "feasibility": "Low"},
+        {"id": "TS-V2X-06", "threat": "Replay of old BSMs to cause stale data decisions", "stride": "T", "attack_vector": "Capture and retransmit valid BSMs after delay", "feasibility": "High"},
+        {"id": "TS-V2X-07", "threat": "Traffic signal spoofing via V2I messages", "stride": "S,T", "attack_vector": "Broadcast false Signal Phase and Timing (SPaT) messages", "feasibility": "Medium"}
+      ],
+      "damage_scenarios": [
+        {"id": "DS-V2X-01", "description": "Unnecessary emergency braking from false collision warnings", "impact_category": "Safety", "severity": "Severe", "impact_rating": "S3"},
+        {"id": "DS-V2X-02", "description": "Driver privacy violation through long-term vehicle tracking", "impact_category": "Privacy", "severity": "Major", "impact_rating": "S2"},
+        {"id": "DS-V2X-03", "description": "Loss of cooperative safety functions in critical situation", "impact_category": "Safety", "severity": "Severe", "impact_rating": "S3"},
+        {"id": "DS-V2X-04", "description": "Traffic disruption from false infrastructure messages", "impact_category": "Safety", "severity": "Major", "impact_rating": "S2"}
+      ],
+      "risk_determinations": [
+        {"threat_id": "TS-V2X-01", "damage_id": "DS-V2X-01", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-V2X-02", "damage_id": "DS-V2X-01", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-V2X-03", "damage_id": "DS-V2X-02", "risk_level": "Medium", "treatment": "Reduce"},
+        {"threat_id": "TS-V2X-04", "damage_id": "DS-V2X-03", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-V2X-05", "damage_id": "DS-V2X-01", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-V2X-06", "damage_id": "DS-V2X-01", "risk_level": "Medium", "treatment": "Reduce"},
+        {"threat_id": "TS-V2X-07", "damage_id": "DS-V2X-04", "risk_level": "Medium", "treatment": "Reduce"}
+      ],
+      "cybersecurity_goals": [
+        {"id": "CSG-V2X-01", "description": "Validate authenticity and plausibility of all received V2X messages", "property": "Authenticity", "cal": "CAL-4"},
+        {"id": "CSG-V2X-02", "description": "Protect driver privacy through effective pseudonym rotation", "property": "Confidentiality", "cal": "CAL-3"},
+        {"id": "CSG-V2X-03", "description": "Maintain safety function availability under RF jamming conditions", "property": "Availability", "cal": "CAL-4"},
+        {"id": "CSG-V2X-04", "description": "Detect and discard replayed or time-invalid messages", "property": "Integrity", "cal": "CAL-3"},
+        {"id": "CSG-V2X-05", "description": "Implement misbehavior detection to identify and report malicious BSM sources", "property": "Integrity", "cal": "CAL-3"}
+      ],
+      "applicable_standards": ["iso_21434", "r155", "ieee_1609", "etsi_its"]
+    },
+    {
+      "id": "tara-adas",
+      "system_name": "ADAS Controller",
+      "item_definition": "The Advanced Driver Assistance Systems controller processes sensor fusion data from cameras, radar, lidar, and ultrasonic sensors to provide functions including adaptive cruise control, lane keeping assist, automatic emergency braking, and parking assist. It runs perception algorithms on a high-performance SoC with GPU/NPU accelerators, consuming data from multiple bus interfaces (Ethernet for cameras, CAN-FD for radar/ultrasonic). The controller outputs actuation commands to steering, braking, and powertrain ECUs. Trust boundaries exist between each sensor input, the fusion processing layer, the decision logic, and the actuation output interfaces. ASIL B to ASIL D requirements apply depending on the function.",
+      "assets": [
+        "Sensor fusion algorithms and ML models",
+        "Calibration parameters for perception systems",
+        "Actuation command authority (steering, braking)",
+        "High-definition map data",
+        "Sensor raw data streams (camera, radar, lidar)",
+        "Object detection and tracking state"
+      ],
+      "threat_scenarios": [
+        {"id": "TS-ADAS-01", "threat": "Adversarial input causing object misclassification", "stride": "T", "attack_vector": "Physical adversarial patches on road signs or vehicles to fool camera-based perception", "feasibility": "Medium"},
+        {"id": "TS-ADAS-02", "threat": "Sensor blinding or saturation", "stride": "D", "attack_vector": "Directed laser or electromagnetic interference to blind cameras/radar/lidar", "feasibility": "Medium"},
+        {"id": "TS-ADAS-03", "threat": "Spoofing of radar or lidar returns", "stride": "S,T", "attack_vector": "Emit crafted RF or optical signals to create phantom objects or hide real ones", "feasibility": "Low"},
+        {"id": "TS-ADAS-04", "threat": "Tampering with ML model weights", "stride": "T", "attack_vector": "Modify model parameters via compromised update channel or debug access", "feasibility": "Low"},
+        {"id": "TS-ADAS-05", "threat": "Unauthorized actuation commands via bus injection", "stride": "T,E", "attack_vector": "Inject CAN-FD frames mimicking ADAS actuation messages from compromised ECU", "feasibility": "Low"},
+        {"id": "TS-ADAS-06", "threat": "Map data manipulation causing incorrect path planning", "stride": "T", "attack_vector": "Tamper with HD map updates to introduce false road geometry", "feasibility": "Low"},
+        {"id": "TS-ADAS-07", "threat": "Denial of ADAS functions via processing overload", "stride": "D", "attack_vector": "Flood Ethernet interface with high-rate traffic to exhaust processing budget", "feasibility": "Medium"}
+      ],
+      "damage_scenarios": [
+        {"id": "DS-ADAS-01", "description": "Failure to detect pedestrian or obstacle causing collision", "impact_category": "Safety", "severity": "Severe", "impact_rating": "S3"},
+        {"id": "DS-ADAS-02", "description": "Unintended braking or steering maneuver in traffic", "impact_category": "Safety", "severity": "Severe", "impact_rating": "S3"},
+        {"id": "DS-ADAS-03", "description": "Loss of driver assistance in hazardous conditions", "impact_category": "Safety", "severity": "Major", "impact_rating": "S2"},
+        {"id": "DS-ADAS-04", "description": "Theft of proprietary perception algorithms", "impact_category": "Financial", "severity": "Major", "impact_rating": "S2"}
+      ],
+      "risk_determinations": [
+        {"threat_id": "TS-ADAS-01", "damage_id": "DS-ADAS-01", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-ADAS-02", "damage_id": "DS-ADAS-03", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-ADAS-03", "damage_id": "DS-ADAS-01", "risk_level": "Medium", "treatment": "Reduce"},
+        {"threat_id": "TS-ADAS-04", "damage_id": "DS-ADAS-01", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-ADAS-05", "damage_id": "DS-ADAS-02", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-ADAS-06", "damage_id": "DS-ADAS-01", "risk_level": "Medium", "treatment": "Reduce"},
+        {"threat_id": "TS-ADAS-07", "damage_id": "DS-ADAS-03", "risk_level": "Medium", "treatment": "Reduce"}
+      ],
+      "cybersecurity_goals": [
+        {"id": "CSG-ADAS-01", "description": "Ensure sensor fusion resilience against adversarial and spoofed inputs", "property": "Integrity", "cal": "CAL-4"},
+        {"id": "CSG-ADAS-02", "description": "Protect ML model integrity against unauthorized modification", "property": "Integrity", "cal": "CAL-4"},
+        {"id": "CSG-ADAS-03", "description": "Authenticate all actuation commands on the vehicle bus", "property": "Authenticity", "cal": "CAL-4"},
+        {"id": "CSG-ADAS-04", "description": "Maintain safe degradation of ADAS functions under sensor denial conditions", "property": "Availability", "cal": "CAL-4"},
+        {"id": "CSG-ADAS-05", "description": "Verify integrity of HD map data before use in path planning", "property": "Integrity", "cal": "CAL-3"}
+      ],
+      "applicable_standards": ["iso_21434", "r155", "iso_26262", "iso_21448", "autosar"]
+    },
+    {
+      "id": "tara-ev-charging",
+      "system_name": "EV Charging Controller (ISO 15118)",
+      "item_definition": "The EV Charging Controller manages communication between the electric vehicle and External Charging Supply Equipment (EVSE) using ISO 15118 Plug and Charge protocol. It handles TLS-based mutual authentication, contract certificate management, charging session negotiation (AC/DC power levels, schedules), and payment authorization via Plug and Charge or External Identification Means (EIM). The controller interfaces with the Battery Management System for charge limits and the vehicle network for user interface. Trust boundaries exist between the charging cable (PLC/powerline communication), the charging controller, the vehicle's internal network, and the backend Mobility Operator/Certificate Provisioning Service. The controller stores contract certificates and private keys in a secure element.",
+      "assets": [
+        "Contract certificates and private keys in secure element",
+        "Charging session billing data",
+        "Vehicle-to-grid power negotiation parameters",
+        "Battery state of charge and limit data",
+        "Mobility operator credentials",
+        "Plug and Charge root certificates"
+      ],
+      "threat_scenarios": [
+        {"id": "TS-EVC-01", "threat": "Billing fraud via charging session manipulation", "stride": "S,T", "attack_vector": "Tamper with metering data or session parameters to alter billing amounts", "feasibility": "Medium"},
+        {"id": "TS-EVC-02", "threat": "Man-in-the-middle on PLC communication", "stride": "I,T", "attack_vector": "Intercept powerline communication between EV and EVSE to modify charging parameters", "feasibility": "Medium"},
+        {"id": "TS-EVC-03", "threat": "Extraction of contract certificate private key", "stride": "I", "attack_vector": "Side-channel attack on secure element during TLS handshake", "feasibility": "Low"},
+        {"id": "TS-EVC-04", "threat": "Unauthorized charging using stolen contract identity", "stride": "S", "attack_vector": "Clone or replay contract certificate for free charging", "feasibility": "Low"},
+        {"id": "TS-EVC-05", "threat": "Battery damage through manipulated charging parameters", "stride": "T", "attack_vector": "Override charge limits to force overcharging or excessive charge rates", "feasibility": "Low"},
+        {"id": "TS-EVC-06", "threat": "Grid destabilization via coordinated V2G manipulation", "stride": "T,D", "attack_vector": "Compromise multiple vehicles to inject/draw power simultaneously in V2G mode", "feasibility": "Low"},
+        {"id": "TS-EVC-07", "threat": "Privacy leakage through charging station correlation", "stride": "I", "attack_vector": "Track vehicle movements by correlating contract certificate usage across charging stations", "feasibility": "Medium"}
+      ],
+      "damage_scenarios": [
+        {"id": "DS-EVC-01", "description": "Financial loss from billing fraud at scale", "impact_category": "Financial", "severity": "Major", "impact_rating": "S2"},
+        {"id": "DS-EVC-02", "description": "Battery thermal event from manipulated charge parameters", "impact_category": "Safety", "severity": "Severe", "impact_rating": "S3"},
+        {"id": "DS-EVC-03", "description": "Driver privacy violation through charging location tracking", "impact_category": "Privacy", "severity": "Moderate", "impact_rating": "S1"},
+        {"id": "DS-EVC-04", "description": "Local grid instability from coordinated V2G attack", "impact_category": "Operational", "severity": "Major", "impact_rating": "S2"}
+      ],
+      "risk_determinations": [
+        {"threat_id": "TS-EVC-01", "damage_id": "DS-EVC-01", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-EVC-02", "damage_id": "DS-EVC-02", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-EVC-03", "damage_id": "DS-EVC-01", "risk_level": "Medium", "treatment": "Reduce"},
+        {"threat_id": "TS-EVC-04", "damage_id": "DS-EVC-01", "risk_level": "Medium", "treatment": "Reduce"},
+        {"threat_id": "TS-EVC-05", "damage_id": "DS-EVC-02", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-EVC-06", "damage_id": "DS-EVC-04", "risk_level": "Medium", "treatment": "Reduce"},
+        {"threat_id": "TS-EVC-07", "damage_id": "DS-EVC-03", "risk_level": "Low", "treatment": "Accept"}
+      ],
+      "cybersecurity_goals": [
+        {"id": "CSG-EVC-01", "description": "Ensure mutual authentication between EV and EVSE using valid contract certificates", "property": "Authenticity", "cal": "CAL-3"},
+        {"id": "CSG-EVC-02", "description": "Protect integrity of charging session metering and billing data", "property": "Integrity", "cal": "CAL-3"},
+        {"id": "CSG-EVC-03", "description": "Enforce BMS-defined charge limits regardless of EVSE parameters", "property": "Integrity", "cal": "CAL-4"},
+        {"id": "CSG-EVC-04", "description": "Protect contract certificate private keys against extraction", "property": "Confidentiality", "cal": "CAL-3"}
+      ],
+      "applicable_standards": ["iso_21434", "r155", "iso_15118", "iec_61851"]
+    },
+    {
+      "id": "tara-keyless-entry",
+      "system_name": "Keyless Entry System",
+      "item_definition": "The Keyless Entry System provides passive entry and passive start (PEPS) functionality using low-frequency (125 kHz) wake and ultra-high-frequency (315/433 MHz or UWB) communication between the vehicle and the key fob. The system includes an immobilizer with cryptographic transponder authentication, remote lock/unlock, and in some variants Ultra-Wideband (UWB) distance bounding for relay attack resistance. Trust boundaries exist between the key fob, the RF communication channel, the body control module (BCM) receiver, and the engine immobilizer ECU. The system must authenticate the key fob and verify physical proximity before unlocking doors or enabling engine start. Key pairing data and cryptographic secrets are stored in both the fob and the BCM.",
+      "assets": [
+        "Immobilizer cryptographic keys and secrets",
+        "Key fob pairing data and rolling codes",
+        "RF communication protocol parameters",
+        "UWB ranging calibration data",
+        "Vehicle unlock and engine start authorization tokens",
+        "Spare key provisioning credentials"
+      ],
+      "threat_scenarios": [
+        {"id": "TS-KE-01", "threat": "Relay attack extending key fob range", "stride": "S", "attack_vector": "Use two relay devices to bridge LF/UHF signals between distant fob and vehicle", "feasibility": "High"},
+        {"id": "TS-KE-02", "threat": "Rolling code prediction or replay", "stride": "S,T", "attack_vector": "Capture and analyze rolling codes to predict future valid codes or jam-and-replay", "feasibility": "Medium"},
+        {"id": "TS-KE-03", "threat": "Key fob cloning via cryptographic key extraction", "stride": "S", "attack_vector": "Extract immobilizer secrets from key fob via hardware attack (decapping, fault injection)", "feasibility": "Low"},
+        {"id": "TS-KE-04", "threat": "Jamming of unlock signal causing user frustration", "stride": "D", "attack_vector": "Transmit interference on 315/433 MHz to prevent legitimate unlock", "feasibility": "High"},
+        {"id": "TS-KE-05", "threat": "Unauthorized key pairing via diagnostic access", "stride": "E", "attack_vector": "Use stolen diagnostic tool credentials to pair additional key fobs", "feasibility": "Medium"},
+        {"id": "TS-KE-06", "threat": "UWB distance bounding bypass", "stride": "S", "attack_vector": "Exploit timing inaccuracies in UWB ranging to defeat proximity check", "feasibility": "Low"}
+      ],
+      "damage_scenarios": [
+        {"id": "DS-KE-01", "description": "Vehicle theft via unauthorized entry and engine start", "impact_category": "Financial", "severity": "Major", "impact_rating": "S2"},
+        {"id": "DS-KE-02", "description": "Theft of valuables from unlocked vehicle", "impact_category": "Financial", "severity": "Moderate", "impact_rating": "S1"},
+        {"id": "DS-KE-03", "description": "Fleet-wide theft vulnerability if cryptographic scheme is broken", "impact_category": "Financial", "severity": "Severe", "impact_rating": "S3"}
+      ],
+      "risk_determinations": [
+        {"threat_id": "TS-KE-01", "damage_id": "DS-KE-01", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-KE-02", "damage_id": "DS-KE-01", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-KE-03", "damage_id": "DS-KE-03", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-KE-04", "damage_id": "DS-KE-02", "risk_level": "Medium", "treatment": "Accept"},
+        {"threat_id": "TS-KE-05", "damage_id": "DS-KE-01", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-KE-06", "damage_id": "DS-KE-01", "risk_level": "Medium", "treatment": "Reduce"}
+      ],
+      "cybersecurity_goals": [
+        {"id": "CSG-KE-01", "description": "Verify physical proximity of key fob using UWB distance bounding", "property": "Authenticity", "cal": "CAL-3"},
+        {"id": "CSG-KE-02", "description": "Protect immobilizer cryptographic secrets against extraction", "property": "Confidentiality", "cal": "CAL-4"},
+        {"id": "CSG-KE-03", "description": "Prevent unauthorized key fob pairing through strong diagnostic authentication", "property": "Authenticity", "cal": "CAL-3"},
+        {"id": "CSG-KE-04", "description": "Ensure rolling code scheme resists prediction and replay attacks", "property": "Integrity", "cal": "CAL-3"}
+      ],
+      "applicable_standards": ["iso_21434", "r155", "autosar"]
+    },
+    {
+      "id": "tara-infotainment",
+      "system_name": "Infotainment Head Unit",
+      "item_definition": "The Infotainment Head Unit (IVI) provides entertainment, navigation, phone connectivity (Bluetooth, Wi-Fi, USB), and vehicle settings interfaces. It runs a Linux-based or Android Automotive OS on an application processor, with connectivity to external devices (smartphones via Apple CarPlay/Android Auto), the internet (via TCU), and the vehicle network (CAN/Ethernet via gateway). Trust boundaries exist between external connectivity interfaces (Bluetooth, Wi-Fi, USB), the application runtime environment, the navigation subsystem, and the vehicle network gateway. The IVI processes personal data including contacts, call history, navigation destinations, and media preferences. It represents the largest code surface in the vehicle.",
+      "assets": [
+        "User personal data (contacts, call history, navigation history)",
+        "Bluetooth pairing keys and Wi-Fi credentials",
+        "Application runtime and installed apps",
+        "Navigation database and route data",
+        "Microphone and camera feeds",
+        "Vehicle network access via gateway interface"
+      ],
+      "threat_scenarios": [
+        {"id": "TS-IVI-01", "threat": "Remote code execution via Bluetooth stack vulnerability", "stride": "T,E", "attack_vector": "Exploit known Bluetooth protocol vulnerabilities to gain shell access", "feasibility": "Medium"},
+        {"id": "TS-IVI-02", "threat": "Malicious USB device exploiting media parser", "stride": "T,E", "attack_vector": "Craft USB storage with malformed media files triggering buffer overflow in codec", "feasibility": "Medium"},
+        {"id": "TS-IVI-03", "threat": "Personal data exfiltration from paired phone data", "stride": "I", "attack_vector": "Extract synced contacts, messages, and call history after IVI compromise", "feasibility": "Medium"},
+        {"id": "TS-IVI-04", "threat": "Malicious app installation via compromised app store", "stride": "T,E", "attack_vector": "Sideload or push malicious app through compromised update mechanism", "feasibility": "Medium"},
+        {"id": "TS-IVI-05", "threat": "Pivoting from IVI to vehicle network", "stride": "E", "attack_vector": "Escape IVI sandbox to send CAN frames through gateway interface", "feasibility": "Low"},
+        {"id": "TS-IVI-06", "threat": "Eavesdropping via microphone access", "stride": "I", "attack_vector": "Activate in-cabin microphone after compromising IVI to record conversations", "feasibility": "Low"},
+        {"id": "TS-IVI-07", "threat": "Wi-Fi credential theft and network reconnaissance", "stride": "I", "attack_vector": "Extract stored Wi-Fi passwords and scan connected networks", "feasibility": "Medium"}
+      ],
+      "damage_scenarios": [
+        {"id": "DS-IVI-01", "description": "Mass privacy breach from fleet-wide personal data extraction", "impact_category": "Privacy", "severity": "Severe", "impact_rating": "S3"},
+        {"id": "DS-IVI-02", "description": "Vehicle network compromise via IVI as entry point", "impact_category": "Safety", "severity": "Major", "impact_rating": "S2"},
+        {"id": "DS-IVI-03", "description": "In-cabin surveillance through microphone/camera access", "impact_category": "Privacy", "severity": "Severe", "impact_rating": "S3"},
+        {"id": "DS-IVI-04", "description": "Driver distraction from IVI malfunction", "impact_category": "Safety", "severity": "Moderate", "impact_rating": "S1"}
+      ],
+      "risk_determinations": [
+        {"threat_id": "TS-IVI-01", "damage_id": "DS-IVI-02", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-IVI-02", "damage_id": "DS-IVI-02", "risk_level": "Medium", "treatment": "Reduce"},
+        {"threat_id": "TS-IVI-03", "damage_id": "DS-IVI-01", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-IVI-04", "damage_id": "DS-IVI-02", "risk_level": "Medium", "treatment": "Reduce"},
+        {"threat_id": "TS-IVI-05", "damage_id": "DS-IVI-02", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-IVI-06", "damage_id": "DS-IVI-03", "risk_level": "Medium", "treatment": "Reduce"},
+        {"threat_id": "TS-IVI-07", "damage_id": "DS-IVI-01", "risk_level": "Medium", "treatment": "Reduce"}
+      ],
+      "cybersecurity_goals": [
+        {"id": "CSG-IVI-01", "description": "Isolate IVI application environment from vehicle safety-critical networks", "property": "Integrity", "cal": "CAL-3"},
+        {"id": "CSG-IVI-02", "description": "Protect user personal data confidentiality at rest and in transit", "property": "Confidentiality", "cal": "CAL-3"},
+        {"id": "CSG-IVI-03", "description": "Enforce application sandboxing to prevent privilege escalation", "property": "Integrity", "cal": "CAL-2"},
+        {"id": "CSG-IVI-04", "description": "Restrict microphone and camera access to authenticated user-initiated sessions only", "property": "Confidentiality", "cal": "CAL-3"}
+      ],
+      "applicable_standards": ["iso_21434", "r155", "autosar", "android_auto_security"]
+    },
+    {
+      "id": "tara-bms",
+      "system_name": "Battery Management System",
+      "item_definition": "The Battery Management System (BMS) monitors and controls the high-voltage lithium-ion battery pack in electric and hybrid vehicles. It measures cell voltages, temperatures, and current flow, calculates state of charge (SoC), state of health (SoH), and remaining range estimates. The BMS controls cell balancing, thermal management (cooling/heating), and enforces charge/discharge limits to prevent thermal runaway. It communicates with the motor controller, charging controller, and vehicle control unit via CAN-FD. Trust boundaries exist between cell monitoring ICs (slave boards), the BMS master controller, and the vehicle network. The BMS has direct control over high-voltage contactors that connect/disconnect the battery. Safety integrity level is ASIL C to ASIL D.",
+      "assets": [
+        "Cell voltage and temperature sensor data",
+        "SoC/SoH calculation algorithms and calibration",
+        "Charge/discharge limit parameters",
+        "Contactor control commands",
+        "Thermal management control logic",
+        "Battery lifecycle and warranty data"
+      ],
+      "threat_scenarios": [
+        {"id": "TS-BMS-01", "threat": "Manipulation of cell voltage readings", "stride": "T", "attack_vector": "Tamper with SPI communication between slave monitoring ICs and BMS master", "feasibility": "Low"},
+        {"id": "TS-BMS-02", "threat": "Override of charge/discharge safety limits", "stride": "T,E", "attack_vector": "Modify BMS calibration via diagnostic access to increase limits beyond safe thresholds", "feasibility": "Low"},
+        {"id": "TS-BMS-03", "threat": "Spoofed CAN messages to BMS from motor controller", "stride": "S,T", "attack_vector": "Inject CAN-FD frames requesting power beyond safe limits", "feasibility": "Medium"},
+        {"id": "TS-BMS-04", "threat": "Denial of thermal management", "stride": "D", "attack_vector": "Suppress BMS cooling commands during fast charge or high-load conditions", "feasibility": "Low"},
+        {"id": "TS-BMS-05", "threat": "SoH data manipulation for warranty fraud", "stride": "T", "attack_vector": "Modify battery health data to falsely report better condition for resale", "feasibility": "Medium"},
+        {"id": "TS-BMS-06", "threat": "Unauthorized contactor control", "stride": "T,E", "attack_vector": "Command high-voltage contactors open during drive or closed during fault condition", "feasibility": "Low"}
+      ],
+      "damage_scenarios": [
+        {"id": "DS-BMS-01", "description": "Battery thermal runaway causing fire", "impact_category": "Safety", "severity": "Severe", "impact_rating": "S3"},
+        {"id": "DS-BMS-02", "description": "Sudden loss of motive power from contactor disconnect", "impact_category": "Safety", "severity": "Severe", "impact_rating": "S3"},
+        {"id": "DS-BMS-03", "description": "Accelerated battery degradation from unsafe charging", "impact_category": "Financial", "severity": "Major", "impact_rating": "S2"},
+        {"id": "DS-BMS-04", "description": "Warranty fraud from falsified battery health records", "impact_category": "Financial", "severity": "Moderate", "impact_rating": "S1"}
+      ],
+      "risk_determinations": [
+        {"threat_id": "TS-BMS-01", "damage_id": "DS-BMS-01", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-BMS-02", "damage_id": "DS-BMS-01", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-BMS-03", "damage_id": "DS-BMS-02", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-BMS-04", "damage_id": "DS-BMS-01", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-BMS-05", "damage_id": "DS-BMS-04", "risk_level": "Medium", "treatment": "Reduce"},
+        {"threat_id": "TS-BMS-06", "damage_id": "DS-BMS-02", "risk_level": "High", "treatment": "Reduce"}
+      ],
+      "cybersecurity_goals": [
+        {"id": "CSG-BMS-01", "description": "Protect integrity of cell monitoring data against manipulation", "property": "Integrity", "cal": "CAL-4"},
+        {"id": "CSG-BMS-02", "description": "Enforce hardware-backed charge and discharge safety limits independent of software", "property": "Integrity", "cal": "CAL-4"},
+        {"id": "CSG-BMS-03", "description": "Authenticate all CAN-FD messages commanding BMS power delivery", "property": "Authenticity", "cal": "CAL-4"},
+        {"id": "CSG-BMS-04", "description": "Ensure thermal management availability under all operating conditions", "property": "Availability", "cal": "CAL-4"}
+      ],
+      "applicable_standards": ["iso_21434", "r155", "iso_26262", "iec_62660"]
+    },
+    {
+      "id": "tara-steering",
+      "system_name": "Steering ECU (ASIL D)",
+      "item_definition": "The Electric Power Steering (EPS) ECU controls the steering assist motor and receives steering angle commands from the ADAS controller and driver steering wheel input. It implements torque overlay functions for lane keeping assist and automated parking. The ECU runs safety-critical software at ASIL D with redundant processing channels (1oo2D architecture) and independent monitoring. Communication occurs via CAN-FD with message authentication (SecOC). Trust boundaries exist between the steering angle sensor, the driver interface, the ADAS torque overlay input, the EPS motor controller, and the redundant safety monitor. Any compromise of steering integrity has direct life-safety consequences.",
+      "assets": [
+        "Steering assist control algorithms",
+        "ADAS torque overlay parameters and limits",
+        "SecOC keys and message authentication codes",
+        "Steering angle sensor calibration data",
+        "Safety monitor configuration (independent channel)",
+        "Motor control firmware"
+      ],
+      "threat_scenarios": [
+        {"id": "TS-STR-01", "threat": "Injection of false steering torque commands", "stride": "S,T", "attack_vector": "Spoof CAN-FD messages from ADAS controller with SecOC bypass or key compromise", "feasibility": "Low"},
+        {"id": "TS-STR-02", "threat": "Compromise of steering assist calibration", "stride": "T", "attack_vector": "Modify EPS calibration parameters via diagnostic access to alter steering feel and limits", "feasibility": "Low"},
+        {"id": "TS-STR-03", "threat": "Denial of power steering assist", "stride": "D", "attack_vector": "Trigger safety shutdown by injecting conflicting sensor data", "feasibility": "Low"},
+        {"id": "TS-STR-04", "threat": "SecOC key extraction for message authentication bypass", "stride": "I,E", "attack_vector": "Extract SecOC keys from ECU firmware or memory via debug interface", "feasibility": "Low"},
+        {"id": "TS-STR-05", "threat": "Bypassing redundant safety monitor", "stride": "T,E", "attack_vector": "Simultaneously compromise both processing channels to suppress safety reactions", "feasibility": "Very Low"}
+      ],
+      "damage_scenarios": [
+        {"id": "DS-STR-01", "description": "Sudden unintended steering causing road departure or collision", "impact_category": "Safety", "severity": "Severe", "impact_rating": "S3"},
+        {"id": "DS-STR-02", "description": "Loss of power steering assist at speed", "impact_category": "Safety", "severity": "Major", "impact_rating": "S2"},
+        {"id": "DS-STR-03", "description": "Fleet-wide steering vulnerability if SecOC keys compromised", "impact_category": "Safety", "severity": "Severe", "impact_rating": "S3"}
+      ],
+      "risk_determinations": [
+        {"threat_id": "TS-STR-01", "damage_id": "DS-STR-01", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-STR-02", "damage_id": "DS-STR-01", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-STR-03", "damage_id": "DS-STR-02", "risk_level": "Medium", "treatment": "Reduce"},
+        {"threat_id": "TS-STR-04", "damage_id": "DS-STR-03", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-STR-05", "damage_id": "DS-STR-01", "risk_level": "Medium", "treatment": "Reduce"}
+      ],
+      "cybersecurity_goals": [
+        {"id": "CSG-STR-01", "description": "Authenticate all steering torque commands using SecOC with fresh keys", "property": "Authenticity", "cal": "CAL-4"},
+        {"id": "CSG-STR-02", "description": "Protect steering calibration parameters against unauthorized modification", "property": "Integrity", "cal": "CAL-4"},
+        {"id": "CSG-STR-03", "description": "Maintain independent safety monitor integrity separate from main processing", "property": "Integrity", "cal": "CAL-4"},
+        {"id": "CSG-STR-04", "description": "Enforce torque overlay limits that cannot be exceeded by software commands", "property": "Integrity", "cal": "CAL-4"}
+      ],
+      "applicable_standards": ["iso_21434", "r155", "iso_26262", "autosar"]
+    },
+    {
+      "id": "tara-fleet-backend",
+      "system_name": "Fleet Management Backend",
+      "item_definition": "The Fleet Management Backend is a cloud-hosted service that aggregates telemetry from thousands of connected vehicles, provides fleet operators with real-time dashboards, geofencing, driver behavior analytics, and remote vehicle commands (lock, unlock, immobilize, honk, flash). It consists of an API gateway, message broker (MQTT/AMQP), time-series database, command dispatcher, and web dashboard. Trust boundaries exist between the public internet, the API gateway, the internal microservices, the message broker, the vehicle communication channel (via TCU), and the operator dashboard. The backend stores sensitive data including all vehicle locations, driver identities, and vehicle command authorization tokens. It must enforce multi-tenancy to prevent cross-fleet data access.",
+      "assets": [
+        "Vehicle telemetry data (GPS, speed, fuel, diagnostics)",
+        "Remote command authorization tokens",
+        "Fleet operator credentials and API keys",
+        "Driver identity and behavior analytics",
+        "Geofence and alert configurations",
+        "Multi-tenant data isolation boundaries"
+      ],
+      "threat_scenarios": [
+        {"id": "TS-FB-01", "threat": "Unauthorized remote vehicle command execution", "stride": "E", "attack_vector": "Exploit API authorization flaw to send immobilize/unlock commands to arbitrary vehicles", "feasibility": "Medium"},
+        {"id": "TS-FB-02", "threat": "Cross-tenant data access in multi-fleet environment", "stride": "I,E", "attack_vector": "IDOR or broken access control allowing fleet operator to view other tenants' vehicles", "feasibility": "Medium"},
+        {"id": "TS-FB-03", "threat": "Mass vehicle tracking through API data exfiltration", "stride": "I", "attack_vector": "Compromise operator credentials to bulk-download GPS history", "feasibility": "Medium"},
+        {"id": "TS-FB-04", "threat": "Message broker poisoning with false telemetry", "stride": "S,T", "attack_vector": "Inject fake MQTT messages to create false vehicle positions or statuses", "feasibility": "Medium"},
+        {"id": "TS-FB-05", "threat": "Denial of fleet management services", "stride": "D", "attack_vector": "DDoS attack on API gateway or message broker exhaustion", "feasibility": "Medium"},
+        {"id": "TS-FB-06", "threat": "Privilege escalation from operator to admin role", "stride": "E", "attack_vector": "Exploit role management API to elevate permissions", "feasibility": "Medium"},
+        {"id": "TS-FB-07", "threat": "Supply chain attack on backend dependencies", "stride": "T", "attack_vector": "Compromise npm/pip package used by backend microservices", "feasibility": "Low"}
+      ],
+      "damage_scenarios": [
+        {"id": "DS-FB-01", "description": "Remote immobilization of vehicles in traffic causing accidents", "impact_category": "Safety", "severity": "Severe", "impact_rating": "S3"},
+        {"id": "DS-FB-02", "description": "Mass vehicle theft through unauthorized fleet unlock", "impact_category": "Financial", "severity": "Severe", "impact_rating": "S3"},
+        {"id": "DS-FB-03", "description": "GDPR privacy breach from bulk location data exfiltration", "impact_category": "Privacy", "severity": "Severe", "impact_rating": "S3"},
+        {"id": "DS-FB-04", "description": "Fleet operational disruption from backend unavailability", "impact_category": "Operational", "severity": "Major", "impact_rating": "S2"}
+      ],
+      "risk_determinations": [
+        {"threat_id": "TS-FB-01", "damage_id": "DS-FB-01", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-FB-02", "damage_id": "DS-FB-03", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-FB-03", "damage_id": "DS-FB-03", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-FB-04", "damage_id": "DS-FB-04", "risk_level": "Medium", "treatment": "Reduce"},
+        {"threat_id": "TS-FB-05", "damage_id": "DS-FB-04", "risk_level": "Medium", "treatment": "Reduce"},
+        {"threat_id": "TS-FB-06", "damage_id": "DS-FB-02", "risk_level": "High", "treatment": "Reduce"},
+        {"threat_id": "TS-FB-07", "damage_id": "DS-FB-01", "risk_level": "Medium", "treatment": "Reduce"}
+      ],
+      "cybersecurity_goals": [
+        {"id": "CSG-FB-01", "description": "Enforce strict multi-tenant data isolation with zero cross-fleet access", "property": "Confidentiality", "cal": "CAL-3"},
+        {"id": "CSG-FB-02", "description": "Require multi-factor authorization for all safety-critical remote vehicle commands", "property": "Authenticity", "cal": "CAL-4"},
+        {"id": "CSG-FB-03", "description": "Authenticate and validate all inbound vehicle telemetry messages", "property": "Integrity", "cal": "CAL-2"},
+        {"id": "CSG-FB-04", "description": "Maintain audit trail of all remote commands with operator attribution", "property": "Integrity", "cal": "CAL-3"},
+        {"id": "CSG-FB-05", "description": "Protect driver location data with encryption and access controls per GDPR", "property": "Confidentiality", "cal": "CAL-3"}
+      ],
+      "applicable_standards": ["iso_21434", "r155", "iso_27001", "gdpr"]
+    }
+  ]
+}
