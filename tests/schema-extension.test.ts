@@ -59,4 +59,13 @@ describe('Schema extension', () => {
     expect(tables).toHaveLength(1);
     db.close();
   });
+
+  it('has FTS5 index on csms_obligations', () => {
+    const db = new Database(DB_PATH, { readonly: true });
+    const tables = db.prepare(
+      "SELECT name FROM sqlite_master WHERE type='table' AND name='csms_obligations_fts'"
+    ).all();
+    expect(tables).toHaveLength(1);
+    db.close();
+  });
 });

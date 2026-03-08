@@ -238,6 +238,18 @@ CREATE TRIGGER IF NOT EXISTS architecture_patterns_ai AFTER INSERT ON architectu
   VALUES (new.rowid, new.id, new.name, new.domain, new.description, new.components, new.guidance);
 END;
 
+CREATE TRIGGER IF NOT EXISTS architecture_patterns_ad AFTER DELETE ON architecture_patterns BEGIN
+  INSERT INTO architecture_patterns_fts(architecture_patterns_fts, rowid, id, name, domain, description, components, guidance)
+  VALUES('delete', old.rowid, old.id, old.name, old.domain, old.description, old.components, old.guidance);
+END;
+
+CREATE TRIGGER IF NOT EXISTS architecture_patterns_au AFTER UPDATE ON architecture_patterns BEGIN
+  INSERT INTO architecture_patterns_fts(architecture_patterns_fts, rowid, id, name, domain, description, components, guidance)
+  VALUES('delete', old.rowid, old.id, old.name, old.domain, old.description, old.components, old.guidance);
+  INSERT INTO architecture_patterns_fts(rowid, id, name, domain, description, components, guidance)
+  VALUES (new.rowid, new.id, new.name, new.domain, new.description, new.components, new.guidance);
+END;
+
 -- ============================================================================
 -- Attack Pattern Library
 -- ============================================================================
@@ -264,6 +276,18 @@ CREATE VIRTUAL TABLE IF NOT EXISTS attack_patterns_fts USING fts5(
 );
 
 CREATE TRIGGER IF NOT EXISTS attack_patterns_ai AFTER INSERT ON attack_patterns BEGIN
+  INSERT INTO attack_patterns_fts(rowid, id, name, target_component, attack_vector, description)
+  VALUES (new.rowid, new.id, new.name, new.target_component, new.attack_vector, new.description);
+END;
+
+CREATE TRIGGER IF NOT EXISTS attack_patterns_ad AFTER DELETE ON attack_patterns BEGIN
+  INSERT INTO attack_patterns_fts(attack_patterns_fts, rowid, id, name, target_component, attack_vector, description)
+  VALUES('delete', old.rowid, old.id, old.name, old.target_component, old.attack_vector, old.description);
+END;
+
+CREATE TRIGGER IF NOT EXISTS attack_patterns_au AFTER UPDATE ON attack_patterns BEGIN
+  INSERT INTO attack_patterns_fts(attack_patterns_fts, rowid, id, name, target_component, attack_vector, description)
+  VALUES('delete', old.rowid, old.id, old.name, old.target_component, old.attack_vector, old.description);
   INSERT INTO attack_patterns_fts(rowid, id, name, target_component, attack_vector, description)
   VALUES (new.rowid, new.id, new.name, new.target_component, new.attack_vector, new.description);
 END;
@@ -306,6 +330,18 @@ CREATE VIRTUAL TABLE IF NOT EXISTS csms_obligations_fts USING fts5(
 );
 
 CREATE TRIGGER IF NOT EXISTS csms_obligations_ai AFTER INSERT ON csms_obligations BEGIN
+  INSERT INTO csms_obligations_fts(rowid, id, lifecycle_phase, obligation, guidance)
+  VALUES (new.rowid, new.id, new.lifecycle_phase, new.obligation, new.guidance);
+END;
+
+CREATE TRIGGER IF NOT EXISTS csms_obligations_ad AFTER DELETE ON csms_obligations BEGIN
+  INSERT INTO csms_obligations_fts(csms_obligations_fts, rowid, id, lifecycle_phase, obligation, guidance)
+  VALUES('delete', old.rowid, old.id, old.lifecycle_phase, old.obligation, old.guidance);
+END;
+
+CREATE TRIGGER IF NOT EXISTS csms_obligations_au AFTER UPDATE ON csms_obligations BEGIN
+  INSERT INTO csms_obligations_fts(csms_obligations_fts, rowid, id, lifecycle_phase, obligation, guidance)
+  VALUES('delete', old.rowid, old.id, old.lifecycle_phase, old.obligation, old.guidance);
   INSERT INTO csms_obligations_fts(rowid, id, lifecycle_phase, obligation, guidance)
   VALUES (new.rowid, new.id, new.lifecycle_phase, new.obligation, new.guidance);
 END;
