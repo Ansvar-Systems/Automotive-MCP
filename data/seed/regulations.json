@@ -37,6 +37,79 @@
         "O4"
       ],
       "regulation_type": "unece"
+    },
+    {
+      "id": "gbt_40857",
+      "full_name": "GB/T 40857-2021",
+      "title": "Vehicle Cybersecurity Technical Requirements",
+      "version": "2021",
+      "effective_date": "2022-05-01",
+      "source_url": null,
+      "applies_to": [
+        "M1",
+        "M2",
+        "N1",
+        "N2"
+      ],
+      "regulation_type": "national"
+    },
+    {
+      "id": "gbt_40856",
+      "full_name": "GB/T 40856-2021",
+      "title": "Vehicle Software Update Requirements",
+      "version": "2021",
+      "effective_date": "2022-05-01",
+      "source_url": null,
+      "applies_to": [
+        "M1",
+        "M2",
+        "N1",
+        "N2"
+      ],
+      "regulation_type": "national"
+    },
+    {
+      "id": "kmvss_18_3",
+      "full_name": "KMVSS Article 18-3",
+      "title": "Cybersecurity Management System for Motor Vehicles",
+      "version": "2024",
+      "effective_date": "2024-08-14",
+      "source_url": null,
+      "applies_to": [
+        "M1",
+        "N1"
+      ],
+      "regulation_type": "national"
+    },
+    {
+      "id": "ais_189",
+      "full_name": "AIS-189",
+      "title": "Automotive Cybersecurity Requirements",
+      "version": "2023",
+      "effective_date": "2025-04-01",
+      "source_url": null,
+      "applies_to": [
+        "M1",
+        "M2",
+        "M3",
+        "N1",
+        "N2",
+        "N3"
+      ],
+      "regulation_type": "national"
+    },
+    {
+      "id": "mlit_guidelines",
+      "full_name": "MLIT Cybersecurity Guidelines",
+      "title": "Vehicle Cybersecurity Guidelines",
+      "version": "2024",
+      "effective_date": "2024-01-01",
+      "source_url": null,
+      "applies_to": [
+        "M1",
+        "N1"
+      ],
+      "regulation_type": "national"
     }
   ],
   "content": [
@@ -2775,6 +2848,966 @@
       "title": "",
       "text": "The Contracting Parties to the Agreement which apply this Regulation shall communicate to the United Nations Secretariat the names and addresses of the Technical Services responsible for conducting approval tests and of the Type Approval Authorities which grant approval and to which forms certifying approval or extension or refusal or withdrawal of approval, issued in other countries, are to be sent. The Contracting Parties to the Agreement which apply this Regulation shall communicate to the United Nations Secretariat the names and addresses of the Technical Services responsible for conducting approval tests and of the Type Approval Authorities which grant approval and to which forms certifying approval or extension or refusal or withdrawal of approval, issued in other countries, are to be sent. (1) As defined in the Consolidated Resolution on the Construction of Vehicles (R.E.3.), document ECE/TRANS/WP.29/78/Rev.6, para. 2 - www.unece.org/trans/main/wp29/wp29wgs/wp29gen/wp29resolutions.html (2) The distinguishing numbers of the Contracting Parties to the 1958 Agreement are reproduced in Annex 3 to the Consolidated Resolution on the Construction of Vehicles (R.E.3), document ECE/TRANS/WP.29/78/Rev.6.",
       "parent_reference": "12"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "article",
+      "reference": "4",
+      "title": "General Requirements",
+      "text": "The vehicle manufacturer shall establish, implement, and maintain a cybersecurity management system covering the entire vehicle lifecycle. The management system shall address organizational cybersecurity policies, risk management processes, and technical security measures applicable to all electronic control units and vehicle communication interfaces. The manufacturer shall designate a responsible person for cybersecurity management and ensure adequate resources for cybersecurity activities throughout the vehicle development and production phases.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "4.1",
+      "title": "Cybersecurity Policy",
+      "text": "The vehicle manufacturer shall establish and document a cybersecurity policy that defines the organization's approach to vehicle cybersecurity. The policy shall cover the scope of cybersecurity activities, roles and responsibilities, risk tolerance levels, and integration with existing quality management systems. Senior management shall approve the cybersecurity policy and ensure it is communicated throughout the organization and to relevant suppliers. The policy shall be reviewed at planned intervals and updated when significant changes occur in the threat landscape or organizational structure.",
+      "parent_reference": "4"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "4.2",
+      "title": "Organizational Structure",
+      "text": "The manufacturer shall define and document the organizational structure for cybersecurity, including clear assignment of roles, responsibilities, and authorities. A cybersecurity manager shall be appointed with direct reporting to senior management. The organizational structure shall ensure independence of cybersecurity assessment activities from development activities. Cross-functional coordination between cybersecurity, safety, and quality teams shall be established through documented processes.",
+      "parent_reference": "4"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "4.3",
+      "title": "Competence and Training",
+      "text": "The manufacturer shall identify required cybersecurity competencies for personnel involved in vehicle development, production, and post-production activities. A training program shall be established to ensure personnel maintain current knowledge of automotive cybersecurity threats, attack techniques, and defensive measures. Training records shall be maintained and competence shall be verified through periodic assessments. The manufacturer shall ensure that suppliers involved in cybersecurity-relevant development also maintain adequate competence levels.",
+      "parent_reference": "4"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "4.4",
+      "title": "Supplier Management",
+      "text": "The manufacturer shall establish processes for managing cybersecurity requirements across the supply chain. Cybersecurity requirements shall be communicated to suppliers through formal agreements that specify security requirements, vulnerability disclosure obligations, and incident reporting timelines. The manufacturer shall verify supplier cybersecurity capabilities through audits or assessments before engaging them in cybersecurity-relevant component development. Supplier performance in cybersecurity shall be monitored throughout the contractual relationship.",
+      "parent_reference": "4"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "article",
+      "reference": "5",
+      "title": "Cybersecurity Risk Assessment",
+      "text": "The vehicle manufacturer shall conduct a thorough cybersecurity risk assessment for each vehicle type. The risk assessment shall identify assets, threats, vulnerabilities, and potential attack paths. Risk shall be determined based on the combination of attack feasibility and impact severity. The risk assessment methodology shall be documented and applied consistently across all vehicle types. Results of risk assessments shall be maintained and updated when new threats or vulnerabilities are identified.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "5.1",
+      "title": "Asset Identification",
+      "text": "The manufacturer shall identify and document all cybersecurity-relevant assets within the vehicle, including electronic control units, communication buses, external interfaces, stored data, and software components. Each asset shall be classified according to its cybersecurity relevance based on the functions it supports and the potential impact of its compromise. The asset inventory shall cover both hardware and software components and shall be maintained throughout the vehicle lifecycle. Particular attention shall be given to assets that interface with external networks, including telematics units, diagnostic ports, and V2X communication modules.",
+      "parent_reference": "5"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "5.2",
+      "title": "Threat Analysis",
+      "text": "The manufacturer shall perform a systematic threat analysis using recognized methodologies such as STRIDE or attack tree analysis. Threats shall be identified for each asset considering the threat categories defined in Appendix A of this standard, including spoofing, tampering, repudiation, information disclosure, denial of service, and elevation of privilege. The threat analysis shall consider both remote and physical attack vectors, insider threats, and supply chain compromise scenarios. Threat intelligence from industry sharing organizations such as Auto-ISAC shall be incorporated into the analysis.",
+      "parent_reference": "5"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "5.3",
+      "title": "Vulnerability Assessment",
+      "text": "The manufacturer shall assess vulnerabilities in vehicle systems through a combination of design review, code analysis, and testing activities. Known vulnerability databases including CVE and NVD shall be consulted for all third-party components used in the vehicle. The vulnerability assessment shall cover both software vulnerabilities and hardware weaknesses that could be exploited to compromise vehicle cybersecurity. Results shall be documented with severity ratings and correlated with identified threats to determine exploitable attack paths.",
+      "parent_reference": "5"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "5.4",
+      "title": "Risk Determination",
+      "text": "Risk levels shall be determined by combining attack feasibility ratings with impact severity assessments. Attack feasibility shall be evaluated considering factors including required elapsed time, specialist expertise needed, knowledge of the target, window of opportunity, and equipment requirements. Impact severity shall be assessed across safety, financial, operational, and privacy dimensions. The risk determination methodology shall produce consistent results and shall be calibrated against real-world automotive cybersecurity incidents. Risk treatment decisions shall be documented with justification for accepted residual risks.",
+      "parent_reference": "5"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "article",
+      "reference": "6",
+      "title": "Vehicle Development Cybersecurity",
+      "text": "Cybersecurity shall be integrated into the vehicle development process from concept phase through production release. The manufacturer shall define cybersecurity goals and requirements derived from the risk assessment and implement appropriate security measures in the vehicle architecture and component design. Verification and validation activities shall confirm that implemented measures effectively mitigate identified risks.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "6.1",
+      "title": "Cybersecurity Goals and Concepts",
+      "text": "Based on the risk assessment results, the manufacturer shall define cybersecurity goals that specify the required security properties for identified assets. Cybersecurity goals shall address confidentiality, integrity, availability, and authenticity requirements as applicable. A cybersecurity concept shall be developed that describes how the cybersecurity goals will be achieved through a combination of architectural measures, technical controls, and operational procedures. The cybersecurity concept shall be traceable to the risk assessment and shall be reviewed for completeness and feasibility.",
+      "parent_reference": "6"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "6.2",
+      "title": "Secure Architecture Design",
+      "text": "The vehicle E/E architecture shall implement security zoning with defined trust boundaries between domains of different security levels. Network segmentation shall separate safety-critical systems from infotainment and external communication systems. Gateway ECUs shall enforce access control policies between network segments. The architecture shall implement defense in depth with multiple layers of security controls. Hardware security modules or trusted platform modules shall be used to protect cryptographic keys and enable secure boot processes.",
+      "parent_reference": "6"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "6.3",
+      "title": "Secure Development Practices",
+      "text": "The manufacturer shall apply secure coding standards throughout software development, including MISRA C/C++ security guidelines and CERT secure coding standards. Static analysis tools shall be used to identify code vulnerabilities before integration testing. Code reviews with cybersecurity focus shall be conducted for all security-relevant components. Software composition analysis shall identify and track all open-source and third-party components. Fuzz testing shall be performed on all external interfaces and protocol parsers.",
+      "parent_reference": "6"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "6.4",
+      "title": "Verification and Validation",
+      "text": "The manufacturer shall perform cybersecurity verification and validation activities including penetration testing, vulnerability scanning, and security-focused integration testing. Penetration testing shall be conducted by qualified testers independent of the development team. Test cases shall cover the threat scenarios identified in the risk assessment. Verification shall confirm that all cybersecurity requirements have been implemented correctly. Validation shall confirm that the implemented measures effectively mitigate the identified risks under realistic operating conditions.",
+      "parent_reference": "6"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "article",
+      "reference": "7",
+      "title": "Technical Cybersecurity Requirements",
+      "text": "Vehicles shall implement technical cybersecurity measures to protect against identified threats. This section specifies requirements for communication security, access control, data protection, intrusion detection, software integrity, diagnostic security, and over-the-air update security. The specific measures implemented shall be commensurate with the risk levels determined in the cybersecurity risk assessment.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "7.1",
+      "title": "Gateway Security",
+      "text": "Vehicle gateways shall implement message filtering and routing policies that restrict communication between network domains based on defined security policies. Gateways shall validate message authenticity using cryptographic message authentication codes for safety-critical and security-critical messages. Deep packet inspection shall be performed on messages transiting between domains of different trust levels. Gateway firewall rules shall implement a default-deny policy, permitting only explicitly authorized communication flows. Gateway configurations shall be protected against unauthorized modification through secure boot and authenticated configuration updates.",
+      "parent_reference": "7"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "7.2",
+      "title": "Intrusion Detection",
+      "text": "Vehicles shall implement an intrusion detection system (IDS) capable of monitoring vehicle network traffic for anomalous patterns indicative of cybersecurity attacks. The IDS shall cover all vehicle network buses including CAN, CAN-FD, Ethernet, LIN, and FlexRay where applicable. Detection capabilities shall include anomaly-based detection for unusual message frequencies, unknown message IDs, and timing deviations, as well as signature-based detection for known attack patterns. IDS alerts shall be logged locally and transmitted to the manufacturer's vehicle security operations center when connectivity is available. The IDS shall not interfere with safety-critical vehicle functions.",
+      "parent_reference": "7"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "7.3",
+      "title": "Cryptographic Requirements",
+      "text": "Cryptographic algorithms and key lengths used in vehicle cybersecurity shall meet the requirements specified in GM/T 0002 (SM4), GM/T 0003 (SM2), and GM/T 0004 (SM3) for domestic applications. International algorithms (AES-128 or higher, RSA-2048 or higher, ECDSA P-256 or higher) may be used for international communication interfaces. Cryptographic key management shall follow the lifecycle defined in GB/T 37092. Hardware security modules shall be used for the storage and processing of long-term cryptographic keys. Key derivation functions shall be used to generate session keys from master keys. Certificate-based authentication shall use X.509v3 certificates issued by a trusted vehicle PKI.",
+      "parent_reference": "7"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "7.4",
+      "title": "Diagnostic Interface Security",
+      "text": "Access to vehicle diagnostic functions shall be controlled through authentication and authorization mechanisms. The OBD-II port shall implement security access per ISO 14229 (UDS) Service 0x27 or authentication per Service 0x29 for access to security-sensitive diagnostic services. Extended diagnostic sessions that provide write access to ECU memory or configuration shall require multi-factor authentication. Diagnostic session timeouts shall be enforced to prevent unauthorized access through abandoned sessions. Diagnostic access logs shall be maintained with timestamps, tool identifiers, and actions performed.",
+      "parent_reference": "7"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "7.5",
+      "title": "Over-the-Air Update Security",
+      "text": "Over-the-air (OTA) software update systems shall implement end-to-end security from the update server to the target ECU. Update packages shall be digitally signed by the manufacturer using asymmetric cryptography. Signature verification shall occur before update installation. Update packages shall be encrypted during transmission to prevent reverse engineering and tampering. The update system shall verify update package integrity using cryptographic hash functions. Rollback protection shall prevent installation of older, potentially vulnerable software versions. The update system shall implement atomic updates that can recover from interrupted installations without leaving the vehicle in an inoperable state.",
+      "parent_reference": "7"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "7.6",
+      "title": "V2X Communication Security",
+      "text": "Vehicle-to-everything (V2X) communication shall implement security mechanisms as specified in GB/T 40855 and related national standards. V2X messages shall be signed using the Chinese SM2 algorithm with certificates issued by the national V2X PKI. Certificate management shall include pseudonym certificate rotation to protect driver privacy. Misbehavior detection shall identify and report vehicles broadcasting false or malicious V2X messages. The V2X communication stack shall implement message rate limiting and plausibility checking to prevent denial-of-service attacks and spoofing. V2X security credentials shall be stored in a hardware security module separate from other vehicle security domains.",
+      "parent_reference": "7"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "7.7",
+      "title": "Data Protection",
+      "text": "Vehicle systems shall protect personal data collected from vehicle occupants and generated by vehicle sensors. Data classification shall identify personal data, sensitive personal data, and important data as defined in the Personal Information Protection Law (PIPL) and the Data Security Law (DSL). Personal data processing shall follow the principles of minimum necessity, purpose limitation, and data minimization. Sensitive personal data including precise location data, biometric data, and driving behavior data shall be encrypted both in storage and in transmission. Cross-border data transfer restrictions shall be implemented in accordance with the regulations of the Cyberspace Administration of China. Data subjects shall be informed of data collection practices and provided with mechanisms to exercise their rights.",
+      "parent_reference": "7"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "7.8",
+      "title": "Secure Boot and Software Integrity",
+      "text": "Vehicle ECUs shall implement secure boot processes that verify the integrity and authenticity of software before execution. The chain of trust shall extend from a hardware root of trust through bootloader stages to the application software. Code signing certificates shall be managed securely with private keys stored in hardware security modules. Runtime integrity monitoring shall detect unauthorized modifications to critical software components. Secure boot failure shall result in a defined safe state that maintains basic vehicle operation while preventing execution of compromised software. Boot integrity measurement logs shall be stored securely for later attestation and forensic analysis.",
+      "parent_reference": "7"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "7.9",
+      "title": "External Interface Protection",
+      "text": "All external communication interfaces shall implement appropriate security controls based on the risk assessment. Wireless interfaces including Wi-Fi, Bluetooth, and cellular shall implement mutual authentication and encrypted communication channels. USB and physical media interfaces shall implement content filtering and malware scanning before processing imported data. Charging interfaces for electric vehicles shall implement ISO 15118 security provisions to prevent man-in-the-middle attacks during plug-and-charge operations. Near-field communication (NFC) interfaces shall implement anti-relay protections. All external interfaces shall be subject to port scanning and protocol fuzzing during verification testing.",
+      "parent_reference": "7"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "article",
+      "reference": "8",
+      "title": "Post-Market Cybersecurity Monitoring",
+      "text": "The vehicle manufacturer shall establish processes for monitoring cybersecurity threats and vulnerabilities throughout the post-production lifecycle of the vehicle. Monitoring activities shall include threat intelligence gathering, vulnerability tracking, field incident analysis, and coordination with national and international cybersecurity organizations. Identified cybersecurity risks shall be assessed and addressed through appropriate corrective actions.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "8.1",
+      "title": "Threat Intelligence",
+      "text": "The manufacturer shall establish and maintain threat intelligence capabilities to identify emerging cybersecurity threats relevant to their vehicle fleet. Sources shall include government cybersecurity advisories from CNCERT/CC, industry threat sharing organizations, academic research publications, and commercial threat intelligence feeds. Threat intelligence shall be correlated with the manufacturer's vehicle architecture and component inventory to determine applicability. Actionable threat intelligence shall trigger vulnerability assessment activities for affected vehicle types.",
+      "parent_reference": "8"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "8.2",
+      "title": "Vulnerability Management",
+      "text": "The manufacturer shall implement a vulnerability management process that tracks known vulnerabilities in all vehicle software components. Vulnerability scanning shall be performed on a regular basis using current vulnerability databases. Third-party component vulnerabilities disclosed through CVE or supplier notifications shall be assessed for impact on vehicle cybersecurity within 72 hours of disclosure. Critical vulnerabilities that pose an imminent safety risk shall be escalated to the vehicle safety team. Vulnerability remediation shall follow defined timelines based on severity: critical within 30 days, high within 90 days, medium within 180 days.",
+      "parent_reference": "8"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "8.3",
+      "title": "Field Monitoring and Incident Detection",
+      "text": "The manufacturer shall implement capabilities to detect cybersecurity incidents affecting vehicles in the field. Vehicle IDS alerts and security logs shall be collected and analyzed at the manufacturer's security operations center. Statistical analysis of fleet-wide security telemetry shall identify anomalous patterns that may indicate coordinated attacks. The manufacturer shall establish communication channels with vehicle owners to receive cybersecurity incident reports. Field monitoring data shall be analyzed in compliance with applicable data protection regulations.",
+      "parent_reference": "8"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "article",
+      "reference": "9",
+      "title": "Cybersecurity Incident Response",
+      "text": "The vehicle manufacturer shall establish and maintain a cybersecurity incident response capability for responding to cybersecurity incidents affecting their vehicle fleet. The incident response process shall include defined procedures for incident classification, containment, remediation, and reporting. The manufacturer shall coordinate with relevant authorities and industry partners during incident response.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "9.1",
+      "title": "Incident Response Plan",
+      "text": "The manufacturer shall maintain a documented cybersecurity incident response plan that defines roles, responsibilities, escalation procedures, and communication protocols. The plan shall cover incident classification criteria based on severity levels from informational through critical. Response procedures shall address both technical containment actions and organizational communication requirements. The incident response plan shall be tested through tabletop exercises at least annually. Lessons learned from incidents and exercises shall be incorporated into plan updates.",
+      "parent_reference": "9"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "9.2",
+      "title": "Incident Classification and Reporting",
+      "text": "Cybersecurity incidents shall be classified based on their impact on vehicle safety, the number of affected vehicles, and the severity of data compromise. Critical incidents that affect vehicle safety or impact a large portion of the fleet shall be reported to the Ministry of Industry and Information Technology (MIIT) within 24 hours of confirmation. Incident reports shall include the nature of the incident, affected vehicle types and estimated count, containment measures taken, and planned remediation actions. Follow-up reports shall be submitted as additional information becomes available and upon incident closure.",
+      "parent_reference": "9"
+    },
+    {
+      "regulation": "gbt_40857",
+      "content_type": "paragraph",
+      "reference": "9.3",
+      "title": "Remediation and Recovery",
+      "text": "The manufacturer shall implement remediation actions to address the root cause of cybersecurity incidents and restore affected vehicles to a secure state. Remediation options shall include over-the-air updates, dealer service campaigns, and temporary mitigating measures such as feature deactivation. The effectiveness of remediation actions shall be verified through testing before deployment. For safety-related cybersecurity incidents, the manufacturer shall coordinate with the China Automotive Technology and Research Center (CATARC) and relevant type approval authorities on recall decisions.",
+      "parent_reference": "9"
+    },
+    {
+      "regulation": "gbt_40856",
+      "content_type": "article",
+      "reference": "4",
+      "title": "Software Update Management System",
+      "text": "The vehicle manufacturer shall establish, implement, and maintain a software update management system (SUMS) that governs all software update activities for vehicles throughout their lifecycle. The SUMS shall define organizational processes, technical requirements, and quality assurance measures for developing, validating, and deploying software updates. The management system shall address both over-the-air (OTA) and workshop-based update mechanisms.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "gbt_40856",
+      "content_type": "paragraph",
+      "reference": "4.1",
+      "title": "SUMS Scope and Policy",
+      "text": "The software update management system shall cover all electronic control units capable of receiving software updates, including those supplied by tier-1 and tier-2 suppliers. The SUMS policy shall define the governance structure, decision-making authorities for update approvals, and quality gates that must be passed before updates are released to the field. The policy shall address the full update lifecycle from development through deployment, monitoring, and potential rollback.",
+      "parent_reference": "4"
+    },
+    {
+      "regulation": "gbt_40856",
+      "content_type": "paragraph",
+      "reference": "4.2",
+      "title": "Configuration Management",
+      "text": "The manufacturer shall maintain a comprehensive software configuration database that tracks the current software version installed on every updateable ECU across the vehicle fleet. The configuration database shall enable identification of the exact software configuration of any individual vehicle by VIN. Version control shall track all software releases, including dependencies between ECU software versions that must be maintained for correct system operation. Configuration baselines shall be established for each vehicle type and variant.",
+      "parent_reference": "4"
+    },
+    {
+      "regulation": "gbt_40856",
+      "content_type": "paragraph",
+      "reference": "4.3",
+      "title": "Change Impact Assessment",
+      "text": "Before approving any software update for release, the manufacturer shall perform a change impact assessment that evaluates the effect of the update on vehicle type approval, functional safety, cybersecurity, emissions compliance, and interoperability with other vehicle systems. The assessment shall determine whether the update constitutes a modification that requires regulatory re-approval. Updates that affect type-approved characteristics shall be reported to the relevant approval authority before deployment. The assessment results shall be documented and retained.",
+      "parent_reference": "4"
+    },
+    {
+      "regulation": "gbt_40856",
+      "content_type": "article",
+      "reference": "5",
+      "title": "Update Package Engineering",
+      "text": "Software update packages shall be engineered to ensure integrity, authenticity, confidentiality, and correct installation on target ECUs. The manufacturer shall define processes for creating, signing, encrypting, and validating update packages before distribution. Update packages shall undergo rigorous testing in representative vehicle environments before field deployment.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "gbt_40856",
+      "content_type": "paragraph",
+      "reference": "5.1",
+      "title": "Package Creation and Signing",
+      "text": "Update packages shall be created through an automated build pipeline that ensures reproducibility and traceability to source code. Each update package shall be digitally signed using asymmetric cryptography with a minimum key length of 2048 bits for RSA or 256 bits for elliptic curve algorithms. The signing key shall be stored in a hardware security module with access controls limiting signing authority to authorized personnel. The signing process shall generate a manifest that includes target ECU identifiers, software version information, dependencies, and cryptographic checksums of all package contents.",
+      "parent_reference": "5"
+    },
+    {
+      "regulation": "gbt_40856",
+      "content_type": "paragraph",
+      "reference": "5.2",
+      "title": "Package Validation",
+      "text": "Update packages shall be validated through multiple testing stages before release approval. Unit testing shall verify individual software component correctness. Integration testing shall verify correct interaction between updated and existing components. System testing shall verify end-to-end functionality in a hardware-in-the-loop (HIL) environment representative of the target vehicle. Regression testing shall confirm that existing functionality is not degraded by the update. Cybersecurity testing shall verify that the update does not introduce new vulnerabilities.",
+      "parent_reference": "5"
+    },
+    {
+      "regulation": "gbt_40856",
+      "content_type": "paragraph",
+      "reference": "5.3",
+      "title": "Delta and Full Updates",
+      "text": "The manufacturer shall support both delta (incremental) and full software updates. Delta updates shall include mechanisms to verify that the pre-update software version matches the expected baseline before applying the differential patch. Full updates shall be used when delta updates cannot be reliably applied or when the magnitude of changes makes delta updates impractical. The update mechanism shall verify successful installation regardless of update type. Checksums shall be computed and verified for the complete post-update software image.",
+      "parent_reference": "5"
+    },
+    {
+      "regulation": "gbt_40856",
+      "content_type": "article",
+      "reference": "6",
+      "title": "Update Delivery Mechanisms",
+      "text": "The manufacturer shall implement secure and reliable mechanisms for delivering software updates to vehicles. Both over-the-air and workshop-based delivery channels shall be supported. The delivery infrastructure shall protect update packages in transit and ensure that updates reach the intended target vehicles.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "gbt_40856",
+      "content_type": "paragraph",
+      "reference": "6.1",
+      "title": "Over-the-Air Delivery",
+      "text": "OTA update delivery shall use encrypted communication channels with mutual authentication between the vehicle and the update server. The delivery system shall implement retry mechanisms to handle interrupted downloads due to connectivity loss. Download progress shall be tracked and resumable to avoid re-downloading previously received portions. The delivery system shall manage bandwidth consumption to avoid excessive cellular data usage. Updates shall be downloaded to a staging area separate from the active software partition. The vehicle shall inform the user about available updates and obtain consent before installation where required.",
+      "parent_reference": "6"
+    },
+    {
+      "regulation": "gbt_40856",
+      "content_type": "paragraph",
+      "reference": "6.2",
+      "title": "Workshop Delivery",
+      "text": "Workshop-based software updates shall use authenticated diagnostic tools connected through the OBD-II port or a manufacturer-specific diagnostic interface. The diagnostic tool shall verify its authorization to perform updates on the target vehicle. Update packages distributed to workshops shall be protected against tampering through digital signatures. Workshop technicians shall be trained on update procedures and troubleshooting. The manufacturer shall provide workshops with rollback procedures for failed updates.",
+      "parent_reference": "6"
+    },
+    {
+      "regulation": "gbt_40856",
+      "content_type": "paragraph",
+      "reference": "6.3",
+      "title": "Update Scheduling and User Notification",
+      "text": "The manufacturer shall implement update scheduling mechanisms that consider vehicle operating state, battery charge level, and user convenience. Safety-critical updates shall be communicated to vehicle owners with appropriate urgency. The vehicle shall display clear information about the update including its purpose, estimated installation time, and any driving restrictions during installation. User consent shall be obtained for updates that require the vehicle to be stationary. Emergency safety updates may be installed automatically with post-installation notification.",
+      "parent_reference": "6"
+    },
+    {
+      "regulation": "gbt_40856",
+      "content_type": "article",
+      "reference": "7",
+      "title": "Verification and Rollback",
+      "text": "The manufacturer shall implement mechanisms to verify successful update installation and to roll back to the previous software version if the update fails or causes operational problems. Verification shall confirm both the integrity of the installed software and the correct operation of the updated system.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "gbt_40856",
+      "content_type": "paragraph",
+      "reference": "7.1",
+      "title": "Post-Installation Verification",
+      "text": "After update installation, the vehicle shall automatically verify the integrity of the installed software through cryptographic hash comparison and digital signature verification. Functional self-tests shall be executed to confirm correct operation of updated components. The verification results shall be reported to the manufacturer's update management server. Failed verification shall trigger automatic rollback to the previous software version. The vehicle configuration database shall be updated only after successful verification.",
+      "parent_reference": "7"
+    },
+    {
+      "regulation": "gbt_40856",
+      "content_type": "paragraph",
+      "reference": "7.2",
+      "title": "Rollback Capability",
+      "text": "The update system shall maintain a backup of the previous software version sufficient to enable rollback. Rollback shall be possible through both automatic and manual mechanisms. Automatic rollback shall be triggered when post-installation verification fails or when the updated system fails to start within a defined timeout period. Manual rollback shall be available through the vehicle diagnostic interface for workshop personnel. The rollback process shall restore the vehicle to the exact pre-update software configuration. Rollback events shall be logged and reported to the manufacturer.",
+      "parent_reference": "7"
+    },
+    {
+      "regulation": "gbt_40856",
+      "content_type": "paragraph",
+      "reference": "7.3",
+      "title": "Version Rollback Protection",
+      "text": "The update system shall implement anti-rollback protection that prevents installation of software versions known to contain security vulnerabilities. An anti-rollback counter or version policy shall be maintained in tamper-resistant storage. The minimum acceptable software version shall be updated as part of security-critical updates. Exceptions to anti-rollback policy shall require explicit authorization from the manufacturer's cybersecurity team.",
+      "parent_reference": "7"
+    },
+    {
+      "regulation": "gbt_40856",
+      "content_type": "article",
+      "reference": "8",
+      "title": "Update Campaign Monitoring",
+      "text": "The manufacturer shall monitor software update campaigns to track deployment progress, detect installation failures, and measure the effectiveness of updates. Campaign monitoring shall provide visibility into the update status of every vehicle in the fleet.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "gbt_40856",
+      "content_type": "paragraph",
+      "reference": "8.1",
+      "title": "Deployment Tracking",
+      "text": "The manufacturer shall track the deployment status of each update campaign including the number of vehicles targeted, updates downloaded, installations started, installations completed successfully, and installations failed. Dashboard visibility shall be provided to update campaign managers showing real-time progress and failure rates. Campaigns with failure rates exceeding defined thresholds shall be automatically paused for investigation. Geographic and model-specific deployment patterns shall be monitored to identify systemic issues.",
+      "parent_reference": "8"
+    },
+    {
+      "regulation": "gbt_40856",
+      "content_type": "paragraph",
+      "reference": "8.2",
+      "title": "Failure Analysis",
+      "text": "Failed update installations shall be analyzed to determine root causes and inform corrective actions. Failure data shall include diagnostic trouble codes, error logs, and pre-update system state information. Common failure patterns shall be identified and addressed through update package modifications or updated installation procedures. The manufacturer shall establish escalation procedures for widespread update failures that may affect vehicle safety or operability. Lessons learned from update failures shall be incorporated into the update engineering process.",
+      "parent_reference": "8"
+    },
+    {
+      "regulation": "gbt_40856",
+      "content_type": "paragraph",
+      "reference": "8.3",
+      "title": "Post-Update Monitoring",
+      "text": "After update deployment, the manufacturer shall monitor the fleet for unexpected behavior changes that may be caused by the update. Warranty claim data, customer complaint data, and vehicle telemetry shall be analyzed for anomalies correlated with the update installation. A monitoring period shall be defined for each update campaign based on the criticality and scope of the changes. If post-update monitoring reveals problems, the manufacturer shall be prepared to issue a corrective update or initiate rollback procedures.",
+      "parent_reference": "8"
+    },
+    {
+      "regulation": "gbt_40856",
+      "content_type": "article",
+      "reference": "9",
+      "title": "Records and Documentation",
+      "text": "The manufacturer shall maintain comprehensive records of all software update activities. Documentation shall support traceability, auditability, and regulatory compliance throughout the vehicle lifecycle.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "gbt_40856",
+      "content_type": "paragraph",
+      "reference": "9.1",
+      "title": "Update Records",
+      "text": "Records shall be maintained for each software update including the rationale for the update, change impact assessment results, test results, approval documentation, deployment timeline, and campaign monitoring results. Records shall be retained for the production life of the vehicle type plus a minimum of ten years. Records shall be made available to type approval authorities upon request. Electronic record-keeping systems shall implement access controls and audit trails to ensure record integrity.",
+      "parent_reference": "9"
+    },
+    {
+      "regulation": "gbt_40856",
+      "content_type": "paragraph",
+      "reference": "9.2",
+      "title": "Regulatory Reporting",
+      "text": "The manufacturer shall report to the Ministry of Industry and Information Technology (MIIT) on software update activities as required by applicable regulations. Reports shall include a summary of updates deployed, the number of affected vehicles, any safety-related impacts identified, and compliance with type approval conditions. The manufacturer shall notify the approval authority before deploying updates that affect type-approved characteristics. Annual summary reports of software update activities shall be submitted to the relevant regulatory bodies.",
+      "parent_reference": "9"
+    },
+    {
+      "regulation": "kmvss_18_3",
+      "content_type": "article",
+      "reference": "1",
+      "title": "Purpose and Scope",
+      "text": "This article establishes requirements for cybersecurity management systems applicable to motor vehicles registered and sold in the Republic of Korea. The requirements apply to manufacturers seeking type approval for vehicles of categories M1 and N1 equipped with electronic control units connected to external communication interfaces. The purpose is to ensure that vehicle manufacturers implement adequate measures to protect vehicles against cybersecurity threats throughout the vehicle lifecycle, in alignment with UNECE WP.29 Regulation No. 155.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "kmvss_18_3",
+      "content_type": "paragraph",
+      "reference": "1.1",
+      "title": "Applicability",
+      "text": "These requirements apply to all new vehicle types submitted for type approval from August 14, 2024, and to all new vehicles produced from August 14, 2026. Vehicles of categories M1 (passenger vehicles) and N1 (light commercial vehicles with GVW up to 3.5 tonnes) that are equipped with at least one ECU capable of wireless communication are subject to these requirements. Manufacturers of vehicles already holding valid type approvals shall comply with these requirements upon renewal of their type approval certificates.",
+      "parent_reference": "1"
+    },
+    {
+      "regulation": "kmvss_18_3",
+      "content_type": "paragraph",
+      "reference": "1.2",
+      "title": "Definitions",
+      "text": "For the purposes of this article: 'Cybersecurity Management System (CSMS)' means a systematic risk-based approach defining organizational processes, responsibilities, and governance to treat risk associated with cyber threats to vehicles. 'Vehicle type' means vehicles that do not differ in essential aspects of the electronic architecture and external interfaces with respect to cybersecurity. 'Cyber threat' means a potential cause of an unwanted incident that may result in harm to a vehicle system or its occupants through exploitation of electronic components. 'MOLIT' means the Ministry of Land, Infrastructure and Transport.",
+      "parent_reference": "1"
+    },
+    {
+      "regulation": "kmvss_18_3",
+      "content_type": "article",
+      "reference": "2",
+      "title": "CSMS Certification Requirements",
+      "text": "Vehicle manufacturers shall obtain a Certificate of Compliance for their Cybersecurity Management System from MOLIT or a designated technical service before applying for vehicle type approval. The CSMS shall demonstrate the manufacturer's capability to identify, assess, and manage cybersecurity risks throughout the vehicle lifecycle.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "kmvss_18_3",
+      "content_type": "paragraph",
+      "reference": "2.1",
+      "title": "CSMS Assessment Process",
+      "text": "The CSMS assessment shall evaluate the manufacturer's organizational cybersecurity processes including governance structure, risk management methodology, threat monitoring capabilities, incident response procedures, and supply chain cybersecurity management. The assessment shall be conducted by KATRI (Korea Automobile Testing and Research Institute) or another technical service designated by MOLIT. The assessment shall include document review, process audits, and practical demonstrations of cybersecurity capabilities. The assessment criteria shall be aligned with the requirements of UNECE R155 paragraphs 7.2.1 through 7.2.5.",
+      "parent_reference": "2"
+    },
+    {
+      "regulation": "kmvss_18_3",
+      "content_type": "paragraph",
+      "reference": "2.2",
+      "title": "Certificate Validity and Renewal",
+      "text": "The Certificate of Compliance for CSMS shall be valid for a maximum period of three years from the date of issuance. The manufacturer shall apply for renewal at least six months before the certificate expiration date. Renewal assessments shall verify continued compliance with all CSMS requirements and evaluate any changes made to the management system since the previous assessment. Material changes to the CSMS during the validity period shall be reported to MOLIT within 30 days. The certificate may be suspended or withdrawn if the manufacturer fails to maintain compliance.",
+      "parent_reference": "2"
+    },
+    {
+      "regulation": "kmvss_18_3",
+      "content_type": "paragraph",
+      "reference": "2.3",
+      "title": "Recognition of Foreign CSMS Certificates",
+      "text": "MOLIT may recognize CSMS certificates issued by approval authorities of other UNECE contracting parties that apply R155, subject to bilateral or multilateral recognition agreements. Manufacturers holding recognized foreign certificates shall still register with MOLIT and provide documentation of their CSMS in Korean language. MOLIT reserves the right to conduct supplementary assessments to verify compliance with Korean-specific requirements including domestic reporting obligations and data protection measures.",
+      "parent_reference": "2"
+    },
+    {
+      "regulation": "kmvss_18_3",
+      "content_type": "article",
+      "reference": "3",
+      "title": "Vehicle Type Approval for Cybersecurity",
+      "text": "Vehicle type approval with regard to cybersecurity shall be granted only to manufacturers holding a valid CSMS certificate who demonstrate that the vehicle type implements appropriate cybersecurity measures derived from a comprehensive risk assessment.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "kmvss_18_3",
+      "content_type": "paragraph",
+      "reference": "3.1",
+      "title": "Type Approval Application",
+      "text": "The type approval application shall include the valid CSMS certificate, a description of the vehicle type's electronic architecture, the cybersecurity risk assessment results, documentation of implemented cybersecurity measures, and evidence of verification and validation testing. The application shall identify all external communication interfaces including cellular, Wi-Fi, Bluetooth, V2X, OBD-II, and charging interfaces. The vehicle type description shall include network architecture diagrams showing trust boundaries and data flows between ECU domains.",
+      "parent_reference": "3"
+    },
+    {
+      "regulation": "kmvss_18_3",
+      "content_type": "paragraph",
+      "reference": "3.2",
+      "title": "Technical Assessment",
+      "text": "The technical service shall perform both document-based assessment and physical testing of the vehicle type. Document assessment shall verify the completeness and adequacy of the risk assessment, the traceability of cybersecurity requirements to implemented measures, and the sufficiency of test coverage. Physical testing shall include penetration testing of external interfaces, verification of network segmentation, and assessment of intrusion detection capabilities. The technical service may require additional testing based on the specific risk profile of the vehicle type.",
+      "parent_reference": "3"
+    },
+    {
+      "regulation": "kmvss_18_3",
+      "content_type": "paragraph",
+      "reference": "3.3",
+      "title": "Type Approval Conditions",
+      "text": "Type approval shall be granted with conditions requiring the manufacturer to maintain the cybersecurity measures demonstrated during the approval process throughout the production and post-production phases. The manufacturer shall notify MOLIT of any changes to the vehicle type that may affect its cybersecurity properties. Changes requiring notification include modifications to the E/E architecture, addition or removal of external interfaces, and updates to security-critical software components. MOLIT may require a new type approval assessment for significant changes.",
+      "parent_reference": "3"
+    },
+    {
+      "regulation": "kmvss_18_3",
+      "content_type": "article",
+      "reference": "4",
+      "title": "Cybersecurity Risk Management",
+      "text": "The manufacturer shall implement a cybersecurity risk management process that identifies, analyzes, evaluates, and treats cybersecurity risks for each vehicle type. The risk management process shall be applied throughout the vehicle lifecycle from concept through end-of-life.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "kmvss_18_3",
+      "content_type": "paragraph",
+      "reference": "4.1",
+      "title": "Risk Assessment Methodology",
+      "text": "The risk assessment methodology shall be documented and applied consistently across all vehicle types. Threat identification shall consider the threat categories listed in UNECE R155 Annex 5. Attack feasibility shall be evaluated using a method aligned with ISO/SAE 21434 that considers elapsed time, specialist expertise, knowledge of the target, window of opportunity, and equipment requirements. Impact severity shall be assessed across safety, financial, operational, and privacy dimensions. Risk determination shall combine attack feasibility and impact ratings to produce risk levels that inform treatment decisions.",
+      "parent_reference": "4"
+    },
+    {
+      "regulation": "kmvss_18_3",
+      "content_type": "paragraph",
+      "reference": "4.2",
+      "title": "Risk Treatment",
+      "text": "The manufacturer shall define and implement risk treatment measures for all risks that exceed the acceptable risk threshold. Treatment options include risk mitigation through technical controls, risk transfer through contractual arrangements with suppliers, risk avoidance through design changes, and risk acceptance with documented justification approved by the cybersecurity manager. Residual risks after treatment shall be documented and monitored. The effectiveness of risk treatment measures shall be verified through testing and validation activities.",
+      "parent_reference": "4"
+    },
+    {
+      "regulation": "kmvss_18_3",
+      "content_type": "article",
+      "reference": "5",
+      "title": "Monitoring and Reporting Obligations",
+      "text": "The manufacturer shall establish processes for ongoing monitoring of cybersecurity threats and incidents affecting vehicles in the Korean market. Reporting obligations to MOLIT shall be fulfilled within the specified timelines.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "kmvss_18_3",
+      "content_type": "paragraph",
+      "reference": "5.1",
+      "title": "Continuous Monitoring",
+      "text": "The manufacturer shall operate or contract a vehicle security operations center capable of receiving, analyzing, and responding to cybersecurity events from the vehicle fleet. Monitoring capabilities shall include analysis of vehicle security logs, correlation of fleet-wide security telemetry, and tracking of external threat intelligence relevant to the manufacturer's vehicle platforms. The manufacturer shall participate in automotive cybersecurity information sharing through membership in Auto-ISAC or an equivalent Korean automotive ISAC when established.",
+      "parent_reference": "5"
+    },
+    {
+      "regulation": "kmvss_18_3",
+      "content_type": "paragraph",
+      "reference": "5.2",
+      "title": "Incident Reporting to MOLIT",
+      "text": "The manufacturer shall report cybersecurity incidents to MOLIT within the following timelines: Critical incidents affecting vehicle safety shall be reported within 24 hours of confirmation. Significant incidents affecting a large number of vehicles or involving data breach shall be reported within 72 hours. The initial report shall include the incident classification, estimated scope, immediate containment actions, and preliminary root cause analysis. A comprehensive incident report shall be submitted within 30 days of the initial report. MOLIT may request additional information or mandate specific remediation actions.",
+      "parent_reference": "5"
+    },
+    {
+      "regulation": "kmvss_18_3",
+      "content_type": "paragraph",
+      "reference": "5.3",
+      "title": "Annual Cybersecurity Report",
+      "text": "The manufacturer shall submit an annual cybersecurity report to MOLIT summarizing cybersecurity activities for the preceding year. The report shall include a summary of threat landscape changes, cybersecurity incidents and their resolution, software updates deployed, vulnerability management metrics, and any changes to the CSMS. The report shall cover all vehicle types approved under this article that are in production or post-production support. The annual report shall be submitted by March 31 of the following year.",
+      "parent_reference": "5"
+    },
+    {
+      "regulation": "kmvss_18_3",
+      "content_type": "paragraph",
+      "reference": "5.4",
+      "title": "Recall Coordination",
+      "text": "When a cybersecurity vulnerability poses an imminent safety risk that cannot be adequately addressed through an over-the-air update, the manufacturer shall coordinate with MOLIT on a recall decision. The recall assessment shall consider the severity of the vulnerability, the feasibility and timeline of a software-based fix, the availability of temporary mitigations, and the number of affected vehicles. Cybersecurity recalls shall follow the same administrative procedures as safety recalls under the Motor Vehicle Management Act. The manufacturer shall report the completion rate of cybersecurity recall campaigns to MOLIT on a monthly basis.",
+      "parent_reference": "5"
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "article",
+      "reference": "1",
+      "title": "Scope",
+      "text": "This standard specifies requirements for automotive cybersecurity management applicable to vehicles manufactured, imported, and sold in India. It applies to vehicles of categories M1, M2, M3, N1, N2, and N3 equipped with electronic control units connected to external communication interfaces. The requirements are aligned with UNECE Regulation No. 155 while incorporating additional provisions specific to the Indian automotive market, including mandatory testing at designated test agencies.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "paragraph",
+      "reference": "1.1",
+      "title": "Implementation Timeline",
+      "text": "These requirements shall apply to all new vehicle types submitted for type approval from April 1, 2025, and to all new vehicles produced from April 1, 2027. Manufacturers of vehicles already in production shall comply with these requirements at the time of renewal of their Conformity of Production (CoP) certificate or within three years of the effective date, whichever is earlier. Two-wheeler and three-wheeler categories (L) are excluded from the initial scope but may be brought under coverage through subsequent amendments.",
+      "parent_reference": "1"
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "paragraph",
+      "reference": "1.2",
+      "title": "Designated Test Agencies",
+      "text": "Type approval testing for cybersecurity compliance shall be conducted by ARAI (Automotive Research Association of India) or iCAT (International Centre for Automotive Technology) as the designated test agencies. Test agencies shall maintain competence in automotive cybersecurity assessment through trained personnel and appropriate testing infrastructure. The test agencies shall develop and publish testing procedures aligned with this standard. Manufacturers may use internal test results as supporting evidence but shall not substitute them for the designated test agency assessment.",
+      "parent_reference": "1"
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "article",
+      "reference": "2",
+      "title": "Cybersecurity Management System",
+      "text": "The vehicle manufacturer shall establish, implement, and maintain a Cybersecurity Management System that addresses organizational processes, risk management, supply chain management, and continuous improvement of cybersecurity capabilities.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "paragraph",
+      "reference": "2.1",
+      "title": "Organizational Requirements",
+      "text": "The manufacturer shall establish a cybersecurity governance structure with defined roles, responsibilities, and reporting lines. A cybersecurity manager shall be appointed with authority to approve or reject vehicle designs based on cybersecurity assessment results. The manufacturer shall allocate adequate resources for cybersecurity activities including trained personnel, testing tools, and threat intelligence capabilities. Internal cybersecurity audits shall be conducted at least annually. The CSMS shall be integrated with the manufacturer's existing quality management system (IATF 16949) and functional safety management system (ISO 26262).",
+      "parent_reference": "2"
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "paragraph",
+      "reference": "2.2",
+      "title": "Supply Chain Cybersecurity",
+      "text": "The manufacturer shall establish cybersecurity requirements for suppliers of electronic components, software, and connected services. Supplier contracts shall include cybersecurity obligations covering secure development practices, vulnerability disclosure, and incident notification. Tier-1 suppliers of cybersecurity-relevant components shall be assessed for their cybersecurity capabilities before engagement. The manufacturer shall maintain visibility into the software bill of materials (SBOM) for all cybersecurity-relevant components including open-source dependencies. Supplier audit rights for cybersecurity shall be contractually established.",
+      "parent_reference": "2"
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "paragraph",
+      "reference": "2.3",
+      "title": "CSMS Certification Process",
+      "text": "CSMS certification shall be obtained from ARAI or iCAT through a structured assessment process. The assessment shall evaluate documented processes, organizational capabilities, and practical demonstrations of cybersecurity management activities. The certification shall be valid for three years and shall be renewed before expiration. Interim audits may be conducted by the certifying agency at its discretion. The certification scope shall cover all vehicle types produced by the manufacturer in India.",
+      "parent_reference": "2"
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "article",
+      "reference": "3",
+      "title": "Cybersecurity Risk Assessment",
+      "text": "The manufacturer shall conduct cybersecurity risk assessments for each vehicle type following a structured methodology. The risk assessment shall identify assets, threats, vulnerabilities, and attack paths, and shall determine risk levels based on attack feasibility and impact severity.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "paragraph",
+      "reference": "3.1",
+      "title": "Threat Analysis and Risk Assessment",
+      "text": "The threat analysis shall consider all threat categories specified in UNECE R155 Annex 5 and shall additionally address threats specific to the Indian operating environment including infrastructure limitations, environmental conditions, and local connectivity characteristics. Attack feasibility shall be evaluated per ISO/SAE 21434 methodology. Impact assessment shall cover safety, financial, operational, and privacy dimensions. Risk treatment decisions shall be documented with justification for any accepted residual risks. The risk assessment shall be updated when significant changes occur in the threat landscape or vehicle architecture.",
+      "parent_reference": "3"
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "paragraph",
+      "reference": "3.2",
+      "title": "Penetration Testing Requirements",
+      "text": "The manufacturer shall conduct penetration testing of the vehicle type as part of the type approval process. Penetration testing shall cover all external interfaces including cellular, Wi-Fi, Bluetooth, V2X, OBD-II, USB, and charging interfaces. Testing shall be performed by qualified security researchers independent of the development team. Test scope shall include network penetration testing, wireless protocol testing, ECU firmware analysis, and physical attack resistance assessment. Penetration test results shall be submitted to the designated test agency as part of the type approval documentation. Critical and high-severity findings shall be remediated before type approval is granted.",
+      "parent_reference": "3"
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "article",
+      "reference": "4",
+      "title": "Technical Cybersecurity Requirements",
+      "text": "Vehicles shall implement technical cybersecurity measures commensurate with the identified risk levels. This section specifies minimum technical requirements for communication security, access control, software integrity, intrusion detection, and data protection.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "paragraph",
+      "reference": "4.1",
+      "title": "Communication Security",
+      "text": "Vehicle internal communication shall implement authentication and integrity protection for safety-critical and cybersecurity-critical messages. External communication interfaces shall use encrypted channels with mutual authentication. Cellular communication shall use TLS 1.2 or higher. Vehicle-to-infrastructure communication shall implement certificate-based authentication. Gateway ECUs shall enforce network segmentation policies between domains of different trust levels. Message filtering shall prevent unauthorized messages from traversing trust boundaries.",
+      "parent_reference": "4"
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "paragraph",
+      "reference": "4.2",
+      "title": "Access Control and Authentication",
+      "text": "Access to vehicle diagnostic and programming functions shall be controlled through authentication mechanisms. Workshop diagnostic access shall require authenticated diagnostic tools. Remote access for telematics and connected services shall implement multi-factor authentication where feasible. Aftermarket device connectivity through the OBD-II port shall be restricted to prevent unauthorized access to vehicle networks. User authentication for mobile applications controlling vehicle functions shall implement secure credential storage and session management.",
+      "parent_reference": "4"
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "paragraph",
+      "reference": "4.3",
+      "title": "Software Integrity and Secure Boot",
+      "text": "Vehicle ECUs shall implement secure boot processes to verify software integrity before execution. Software updates shall be digitally signed and verified before installation. The software update mechanism shall implement rollback protection to prevent installation of vulnerable versions. Code signing key management shall follow established best practices with keys stored in hardware security modules. Runtime integrity monitoring shall detect unauthorized modifications to critical software components.",
+      "parent_reference": "4"
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "paragraph",
+      "reference": "4.4",
+      "title": "Intrusion Detection and Logging",
+      "text": "Vehicles shall implement intrusion detection capabilities to identify cybersecurity attacks targeting the vehicle network and external interfaces. Security event logs shall be generated for authentication attempts, network anomalies, software integrity violations, and configuration changes. Log data shall be stored locally with integrity protection and transmitted to the manufacturer's monitoring infrastructure when connectivity is available. Log storage shall maintain at least 30 days of security event data. Log data handling shall comply with applicable data protection regulations.",
+      "parent_reference": "4"
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "article",
+      "reference": "5",
+      "title": "V2X Communication Security",
+      "text": "Vehicles equipped with vehicle-to-everything communication capabilities shall implement security measures to protect V2X message integrity, authenticity, and privacy. V2X security implementation shall align with national V2X standards and the planned Indian V2X public key infrastructure.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "paragraph",
+      "reference": "5.1",
+      "title": "V2X Message Security",
+      "text": "V2X messages shall be digitally signed to enable receiving vehicles to verify message authenticity and integrity. The signing mechanism shall use elliptic curve cryptography with a minimum security level equivalent to 128 bits. Certificate management shall support pseudonym certificate rotation for privacy protection. The V2X stack shall implement message plausibility checking including position verification, speed validation, and timing consistency. Misbehavior detection shall identify and flag vehicles transmitting false or inconsistent V2X messages.",
+      "parent_reference": "5"
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "paragraph",
+      "reference": "5.2",
+      "title": "V2X PKI Integration",
+      "text": "When India's national V2X PKI is established, vehicles shall integrate with it for certificate enrollment, renewal, and revocation checking. Until the national PKI is operational, manufacturers shall implement an interim PKI solution that can be migrated to the national system. The V2X security credential management system shall support over-the-air certificate updates. Certificate revocation list (CRL) distribution shall be designed to function within the bandwidth and latency constraints of Indian cellular networks.",
+      "parent_reference": "5"
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "article",
+      "reference": "6",
+      "title": "Data Protection and Localization",
+      "text": "Vehicle manufacturers shall implement data protection measures in compliance with the Digital Personal Data Protection Act, 2023 (DPDPA) and any sector-specific data regulations applicable to connected vehicles.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "paragraph",
+      "reference": "6.1",
+      "title": "Personal Data Protection",
+      "text": "Vehicles shall implement technical measures to protect personal data collected from vehicle occupants and generated by vehicle sensors. Personal data categories shall include location data, driving behavior, biometric data, communication records, and user preferences. Data processing shall follow the principles of purpose limitation, data minimization, and storage limitation as specified in the DPDPA. Consent mechanisms shall be implemented for data collection that goes beyond what is necessary for vehicle operation and safety. Data subjects shall be provided with mechanisms to access, correct, and delete their personal data.",
+      "parent_reference": "6"
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "paragraph",
+      "reference": "6.2",
+      "title": "Data Localization",
+      "text": "Vehicle data classified as significant data or sensitive personal data under applicable Indian regulations shall be stored within the territory of India. The manufacturer shall implement data routing controls to ensure that data subject to localization requirements is processed and stored on servers located in India. Cross-border data transfer for non-restricted data categories shall comply with the transfer mechanisms specified in the DPDPA. The manufacturer shall maintain documentation of data flows between the vehicle, backend servers, and third-party service providers, identifying the storage locations for each data category.",
+      "parent_reference": "6"
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "article",
+      "reference": "7",
+      "title": "Type Approval Process",
+      "text": "Cybersecurity type approval shall be integrated with the existing vehicle type approval process administered by the designated test agencies. The cybersecurity assessment shall be a prerequisite for the grant of vehicle type approval.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "paragraph",
+      "reference": "7.1",
+      "title": "Type Approval Documentation",
+      "text": "The type approval application shall include the CSMS certificate, cybersecurity risk assessment report, description of implemented cybersecurity measures with traceability to risk assessment findings, penetration test report, and a declaration of compliance signed by the manufacturer's cybersecurity manager. The documentation shall demonstrate that the vehicle type implements all cybersecurity requirements specified in this standard. Confidential information in the type approval documentation shall be handled according to the test agency's information security procedures.",
+      "parent_reference": "7"
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "paragraph",
+      "reference": "7.2",
+      "title": "Conformity of Production",
+      "text": "The manufacturer shall demonstrate that production vehicles maintain the cybersecurity measures verified during type approval. Conformity of production (CoP) audits shall include verification that software versions installed on production vehicles match the approved configuration. The manufacturer shall implement production line cybersecurity processes including secure key injection, secure boot configuration, and certificate provisioning. CoP audit results for cybersecurity shall be documented separately and made available to the test agency upon request.",
+      "parent_reference": "7"
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "article",
+      "reference": "8",
+      "title": "Post-Market Obligations",
+      "text": "The manufacturer shall maintain cybersecurity monitoring, vulnerability management, and incident response capabilities for all vehicle types throughout their production and post-production lifecycle.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "paragraph",
+      "reference": "8.1",
+      "title": "Monitoring and Response",
+      "text": "The manufacturer shall monitor the threat landscape for cybersecurity risks relevant to their vehicle fleet in the Indian market. Vulnerability management processes shall track and remediate security vulnerabilities in vehicle software components. Cybersecurity incidents affecting vehicles in India shall be reported to ARAI or iCAT within 72 hours of confirmation. The manufacturer shall maintain the capability to deploy security updates to the vehicle fleet through over-the-air or workshop-based channels. Software update campaigns shall be reported to the relevant test agency.",
+      "parent_reference": "8"
+    },
+    {
+      "regulation": "ais_189",
+      "content_type": "paragraph",
+      "reference": "8.2",
+      "title": "Coordination with CERT-In",
+      "text": "The manufacturer shall coordinate with CERT-In (Indian Computer Emergency Response Team) for cybersecurity incidents that may affect critical information infrastructure or involve significant data breaches. Vulnerability disclosures received through the manufacturer's coordinated vulnerability disclosure program shall be shared with CERT-In when they affect the broader automotive ecosystem. The manufacturer shall comply with CERT-In directives on incident reporting timelines and information sharing requirements applicable to connected vehicle platforms.",
+      "parent_reference": "8"
+    },
+    {
+      "regulation": "mlit_guidelines",
+      "content_type": "article",
+      "reference": "1",
+      "title": "Purpose and Framework",
+      "text": "These guidelines provide guidance for vehicle manufacturers on implementing cybersecurity management practices in alignment with UNECE WP.29 Regulation No. 155 and Regulation No. 156. Japan, as a contracting party to the 1958 Agreement, applies R155 and R156 directly. These guidelines supplement the regulations with recommended implementation approaches tailored to the Japanese automotive industry's practices and organizational structures.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "mlit_guidelines",
+      "content_type": "paragraph",
+      "reference": "1.1",
+      "title": "Guideline Scope",
+      "text": "These guidelines apply to vehicle manufacturers producing vehicles of categories M1 and N1 for the Japanese domestic market. The guidelines address cybersecurity management system implementation, vehicle type cybersecurity assessment, software update management, and post-market surveillance. While these guidelines are not legally binding beyond the requirements of R155 and R156, compliance with the recommended practices demonstrates good faith effort in meeting the regulatory obligations and will be considered during type approval assessments by NTSEL (National Traffic Safety and Environment Laboratory).",
+      "parent_reference": "1"
+    },
+    {
+      "regulation": "mlit_guidelines",
+      "content_type": "paragraph",
+      "reference": "1.2",
+      "title": "Relationship to R155 and R156",
+      "text": "These guidelines do not create requirements beyond those specified in R155 and R156. Where these guidelines provide more specific recommendations than the regulations, manufacturers may choose alternative approaches that achieve equivalent security outcomes. Manufacturers should document their rationale when deviating from the recommended practices. NTSEL will accept alternative approaches during type approval assessment provided the manufacturer demonstrates that the alternative achieves the regulatory objectives.",
+      "parent_reference": "1"
+    },
+    {
+      "regulation": "mlit_guidelines",
+      "content_type": "article",
+      "reference": "2",
+      "title": "Self-Assessment Framework",
+      "text": "MLIT provides a self-assessment framework for manufacturers to evaluate their readiness for CSMS certification and vehicle type approval. The self-assessment covers organizational processes, technical capabilities, and operational readiness for cybersecurity management.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "mlit_guidelines",
+      "content_type": "paragraph",
+      "reference": "2.1",
+      "title": "Organizational Maturity Assessment",
+      "text": "Manufacturers should assess their organizational cybersecurity maturity across five domains: governance and leadership, risk management, engineering practices, operational capabilities, and continuous improvement. For each domain, the assessment framework defines three maturity levels: developing, established, and advanced. Manufacturers should target at least the established level across all domains before applying for CSMS certification. The self-assessment results should be used to develop an improvement roadmap that prioritizes gaps with the greatest impact on cybersecurity outcomes.",
+      "parent_reference": "2"
+    },
+    {
+      "regulation": "mlit_guidelines",
+      "content_type": "paragraph",
+      "reference": "2.2",
+      "title": "Technical Readiness Checklist",
+      "text": "The technical readiness checklist covers the manufacturer's capabilities in threat analysis and risk assessment, secure architecture design, security testing and verification, intrusion detection and monitoring, incident response, and software update management. Each checklist item maps to specific requirements in R155 and R156. Manufacturers should use the checklist to identify technical capability gaps and develop implementation plans before the mandatory compliance dates. The checklist includes references to relevant industry standards (ISO/SAE 21434, ISO 24089) that provide detailed implementation guidance.",
+      "parent_reference": "2"
+    },
+    {
+      "regulation": "mlit_guidelines",
+      "content_type": "paragraph",
+      "reference": "2.3",
+      "title": "Gap Analysis and Remediation",
+      "text": "Based on the self-assessment results, manufacturers should conduct a gap analysis comparing their current cybersecurity capabilities against the R155 and R156 requirements. The gap analysis should prioritize findings based on regulatory compliance risk and cybersecurity risk. A remediation plan should assign responsibilities, timelines, and resource allocations for addressing each identified gap. Progress on remediation activities should be tracked and reported to senior management at regular intervals.",
+      "parent_reference": "2"
+    },
+    {
+      "regulation": "mlit_guidelines",
+      "content_type": "article",
+      "reference": "3",
+      "title": "Recommended Technical Measures",
+      "text": "This section provides recommended technical measures for implementing the cybersecurity requirements of R155. These recommendations reflect established practices in the Japanese automotive industry and are consistent with the guidance provided in ISO/SAE 21434.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "mlit_guidelines",
+      "content_type": "paragraph",
+      "reference": "3.1",
+      "title": "Network Architecture Security",
+      "text": "Vehicle network architectures should implement domain separation with gateway ECUs controlling inter-domain communication. Recommended domain separation includes powertrain, chassis/safety, body/comfort, infotainment, and telematics/connectivity domains. Each domain should have a defined security level based on the criticality of the functions it contains. Communication between domains of different security levels should transit through a gateway that implements message authentication and filtering. Ethernet backbone architectures should implement VLAN segmentation and IEEE 802.1X port-based authentication.",
+      "parent_reference": "3"
+    },
+    {
+      "regulation": "mlit_guidelines",
+      "content_type": "paragraph",
+      "reference": "3.2",
+      "title": "Secure Communication Protocols",
+      "text": "Manufacturers should implement SecOC (Secure Onboard Communication) as defined in AUTOSAR for authentication of CAN and CAN-FD messages. TLS 1.2 or higher should be used for all external TCP/IP communication. IPsec or MACsec should be used for in-vehicle Ethernet communication where performance requirements permit. Diagnostic communication over DoIP (Diagnostics over IP) should implement transport layer security. Key management for communication security should follow the principles established in ISO/SAE 21434 and the manufacturer's key management policy.",
+      "parent_reference": "3"
+    },
+    {
+      "regulation": "mlit_guidelines",
+      "content_type": "paragraph",
+      "reference": "3.3",
+      "title": "Intrusion Detection and Response",
+      "text": "Manufacturers should implement a multi-layer intrusion detection strategy covering network-level anomaly detection on vehicle buses, host-based detection on critical ECUs, and application-level monitoring for connected services. The IDS should be tuned to minimize false positive rates while maintaining high detection sensitivity for known attack patterns. IDS alert data should be transmitted to the manufacturer's vehicle security operations center for fleet-wide correlation and analysis. Automated response actions should be limited to defensive measures that do not affect vehicle safety, such as disabling non-critical connected features.",
+      "parent_reference": "3"
+    },
+    {
+      "regulation": "mlit_guidelines",
+      "content_type": "paragraph",
+      "reference": "3.4",
+      "title": "Secure Software Update Implementation",
+      "text": "Software update systems should implement the A/B partition scheme for major updates, enabling atomic switching between current and updated software. Update package integrity should be verified using cryptographic hash functions (SHA-256 or stronger) and digital signatures. The update orchestration system should coordinate multi-ECU updates to maintain inter-ECU compatibility throughout the update process. Battery charge verification should prevent update installation when insufficient charge is available to complete the process. The update system should integrate with the vehicle's diagnostic system to verify post-update functionality.",
+      "parent_reference": "3"
+    },
+    {
+      "regulation": "mlit_guidelines",
+      "content_type": "article",
+      "reference": "4",
+      "title": "Reporting and Communication",
+      "text": "This section provides guidance on cybersecurity reporting obligations and recommended communication practices between manufacturers, MLIT, and other stakeholders.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "mlit_guidelines",
+      "content_type": "paragraph",
+      "reference": "4.1",
+      "title": "Incident Reporting",
+      "text": "Manufacturers should report cybersecurity incidents to MLIT's Road Transport Bureau through the established vehicle defect reporting system. Incidents that may affect vehicle safety should be reported within 24 hours of confirmation using the designated incident report form. Non-safety cybersecurity incidents should be included in the manufacturer's periodic cybersecurity status reports. Manufacturers should coordinate with JPCERT/CC (Japan Computer Emergency Response Team Coordination Center) for incidents that involve broader cybersecurity implications beyond the automotive domain.",
+      "parent_reference": "4"
+    },
+    {
+      "regulation": "mlit_guidelines",
+      "content_type": "paragraph",
+      "reference": "4.2",
+      "title": "Periodic Reporting",
+      "text": "Manufacturers should submit periodic cybersecurity status reports to MLIT summarizing monitoring activities, identified threats, vulnerability management actions, and software update campaigns. Reports should be submitted semi-annually at a minimum, with more frequent reporting for significant events. The report format should follow the template provided by MLIT's Road Transport Bureau. Reports should include quantitative metrics on vulnerability remediation timelines, update deployment rates, and incident response effectiveness.",
+      "parent_reference": "4"
+    },
+    {
+      "regulation": "mlit_guidelines",
+      "content_type": "article",
+      "reference": "5",
+      "title": "R155 Alignment and Compliance",
+      "text": "This section clarifies the alignment between these guidelines, R155 requirements, and the Japanese type approval process administered by MLIT.",
+      "parent_reference": null
+    },
+    {
+      "regulation": "mlit_guidelines",
+      "content_type": "paragraph",
+      "reference": "5.1",
+      "title": "Type Approval Process",
+      "text": "Cybersecurity type approval in Japan is administered by MLIT through NTSEL as the designated technical service. The type approval process follows R155 procedures with CSMS assessment preceding vehicle type approval. Manufacturers should engage with NTSEL early in the development process to clarify assessment expectations and documentation requirements. Pre-submission consultation meetings are available and recommended for manufacturers seeking their first cybersecurity type approval. NTSEL assessment reports may reference these guidelines when evaluating the adequacy of manufacturer cybersecurity practices.",
+      "parent_reference": "5"
+    },
+    {
+      "regulation": "mlit_guidelines",
+      "content_type": "paragraph",
+      "reference": "5.2",
+      "title": "Mutual Recognition",
+      "text": "Japan recognizes CSMS certificates and vehicle type approvals granted by other contracting parties to the 1958 Agreement that apply R155, subject to the mutual recognition provisions of the Agreement. Manufacturers holding CSMS certificates from other contracting parties should register their certificates with MLIT and provide Japanese-language documentation of their CSMS processes relevant to vehicles produced for or imported into Japan. MLIT may conduct supplementary reviews to verify compliance with Japanese-specific reporting and communication requirements.",
+      "parent_reference": "5"
     }
   ]
 }

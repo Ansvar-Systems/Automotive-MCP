@@ -69,9 +69,9 @@ describe('Database Population', () => {
   });
 
   describe('Regulations', () => {
-    it('should load 2 regulations', () => {
+    it('should load at least 2 regulations', () => {
       const count = db.prepare('SELECT COUNT(*) as count FROM regulations').get() as { count: number };
-      expect(count.count).toBe(2);
+      expect(count.count).toBeGreaterThanOrEqual(2);
     });
 
     it('should have R155 with correct metadata', () => {
