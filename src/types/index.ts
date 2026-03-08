@@ -234,6 +234,17 @@ export interface MapCompliancePathInput {
   depth?: 'summary' | 'full';
 }
 
+export interface GetCsmsObligationsInput {
+  lifecycle_phase?: string;
+  regulation?: string;
+  query?: string;
+}
+
+export interface CompareMarketsInput {
+  markets: string[];
+  topic?: string;
+}
+
 // ============================================================================
 // Tool Output Types
 // ============================================================================

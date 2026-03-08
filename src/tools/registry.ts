@@ -22,8 +22,9 @@ import { getArchitecturePattern } from './architecture.js';
 import { searchAttackPatterns } from './attacks.js';
 import { generateTara } from './tara-generator.js';
 import { mapCompliancePath } from './compliance-path.js';
+import { getCsmsObligations } from './csms.js';
 import { getAbout, type AboutContext } from './about.js';
-import type { ListSourcesInput, GetRequirementInput, SearchRequirementsInput, ListWorkProductsInput, ExportComplianceMatrixInput, GetArchitecturePatternInput, SearchAttackPatternsInput, GenerateTaraInput, MapCompliancePathInput } from '../types/index.js';
+import type { ListSourcesInput, GetRequirementInput, SearchRequirementsInput, ListWorkProductsInput, ExportComplianceMatrixInput, GetArchitecturePatternInput, SearchAttackPatternsInput, GenerateTaraInput, MapCompliancePathInput, GetCsmsObligationsInput } from '../types/index.js';
 
 /**
  * Tool definition with name, description, input schema, and handler function
@@ -340,6 +341,35 @@ const TOOLS: ToolDefinition[] = [
     handler: (db: InstanceType<typeof Database>, args: unknown) => {
       const input = args as MapCompliancePathInput;
       return mapCompliancePath(db, input);
+    },
+  },
+  {
+    name: 'get_csms_obligations',
+    description:
+      'Retrieve CSMS (Cybersecurity Management System) operational obligations by lifecycle phase. Shows what an OEM must do during development, production, operations, decommissioning, and supplier management — with reporting timelines, evidence requirements, and practical guidance.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        lifecycle_phase: {
+          type: 'string',
+          description:
+            'Filter to a specific lifecycle phase (e.g., "development", "production", "operations", "decommissioning", "supplier_management"). Omit to return all phases.',
+        },
+        regulation: {
+          type: 'string',
+          description:
+            'Filter to obligations from a specific source regulation (e.g., "r155"). Omit to return obligations from all regulations.',
+        },
+        query: {
+          type: 'string',
+          description:
+            'Full-text search across obligation text and guidance. FTS5 with BM25 ranking.',
+        },
+      },
+    },
+    handler: (db: InstanceType<typeof Database>, args: unknown) => {
+      const input = args as GetCsmsObligationsInput;
+      return getCsmsObligations(db, input);
     },
   },
 ];
