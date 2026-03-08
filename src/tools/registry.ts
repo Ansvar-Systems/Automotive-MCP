@@ -18,8 +18,9 @@ import { getRequirement } from './get.js';
 import { searchRequirements } from './search.js';
 import { listWorkProducts } from './workproducts.js';
 import { exportComplianceMatrix } from './export.js';
+import { getArchitecturePattern } from './architecture.js';
 import { getAbout, type AboutContext } from './about.js';
-import type { ListSourcesInput, GetRequirementInput, SearchRequirementsInput, ListWorkProductsInput, ExportComplianceMatrixInput } from '../types/index.js';
+import type { ListSourcesInput, GetRequirementInput, SearchRequirementsInput, ListWorkProductsInput, ExportComplianceMatrixInput, GetArchitecturePatternInput } from '../types/index.js';
 
 /**
  * Tool definition with name, description, input schema, and handler function
@@ -212,6 +213,30 @@ const TOOLS: ToolDefinition[] = [
     handler: (db: InstanceType<typeof Database>, args: unknown) => {
       const input = args as ExportComplianceMatrixInput;
       return exportComplianceMatrix(db, input);
+    },
+  },
+  {
+    name: 'get_architecture_pattern',
+    description:
+      'Retrieve architecture reference patterns for automotive cybersecurity. Get a specific pattern by ID (e.g., \'split-trust-diagnostic-pki\') for full implementation guidance, or browse by domain (e.g., \'diagnostics\', \'software-update\', \'network-architecture\'). Each pattern includes components, trust boundaries, applicable standards, and threat mitigations.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        pattern_id: {
+          type: 'string',
+          description:
+            'Specific pattern ID to retrieve with full details (e.g., "split-trust-diagnostic-pki", "ota-chain-of-trust"). Omit to browse.',
+        },
+        domain: {
+          type: 'string',
+          description:
+            'Filter patterns by domain (e.g., "diagnostics", "software-update", "network-architecture", "platform-security"). Omit to list all domains.',
+        },
+      },
+    },
+    handler: (db: InstanceType<typeof Database>, args: unknown) => {
+      const input = args as GetArchitecturePatternInput;
+      return getArchitecturePattern(db, input);
     },
   },
 ];

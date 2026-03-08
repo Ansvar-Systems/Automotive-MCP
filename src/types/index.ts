@@ -145,6 +145,11 @@ export interface ListSourcesInput {
   source_type?: 'regulation' | 'standard' | 'all';
 }
 
+export interface GetArchitecturePatternInput {
+  pattern_id?: string;
+  domain?: string;
+}
+
 /** @planned TARA guidance input — not yet implemented */
 export interface GetTaraGuidanceInput {
   asset_type?: string;
