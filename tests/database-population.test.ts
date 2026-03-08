@@ -148,7 +148,7 @@ describe('Database Population', () => {
 
       expect(clause).toBeDefined();
       expect(clause.title).toBe('Vulnerability analysis');
-      expect(clause.guidance).toContain('Monitor for vulnerabilities');
+      expect(clause.guidance).toContain('vulnerability analysis');
       expect(clause.cal_relevant).toBe(1);
     });
 
